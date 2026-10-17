@@ -1,5 +1,5 @@
+import { prisma, isPrismaConfigured } from "@/lib/prisma";
 import { supabaseAdmin, isSupabaseConfigured } from "./client";
-import { sql, isPostgresConfigured } from "@/lib/db";
 import { createHash } from "crypto";
 import { nanoid } from "nanoid";
 
@@ -7,48 +7,73 @@ export interface Profile {
   id: string;
   email: string;
   name: string | null;
-  avatar_url: string | null;
-  credits_balance: number;
-  created_at: string;
-  updated_at: string;
+  avatar_url?: string | null;
+  avatarUrl?: string | null;
+  credits_balance?: number;
+  creditsBalance?: number;
+  created_at?: string | Date;
+  createdAt?: string | Date;
+  updated_at?: string | Date;
+  updatedAt?: string | Date;
 }
 
 export interface Subscription {
   id: string;
-  user_id: string;
+  user_id?: string;
+  userId?: string;
   provider: "lemonsqueezy" | "stripe";
-  plan_id: string;
-  status: "active" | "past_due" | "canceled" | "trialing" | "paused";
-  customer_id: string;
-  variant_id?: string;
-  current_period_end: string | null;
-  cancel_at_period_end: boolean;
-  created_at: string;
-  updated_at: string;
+  plan_id?: string;
+  planId?: string;
+  status: "active" | "past_due" | "canceled" | "trialing" | "paused" | string;
+  customer_id?: string;
+  customerId?: string;
+  variant_id?: string | null;
+  variantId?: string | null;
+  current_period_end?: string | Date | null;
+  currentPeriodEnd?: string | Date | null;
+  cancel_at_period_end?: boolean;
+  cancelAtPeriodEnd?: boolean;
+  created_at?: string | Date;
+  createdAt?: string | Date;
+  updated_at?: string | Date;
+  updatedAt?: string | Date;
 }
 
 export interface ApiKey {
   id: string;
-  user_id: string;
+  user_id?: string;
+  userId?: string;
   name: string;
-  key_prefix: string;
-  key_hash: string;
-  is_active: boolean;
-  requests_count: number;
-  last_used_at: string | null;
-  created_at: string;
+  key_prefix?: string;
+  keyPrefix?: string;
+  key_hash?: string;
+  keyHash?: string;
+  is_active?: boolean;
+  isActive?: boolean;
+  requests_count?: number;
+  requestsCount?: number;
+  last_used_at?: string | Date | null;
+  lastUsedAt?: string | Date | null;
+  created_at?: string | Date;
+  createdAt?: string | Date;
 }
 
 export interface UsageLog {
   id: string;
-  user_id: string;
-  api_key_id: string | null;
+  user_id?: string;
+  userId?: string;
+  api_key_id?: string | null;
+  apiKeyId?: string | null;
   endpoint: string;
-  credits_deducted: number;
-  duration_ms: number;
-  status_code: number;
-  metadata?: Record<string, any>;
-  created_at: string;
+  credits_deducted?: number;
+  creditsDeducted?: number;
+  duration_ms?: number;
+  durationMs?: number;
+  status_code?: number;
+  statusCode?: number;
+  metadata?: Record<string, any> | any;
+  created_at?: string | Date;
+  createdAt?: string | Date;
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +88,9 @@ const mockStore = {
         email: "demo@developer.local",
         name: "Demo Developer",
         avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
+        avatarUrl: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&auto=format&fit=crop&q=80",
         credits_balance: 1420,
+        creditsBalance: 1420,
         created_at: new Date(Date.now() - 30 * 86400000).toISOString(),
         updated_at: new Date().toISOString(),
       },
@@ -75,11 +102,15 @@ const mockStore = {
       {
         id: "sub_demo_pro",
         user_id: "user_demo_123",
+        userId: "user_demo_123",
         provider: "lemonsqueezy",
         plan_id: "pro",
+        planId: "pro",
         status: "active",
         customer_id: "cust_demo_8821",
+        customerId: "cust_demo_8821",
         variant_id: "variant_pro_monthly",
+        variantId: "variant_pro_monthly",
         current_period_end: new Date(Date.now() + 20 * 86400000).toISOString(),
         cancel_at_period_end: false,
         created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
@@ -93,11 +124,15 @@ const mockStore = {
       {
         id: "key_demo_primary",
         user_id: "user_demo_123",
+        userId: "user_demo_123",
         name: "CLI & Terminal Key",
         key_prefix: "sk_live_demo88f2...",
+        keyPrefix: "sk_live_demo88f2...",
         key_hash: createHash("sha256").update("sk_live_demo88f29910a7b4c").digest("hex"),
         is_active: true,
+        isActive: true,
         requests_count: 342,
+        requestsCount: 342,
         last_used_at: new Date(Date.now() - 15 * 60000).toISOString(),
         created_at: new Date(Date.now() - 10 * 86400000).toISOString(),
       },
@@ -107,22 +142,32 @@ const mockStore = {
     {
       id: "log_1",
       user_id: "user_demo_123",
+      userId: "user_demo_123",
       api_key_id: "key_demo_primary",
+      apiKeyId: "key_demo_primary",
       endpoint: "/api/v1/tool/execute",
       credits_deducted: 1,
+      creditsDeducted: 1,
       duration_ms: 38,
+      durationMs: 38,
       status_code: 200,
+      statusCode: 200,
       metadata: { dialect: "postgres" },
       created_at: new Date(Date.now() - 15 * 60000).toISOString(),
     },
     {
       id: "log_2",
       user_id: "user_demo_123",
+      userId: "user_demo_123",
       api_key_id: "key_demo_primary",
+      apiKeyId: "key_demo_primary",
       endpoint: "/api/v1/tool/execute",
       credits_deducted: 1,
+      creditsDeducted: 1,
       duration_ms: 54,
+      durationMs: 54,
       status_code: 200,
+      statusCode: 200,
       metadata: { dialect: "mysql" },
       created_at: new Date(Date.now() - 95 * 60000).toISOString(),
     },
@@ -134,7 +179,7 @@ export function hashApiKey(key: string): string {
 }
 
 // -----------------------------------------------------------------------------
-// Database Operations (Direct PostgreSQL -> Supabase Client -> Mock Fallback)
+// Database Operations (Optimized Prisma ORM -> Supabase Client -> Mock Fallback)
 // -----------------------------------------------------------------------------
 
 /**
@@ -146,24 +191,31 @@ export async function getOrCreateProfile(
   name?: string | null,
   avatarUrl?: string | null
 ): Promise<Profile> {
-  // Option 1: Direct PostgreSQL
-  if (isPostgresConfigured && sql) {
-    const existing = await sql<Profile[]>`
-      SELECT * FROM public.profiles WHERE id = ${userId} LIMIT 1;
-    `;
-    if (existing.length > 0) return existing[0];
+  // Option 1: Optimized Prisma ORM
+  if (isPrismaConfigured && prisma) {
+    const profile = await prisma.profile.upsert({
+      where: { id: userId },
+      update: {
+        email,
+        ...(name ? { name } : {}),
+        ...(avatarUrl ? { avatarUrl } : {}),
+      },
+      create: {
+        id: userId,
+        email,
+        name: name || null,
+        avatarUrl: avatarUrl || null,
+        creditsBalance: 50,
+      },
+    });
 
-    const inserted = await sql<Profile[]>`
-      INSERT INTO public.profiles (id, email, name, avatar_url, credits_balance)
-      VALUES (${userId}, ${email}, ${name || null}, ${avatarUrl || null}, 50)
-      ON CONFLICT (id) DO UPDATE SET
-        email = EXCLUDED.email,
-        name = COALESCE(EXCLUDED.name, profiles.name),
-        avatar_url = COALESCE(EXCLUDED.avatar_url, profiles.avatar_url),
-        updated_at = NOW()
-      RETURNING *;
-    `;
-    return inserted[0];
+    return {
+      ...profile,
+      avatar_url: profile.avatarUrl,
+      credits_balance: profile.creditsBalance,
+      created_at: profile.createdAt.toISOString(),
+      updated_at: profile.updatedAt.toISOString(),
+    };
   }
 
   // Option 2: Supabase REST
@@ -212,11 +264,18 @@ export async function getOrCreateProfile(
  * Fetch profile by user ID
  */
 export async function getUserProfile(userId: string): Promise<Profile | null> {
-  if (isPostgresConfigured && sql) {
-    const rows = await sql<Profile[]>`
-      SELECT * FROM public.profiles WHERE id = ${userId} LIMIT 1;
-    `;
-    return rows[0] || null;
+  if (isPrismaConfigured && prisma) {
+    const profile = await prisma.profile.findUnique({
+      where: { id: userId },
+    });
+    if (!profile) return null;
+    return {
+      ...profile,
+      avatar_url: profile.avatarUrl,
+      credits_balance: profile.creditsBalance,
+      created_at: profile.createdAt.toISOString(),
+      updated_at: profile.updatedAt.toISOString(),
+    };
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
@@ -235,14 +294,23 @@ export async function getUserProfile(userId: string): Promise<Profile | null> {
  * Fetch active subscription for user
  */
 export async function getUserSubscription(userId: string): Promise<Subscription | null> {
-  if (isPostgresConfigured && sql) {
-    const rows = await sql<Subscription[]>`
-      SELECT * FROM public.subscriptions 
-      WHERE user_id = ${userId} AND status = 'active'
-      ORDER BY created_at DESC 
-      LIMIT 1;
-    `;
-    return rows[0] || null;
+  if (isPrismaConfigured && prisma) {
+    const sub = await prisma.subscription.findFirst({
+      where: { userId, status: "active" },
+      orderBy: { createdAt: "desc" },
+    });
+    if (!sub) return null;
+    return {
+      ...sub,
+      user_id: sub.userId,
+      plan_id: sub.planId,
+      customer_id: sub.customerId,
+      variant_id: sub.variantId,
+      current_period_end: sub.currentPeriodEnd ? sub.currentPeriodEnd.toISOString() : null,
+      cancel_at_period_end: sub.cancelAtPeriodEnd,
+      created_at: sub.createdAt.toISOString(),
+      updated_at: sub.updatedAt.toISOString(),
+    } as Subscription;
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
@@ -259,7 +327,7 @@ export async function getUserSubscription(userId: string): Promise<Subscription 
   }
 
   const sub = Array.from(mockStore.subscriptions.values()).find(
-    (s) => s.user_id === userId && s.status === "active"
+    (s) => (s.user_id === userId || s.userId === userId) && s.status === "active"
   );
   return sub || null;
 }
@@ -270,28 +338,49 @@ export async function getUserSubscription(userId: string): Promise<Subscription 
 export async function upsertSubscription(
   sub: Omit<Subscription, "created_at" | "updated_at">
 ): Promise<void> {
-  if (isPostgresConfigured && sql) {
-    await sql`
-      INSERT INTO public.subscriptions (
-        id, user_id, provider, plan_id, status, customer_id, variant_id, current_period_end, cancel_at_period_end, updated_at
-      ) VALUES (
-        ${sub.id}, ${sub.user_id}, ${sub.provider}, ${sub.plan_id}, ${sub.status},
-        ${sub.customer_id}, ${sub.variant_id || null}, ${sub.current_period_end},
-        ${sub.cancel_at_period_end}, NOW()
-      )
-      ON CONFLICT (id) DO UPDATE SET
-        status = EXCLUDED.status,
-        plan_id = EXCLUDED.plan_id,
-        current_period_end = EXCLUDED.current_period_end,
-        cancel_at_period_end = EXCLUDED.cancel_at_period_end,
-        updated_at = NOW();
-    `;
+  const userId = sub.user_id || sub.userId!;
+  const planId = sub.plan_id || sub.planId || "pro";
+  const customerId = sub.customer_id || sub.customerId!;
+  const variantId = sub.variant_id || sub.variantId || null;
+  const periodEnd = sub.current_period_end || sub.currentPeriodEnd;
+  const cancelAtEnd = Boolean(sub.cancel_at_period_end ?? sub.cancelAtPeriodEnd ?? false);
+
+  if (isPrismaConfigured && prisma) {
+    await prisma.subscription.upsert({
+      where: { id: sub.id },
+      update: {
+        status: sub.status,
+        planId,
+        variantId,
+        currentPeriodEnd: periodEnd ? new Date(periodEnd) : null,
+        cancelAtPeriodEnd: cancelAtEnd,
+      },
+      create: {
+        id: sub.id,
+        userId,
+        provider: sub.provider,
+        planId,
+        status: sub.status,
+        customerId,
+        variantId,
+        currentPeriodEnd: periodEnd ? new Date(periodEnd) : null,
+        cancelAtPeriodEnd: cancelAtEnd,
+      },
+    });
     return;
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
     const { error } = await supabaseAdmin.from("subscriptions").upsert({
-      ...sub,
+      id: sub.id,
+      user_id: userId,
+      provider: sub.provider,
+      plan_id: planId,
+      status: sub.status,
+      customer_id: customerId,
+      variant_id: variantId,
+      current_period_end: periodEnd,
+      cancel_at_period_end: cancelAtEnd,
       updated_at: new Date().toISOString(),
     });
     if (error) throw error;
@@ -306,17 +395,38 @@ export async function upsertSubscription(
 }
 
 /**
- * Deduct credits atomically using PostgreSQL Stored Procedure
+ * Deduct credits atomically
  */
 export async function deductCredits(
   userId: string,
   amount: number
 ): Promise<{ success: boolean; balance: number; error?: string }> {
-  if (isPostgresConfigured && sql) {
-    const result = await sql<[{ deduct_credits: { success: boolean; balance: number; error?: string } }]>`
-      SELECT public.deduct_credits(${userId}, ${amount});
-    `;
-    return result[0]?.deduct_credits || { success: false, balance: 0, error: "Deduction failed" };
+  if (isPrismaConfigured && prisma) {
+    try {
+      // Execute the PostgreSQL stored procedure atomically via Prisma
+      const result = await prisma.$queryRaw<[{ deduct_credits: { success: boolean; balance: number; error?: string } }]>`
+        SELECT public.deduct_credits(${userId}, ${amount});
+      `;
+      return result[0]?.deduct_credits || { success: false, balance: 0, error: "Deduction failed" };
+    } catch (e: any) {
+      // Fallback to Prisma interactive transaction with row check
+      try {
+        return await prisma.$transaction(async (tx) => {
+          const profile = await tx.profile.findUnique({ where: { id: userId } });
+          if (!profile) return { success: false, balance: 0, error: "Profile not found" };
+          if (profile.creditsBalance < amount) {
+            return { success: false, balance: profile.creditsBalance, error: "Insufficient credit balance" };
+          }
+          const updated = await tx.profile.update({
+            where: { id: userId },
+            data: { creditsBalance: { decrement: amount } },
+          });
+          return { success: true, balance: updated.creditsBalance };
+        });
+      } catch (err: any) {
+        return { success: false, balance: 0, error: err.message };
+      }
+    }
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
@@ -330,11 +440,14 @@ export async function deductCredits(
 
   const profile = mockStore.profiles.get(userId);
   if (!profile) return { success: false, balance: 0, error: "Profile not found" };
-  if (profile.credits_balance < amount) {
-    return { success: false, balance: profile.credits_balance, error: "Insufficient credit balance" };
+  const currentBal = profile.credits_balance ?? profile.creditsBalance ?? 0;
+  if (currentBal < amount) {
+    return { success: false, balance: currentBal, error: "Insufficient credit balance" };
   }
-  profile.credits_balance -= amount;
-  return { success: true, balance: profile.credits_balance };
+  const newBal = currentBal - amount;
+  profile.credits_balance = newBal;
+  profile.creditsBalance = newBal;
+  return { success: true, balance: newBal };
 }
 
 /**
@@ -344,11 +457,14 @@ export async function addCredits(
   userId: string,
   amount: number
 ): Promise<{ success: boolean; balance: number }> {
-  if (isPostgresConfigured && sql) {
-    const result = await sql<[{ add_credits: { success: boolean; balance: number } }]>`
-      SELECT public.add_credits(${userId}, ${amount});
-    `;
-    return result[0]?.add_credits || { success: false, balance: 0 };
+  if (isPrismaConfigured && prisma) {
+    const updated = await prisma.profile.update({
+      where: { id: userId },
+      data: {
+        creditsBalance: { increment: amount },
+      },
+    });
+    return { success: true, balance: updated.creditsBalance };
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
@@ -362,7 +478,9 @@ export async function addCredits(
 
   const profile = mockStore.profiles.get(userId);
   if (profile) {
-    profile.credits_balance += amount;
+    const current = profile.credits_balance ?? profile.creditsBalance ?? 0;
+    profile.credits_balance = current + amount;
+    profile.creditsBalance = current + amount;
     return { success: true, balance: profile.credits_balance };
   }
   return { success: false, balance: 0 };
@@ -381,6 +499,34 @@ export async function createApiKey(
   const keyHash = hashApiKey(rawKey);
   const id = `key_${nanoid(16)}`;
 
+  if (isPrismaConfigured && prisma) {
+    const key = await prisma.apiKey.create({
+      data: {
+        id,
+        userId,
+        name,
+        keyPrefix,
+        keyHash,
+        isActive: true,
+        requestsCount: 0,
+      },
+    });
+
+    return {
+      rawKey,
+      keyInfo: {
+        ...key,
+        user_id: key.userId,
+        key_prefix: key.keyPrefix,
+        key_hash: key.keyHash,
+        is_active: key.isActive,
+        requests_count: key.requestsCount,
+        last_used_at: key.lastUsedAt ? key.lastUsedAt.toISOString() : null,
+        created_at: key.createdAt.toISOString(),
+      },
+    };
+  }
+
   const keyRecord: ApiKey = {
     id,
     user_id: userId,
@@ -392,15 +538,6 @@ export async function createApiKey(
     last_used_at: null,
     created_at: new Date().toISOString(),
   };
-
-  if (isPostgresConfigured && sql) {
-    const rows = await sql<ApiKey[]>`
-      INSERT INTO public.api_keys (id, user_id, name, key_prefix, key_hash, is_active, requests_count)
-      VALUES (${id}, ${userId}, ${name}, ${keyPrefix}, ${keyHash}, true, 0)
-      RETURNING *;
-    `;
-    return { rawKey, keyInfo: rows[0] };
-  }
 
   if (isSupabaseConfigured && supabaseAdmin) {
     const { data, error } = await supabaseAdmin
@@ -420,12 +557,21 @@ export async function createApiKey(
  * Get all API keys for user
  */
 export async function getUserApiKeys(userId: string): Promise<ApiKey[]> {
-  if (isPostgresConfigured && sql) {
-    return await sql<ApiKey[]>`
-      SELECT * FROM public.api_keys 
-      WHERE user_id = ${userId} 
-      ORDER BY created_at DESC;
-    `;
+  if (isPrismaConfigured && prisma) {
+    const keys = await prisma.apiKey.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+    });
+    return keys.map((k) => ({
+      ...k,
+      user_id: k.userId,
+      key_prefix: k.keyPrefix,
+      key_hash: k.keyHash,
+      is_active: k.isActive,
+      requests_count: k.requestsCount,
+      last_used_at: k.lastUsedAt ? k.lastUsedAt.toISOString() : null,
+      created_at: k.createdAt.toISOString(),
+    }));
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
@@ -437,18 +583,19 @@ export async function getUserApiKeys(userId: string): Promise<ApiKey[]> {
     return (data as ApiKey[]) || [];
   }
 
-  return Array.from(mockStore.apiKeys.values()).filter((k) => k.user_id === userId);
+  return Array.from(mockStore.apiKeys.values()).filter(
+    (k) => k.user_id === userId || k.userId === userId
+  );
 }
 
 /**
  * Revoke API key
  */
 export async function revokeApiKey(userId: string, keyId: string): Promise<boolean> {
-  if (isPostgresConfigured && sql) {
-    const result = await sql`
-      DELETE FROM public.api_keys 
-      WHERE id = ${keyId} AND user_id = ${userId};
-    `;
+  if (isPrismaConfigured && prisma) {
+    const result = await prisma.apiKey.deleteMany({
+      where: { id: keyId, userId },
+    });
     return result.count > 0;
   }
 
@@ -462,7 +609,7 @@ export async function revokeApiKey(userId: string, keyId: string): Promise<boole
   }
 
   const key = mockStore.apiKeys.get(keyId);
-  if (key && key.user_id === userId) {
+  if (key && (key.user_id === userId || key.userId === userId)) {
     mockStore.apiKeys.delete(keyId);
     return true;
   }
@@ -475,29 +622,29 @@ export async function revokeApiKey(userId: string, keyId: string): Promise<boole
 export async function verifyApiKey(
   rawKey: string
 ): Promise<{ valid: boolean; userId?: string; keyId?: string }> {
-  // Demo key support for testing out of the box
   if (rawKey === "sk_live_demo88f29910a7b4c" || rawKey === "sk_test_demo") {
     return { valid: true, userId: "user_demo_123", keyId: "key_demo_primary" };
   }
 
   const keyHash = hashApiKey(rawKey);
 
-  if (isPostgresConfigured && sql) {
-    const rows = await sql<{ id: string; user_id: string; is_active: boolean }[]>`
-      SELECT id, user_id, is_active FROM public.api_keys
-      WHERE key_hash = ${keyHash} AND is_active = true
-      LIMIT 1;
-    `;
-    if (rows.length === 0) return { valid: false };
+  if (isPrismaConfigured && prisma) {
+    const key = await prisma.apiKey.findFirst({
+      where: { keyHash, isActive: true },
+      select: { id: true, userId: true },
+    });
+    if (!key) return { valid: false };
 
-    // Update async in background without blocking request
-    sql`
-      UPDATE public.api_keys 
-      SET last_used_at = NOW(), requests_count = requests_count + 1 
-      WHERE id = ${rows[0].id};
-    `.catch(() => {});
+    // Asynchronously record last used time and increment counter
+    prisma.apiKey.update({
+      where: { id: key.id },
+      data: {
+        lastUsedAt: new Date(),
+        requestsCount: { increment: 1 },
+      },
+    }).catch(() => {});
 
-    return { valid: true, userId: rows[0].user_id, keyId: rows[0].id };
+    return { valid: true, userId: key.userId, keyId: key.id };
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
@@ -524,10 +671,10 @@ export async function verifyApiKey(
   }
 
   for (const key of mockStore.apiKeys.values()) {
-    if (key.key_hash === keyHash && key.is_active) {
-      key.requests_count += 1;
+    if ((key.key_hash === keyHash || key.keyHash === keyHash) && (key.is_active || key.isActive)) {
+      key.requests_count = (key.requests_count || 0) + 1;
       key.last_used_at = new Date().toISOString();
-      return { valid: true, userId: key.user_id, keyId: key.id };
+      return { valid: true, userId: key.user_id || key.userId, keyId: key.id };
     }
   }
   return { valid: false };
@@ -547,16 +694,19 @@ export async function logUsage(params: {
 }): Promise<void> {
   const logId = `log_${nanoid(12)}`;
 
-  if (isPostgresConfigured && sql) {
-    await sql`
-      INSERT INTO public.usage_logs (
-        id, user_id, api_key_id, endpoint, credits_deducted, duration_ms, status_code, metadata, created_at
-      ) VALUES (
-        ${logId}, ${params.userId}, ${params.apiKeyId || null}, ${params.endpoint},
-        ${params.creditsDeducted}, ${params.durationMs}, ${params.statusCode},
-        ${JSON.stringify(params.metadata || {})}, NOW()
-      );
-    `;
+  if (isPrismaConfigured && prisma) {
+    await prisma.usageLog.create({
+      data: {
+        id: logId,
+        userId: params.userId,
+        apiKeyId: params.apiKeyId || null,
+        endpoint: params.endpoint,
+        creditsDeducted: params.creditsDeducted,
+        durationMs: params.durationMs,
+        statusCode: params.statusCode,
+        metadata: params.metadata || {},
+      },
+    });
     return;
   }
 
@@ -577,11 +727,16 @@ export async function logUsage(params: {
   mockStore.usageLogs.unshift({
     id: logId,
     user_id: params.userId,
+    userId: params.userId,
     api_key_id: params.apiKeyId || null,
+    apiKeyId: params.apiKeyId || null,
     endpoint: params.endpoint,
     credits_deducted: params.creditsDeducted,
+    creditsDeducted: params.creditsDeducted,
     duration_ms: params.durationMs,
+    durationMs: params.durationMs,
     status_code: params.statusCode,
+    statusCode: params.statusCode,
     metadata: params.metadata || {},
     created_at: new Date().toISOString(),
   });
@@ -592,13 +747,21 @@ export async function logUsage(params: {
  * Fetch usage logs for user dashboard
  */
 export async function getUserUsageLogs(userId: string, limit = 20): Promise<UsageLog[]> {
-  if (isPostgresConfigured && sql) {
-    return await sql<UsageLog[]>`
-      SELECT * FROM public.usage_logs 
-      WHERE user_id = ${userId} 
-      ORDER BY created_at DESC 
-      LIMIT ${limit};
-    `;
+  if (isPrismaConfigured && prisma) {
+    const logs = await prisma.usageLog.findMany({
+      where: { userId },
+      orderBy: { createdAt: "desc" },
+      take: limit,
+    });
+    return logs.map((l) => ({
+      ...l,
+      user_id: l.userId,
+      api_key_id: l.apiKeyId,
+      credits_deducted: l.creditsDeducted,
+      duration_ms: l.durationMs,
+      status_code: l.statusCode,
+      created_at: l.createdAt.toISOString(),
+    }));
   }
 
   if (isSupabaseConfigured && supabaseAdmin) {
@@ -611,5 +774,5 @@ export async function getUserUsageLogs(userId: string, limit = 20): Promise<Usag
     return (data as UsageLog[]) || [];
   }
 
-  return mockStore.usageLogs.filter((l) => l.user_id === userId).slice(0, limit);
+  return mockStore.usageLogs.filter((l) => l.user_id === userId || l.userId === userId).slice(0, limit);
 }

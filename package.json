@@ -15,11 +15,15 @@
     "db:status": "node scripts/wsl-docker.mjs status",
     "db:logs": "node scripts/wsl-docker.mjs logs",
     "db:reset": "node scripts/wsl-docker.mjs reset",
-    "db:gui": "node scripts/wsl-docker.mjs gui"
+    "db:gui": "node scripts/wsl-docker.mjs gui",
+    "prisma:generate": "node ./node_modules/prisma/build/index.js generate",
+    "prisma:push": "node ./node_modules/prisma/build/index.js db push",
+    "prisma:studio": "node ./node_modules/prisma/build/index.js studio"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.0",
     "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
+    "@prisma/client": "^6.4.1",
     "@supabase/supabase-js": "^2.49.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.475.0",
@@ -39,6 +43,7 @@
     "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.3",
+    "prisma": "^6.4.1",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.7.3"
   }

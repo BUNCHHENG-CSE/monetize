@@ -11,7 +11,8 @@ export async function POST(req: NextRequest) {
 
   try {
     const subscription = await getUserSubscription(session.userId);
-    if (!subscription || !subscription.customer_id) {
+    const customerId = subscription?.customer_id || subscription?.customerId;
+    if (!subscription || !customerId) {
       return NextResponse.json(
         { error: "No active subscription found for this user." },
         { status: 404 }
@@ -22,8 +23,8 @@ export async function POST(req: NextRequest) {
     const returnUrl = `${appUrl}/dashboard`;
 
     const portalUrl = await getBillingPortalUrl({
-      customerId: subscription.customer_id,
-      provider: subscription.provider,
+      customerId,
+      provider: subscription.provider as "lemonsqueezy" | "stripe",
       returnUrl,
     });
 

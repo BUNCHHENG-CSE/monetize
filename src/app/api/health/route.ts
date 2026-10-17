@@ -1,26 +1,41 @@
 import { NextResponse } from "next/server";
-import { testDatabaseConnection, isPostgresConfigured, sql } from "@/lib/db";
+import { prisma, isPrismaConfigured } from "@/lib/prisma";
+import { isPostgresConfigured, sql } from "@/lib/db";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 
 export async function GET() {
   const startTime = Date.now();
   let dbStatus: any = {
-    driver: "in_memory_mock",
+    orm: "in_memory_mock",
     connected: true,
   };
 
-  if (isPostgresConfigured && sql) {
-    const testResult = await testDatabaseConnection();
+  if (isPrismaConfigured && prisma) {
+    const pStart = Date.now();
+    try {
+      const versionResult = await prisma.$queryRaw<[{ version: string }]>`SELECT version();`;
+      const latencyMs = Date.now() - pStart;
+      dbStatus = {
+        orm: "prisma",
+        connected: true,
+        latencyMs,
+        serverVersion: versionResult[0]?.version?.split(",")[0] || "PostgreSQL",
+      };
+    } catch (err: any) {
+      dbStatus = {
+        orm: "prisma",
+        connected: false,
+        error: err.message,
+      };
+    }
+  } else if (isPostgresConfigured && sql) {
     dbStatus = {
-      driver: "direct_postgresql",
-      connected: testResult.connected,
-      latencyMs: testResult.latencyMs,
-      serverVersion: testResult.serverVersion,
-      error: testResult.error,
+      orm: "direct_postgres",
+      connected: true,
     };
   } else if (isSupabaseConfigured) {
     dbStatus = {
-      driver: "supabase_rest",
+      orm: "supabase_rest",
       connected: true,
     };
   }

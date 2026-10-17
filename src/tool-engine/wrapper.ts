@@ -86,7 +86,10 @@ export async function handleToolExecution(
     // 2. Fetch User Profile & Subscription
     const profile = await getUserProfile(userId);
     const subscription = await getUserSubscription(userId);
-    const activePlanId = subscription?.status === "active" ? subscription.plan_id : "free";
+    const activePlanId: string =
+      (subscription?.status === "active"
+        ? subscription.plan_id || subscription.planId
+        : "free") || "free";
 
     const planConfig =
       monetizeConfig.plans.find((p) => p.id === activePlanId) ||
