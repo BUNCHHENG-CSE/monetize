@@ -9,7 +9,13 @@
     "start": "node \"./node_modules/next/dist/bin/next\" start",
     "lint": "node \"./node_modules/next/dist/bin/next\" lint",
     "setup": "node scripts/setup.mjs",
-    "db:init": "node scripts/db-init.mjs"
+    "db:init": "node scripts/db-init.mjs",
+    "db:up": "node scripts/wsl-docker.mjs up",
+    "db:down": "node scripts/wsl-docker.mjs down",
+    "db:status": "node scripts/wsl-docker.mjs status",
+    "db:logs": "node scripts/wsl-docker.mjs logs",
+    "db:reset": "node scripts/wsl-docker.mjs reset",
+    "db:gui": "node scripts/wsl-docker.mjs gui"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.0",
@@ -19,6 +25,7 @@
     "lucide-react": "^0.475.0",
     "nanoid": "^5.1.3",
     "next": "^15.1.7",
+    "postgres": "^3.4.9",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "stripe": "^17.7.0",

@@ -2,6 +2,7 @@
 
 import fs from "fs";
 import path from "path";
+import { execSync } from "child_process";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -52,15 +53,21 @@ if (clerkCheck.isSet) {
   console.log("\x1b[33m%s\x1b[0m", "  ⚠ Clerk Auth: Using local simulation fallback (Add live keys from https://dashboard.clerk.com)");
 }
 
-// 2. Supabase
-const supabaseCheck = checkVar("NEXT_PUBLIC_SUPABASE_URL", "example.supabase.co");
-if (supabaseCheck.isSet) {
-  console.log("\x1b[32m%s\x1b[0m", "  ✔ Supabase Database: Configured");
+// 2. Direct PostgreSQL & WSL Docker
+const dbUrlCheck = checkVar("DATABASE_URL", "placeholder");
+if (dbUrlCheck.isSet) {
+  console.log("\x1b[32m%s\x1b[0m", `  ✔ Direct PostgreSQL: Configured (${dbUrlCheck.val.split("@")[1] || "active"})`);
 } else {
-  console.log("\x1b[33m%s\x1b[0m", "  ⚠ Supabase Database: Using in-memory mock store (Add credentials from https://supabase.com)");
+  console.log("\x1b[33m%s\x1b[0m", "  ⚠ Direct PostgreSQL: Run 'npm run db:up' to launch local PostgreSQL in WSL Docker");
 }
 
-// 3. Lemon Squeezy / Stripe
+// 3. Supabase REST fallback
+const supabaseCheck = checkVar("NEXT_PUBLIC_SUPABASE_URL", "example.supabase.co");
+if (supabaseCheck.isSet) {
+  console.log("\x1b[32m%s\x1b[0m", "  ✔ Supabase Cloud Client: Configured");
+}
+
+// 4. Lemon Squeezy / Stripe
 const lemonCheck = checkVar("LEMONSQUEEZY_API_KEY", "placeholder");
 const stripeCheck = checkVar("STRIPE_SECRET_KEY", "placeholder");
 
@@ -72,9 +79,14 @@ if (lemonCheck.isSet) {
   console.log("\x1b[33m%s\x1b[0m", "  ⚠ Payments: Running in local sandbox simulation mode");
 }
 
+console.log("\n\x1b[1mPostgreSQL & WSL Docker Commands:\x1b[0m");
+console.log("  • Start local database:     \x1b[32mnpm run db:up\x1b[0m");
+console.log("  • Check database status:    \x1b[34mnpm run db:status\x1b[0m");
+console.log("  • View database logs:       \x1b[34mnpm run db:logs\x1b[0m");
+console.log("  • Reset & re-seed database: \x1b[31mnpm run db:reset\x1b[0m");
+
 console.log("\n\x1b[1mNext Steps To Launch:\x1b[0m");
 console.log("  1. Drop your custom code into \x1b[34msrc/tool-engine/index.ts\x1b[0m");
 console.log("  2. Set your pricing tiers in \x1b[34mmonetize.config.ts\x1b[0m");
 console.log("  3. Run \x1b[32mnpm run dev\x1b[0m to test the playground and developer dashboard");
-console.log("  4. Apply DB schema: copy \x1b[34msupabase/schema.sql\x1b[0m into your Supabase SQL Editor");
-console.log("  5. Deploy to Vercel: \x1b[32mvercel deploy\x1b[0m\n");
+console.log("  4. Deploy to Vercel: \x1b[32mvercel deploy\x1b[0m\n");

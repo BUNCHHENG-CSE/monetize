@@ -1,6 +1,6 @@
 # All-in-One "Payments + Auth + Hosting" Wrapper for Developer Tools
 
-> **Turn code into revenue in 5 minutes.** In 2026, writing code is no longer the bottleneck—turning code into a product that can take money still is. This production-ready starter kit wraps your TypeScript or Python developer tool with **Clerk Auth**, **Lemon Squeezy (MoR) / Stripe Payments**, **Supabase Credit Metering**, and **API Key Management** out of the box.
+> **Turn code into revenue in 5 minutes.** In 2026, writing code is no longer the bottleneck—turning code into a product that can take money still is. This production-ready starter kit wraps your TypeScript or Python developer tool with **Clerk Auth**, **Lemon Squeezy (MoR) / Stripe Payments**, **Production-Optimized PostgreSQL / Supabase Credit Metering**, and **API Key Management** out of the box.
 
 ---
 
@@ -11,7 +11,7 @@ In 2019, launching a commercial developer SaaS required an agency or engineering
 In 2026, an indie developer can replace that entire team with an **$85–200/month stack**:
 - **Authentication**: Clerk (zero-maintenance modern auth & session management)
 - **Payments**: Lemon Squeezy (Merchant of Record: solves global sales tax & EU VAT compliance) or Stripe
-- **Database & Metering**: Supabase (PostgreSQL with atomic credit deduction stored procedures)
+- **Database & Metering**: PostgreSQL / Supabase (compiled direct SQL connection pooling with atomic stored procedures)
 - **Hosting & Edge**: Vercel (Next.js 15 App Router)
 - **AI / Building**: Cursor + Claude
 
@@ -36,7 +36,7 @@ The gap is not *"can it be built"*, but *"how do I charge for it once built."* T
                      │         Middleware & Execution Wrapper                 │
                      │  • Sliding-window rate limiter                         │
                      │  • Active subscription plan verification               │
-                     │  • Atomic credit balance check (Supabase RPC)          │
+                     │  • Atomic credit balance check (PostgreSQL RPC)        │
                      └──────────────────────────┬─────────────────────────────┘
                                                 │
                      ┌──────────────────────────┴─────────────────────────────┐
@@ -55,7 +55,77 @@ The gap is not *"can it be built"*, but *"how do I charge for it once built."* T
 
 ---
 
-## 📦 MVP Features Included
+## 🐘 Production PostgreSQL & Local WSL Docker Optimization
+
+This codebase includes an optimized three-tier database architecture supporting both **local development in WSL2 Docker** and **high-throughput production deployments**.
+
+### 1. High-Performance Direct PostgreSQL Connection Pool (`src/lib/db/index.ts`)
+- Powered by `postgres` (porsager's zero-dependency, ultra-fast compiled SQL driver).
+- **Singleton Pattern**: Prevents connection pool leaks during Next.js hot-reloads and serverless edge invocations.
+- **Auto SSL Detection**: Automatically enforces SSL for remote cloud databases (Supabase, Neon, AWS RDS) while disabling it for local Docker instances.
+- **Configurable Pool Size**: `max: 10`, `idle_timeout: 20s`, `connect_timeout: 10s`, tuned for serverless workloads.
+
+### 2. Local WSL Docker PostgreSQL (`docker-compose.yml`)
+Run an exact production-replica PostgreSQL 16 engine locally in WSL2 without installing heavy software on Windows:
+
+```bash
+# Start production-tuned PostgreSQL in WSL Docker (port 5434)
+npm run db:up
+
+# Check container status & health
+npm run db:status
+
+# View live PostgreSQL logs
+npm run db:logs
+
+# Reset volume & re-apply schema + seed data
+npm run db:reset
+
+# Stop database container
+npm run db:down
+```
+
+#### WSL2 Performance Optimizations Included:
+- **Native Named Volume (`pgdata`)**: Placed on the WSL2 native `ext4` virtual disk (`/var/lib/docker/volumes`), bypassing the slow Windows 9p translation layer for full NVMe SSD speed.
+- **Production-Tuned `docker/postgres.conf`**:
+  - `shared_buffers = 512MB`
+  - `effective_cache_size = 1536MB`
+  - `work_mem = 16MB`
+  - `wal_buffers = 16MB`
+  - `checkpoint_completion_target = 0.9`
+  - `random_page_cost = 1.1` (SSD / virtual disk optimization)
+  - `autovacuum` tuned for high-frequency append tables (`usage_logs`).
+- **Automated Schema Provisioning**: Mounts `supabase/schema.sql` and `docker/seed.sql` into `/docker-entrypoint-initdb.d/` to automatically create all tables, indexes, and stored procedures on container creation.
+
+### 3. Production Cloud Connection String (Supabase / Neon / AWS RDS)
+In production, point `DATABASE_URL` in your Vercel or production environment to your managed connection pooler:
+
+```env
+# Supabase Transaction Pooler (Port 6543 - Recommended for Serverless):
+DATABASE_URL="postgres://postgres.[PROJECT_REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
+
+# Supabase Session Pooler (Port 5432):
+DATABASE_URL="postgres://postgres.[PROJECT_REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres"
+```
+
+### 4. Database Health & Diagnostics Endpoint (`/api/health`)
+Visit `http://localhost:3000/api/health` to view real-time database connection metrics:
+```json
+{
+  "status": "healthy",
+  "latencyMs": 2,
+  "database": {
+    "driver": "direct_postgresql",
+    "connected": true,
+    "latencyMs": 1,
+    "serverVersion": "PostgreSQL 16.15 on x86_64-pc-linux-musl"
+  }
+}
+```
+
+---
+
+## 📦 Features Summary
 
 1. **Drop-in Business Logic Engine (`src/tool-engine/index.ts`)**:
    - Simply export your `executeToolLogic(input, context)` function.
@@ -76,8 +146,6 @@ The gap is not *"can it be built"*, but *"how do I charge for it once built."* T
    - Real-time MRR tracking, subscriber health, and an interactive payment webhook simulator.
 8. **Interactive CLI Setup Wizard (`npm run setup`)**:
    - Validates environment variables, checks provider keys, and provides next steps.
-9. **Zero-Setup Local Simulation Mode**:
-   - Runs out of the box with `npm run dev` using an in-memory mock store before you even configure Clerk or Supabase keys!
 
 ---
 
@@ -90,12 +158,17 @@ cd devtool-monetization-wrapper
 npm install
 ```
 
-### 2. Run Setup Wizard
+### 2. Start Local WSL Docker PostgreSQL
 ```bash
-npm run setup
+npm run db:up
 ```
 
-### 3. Start Development Server
+### 3. Verify Database Connectivity
+```bash
+node scripts/test-db.mjs
+```
+
+### 4. Start Development Server
 ```bash
 npm run dev
 ```
@@ -131,89 +204,10 @@ export async function executeToolLogic(
 
 ---
 
-## ⚙ Configuration (`monetize.config.ts`)
-
-Open [`monetize.config.ts`](file:///d:/Program/Developer%20Monetization%20&%20Growth/All-in-One%20Payments%20+%20Auth%20+%20Hosting%20Wrapper%20for%20Developer%20Tools/monetize.config.ts) to define your pricing tiers:
-
-```typescript
-export const monetizeConfig = {
-  tool: {
-    name: "DevTool Monetize Engine",
-    tagline: "Turn code into revenue in 5 minutes",
-    badge: "v1.0 Live",
-  },
-  providers: {
-    payments: "lemonsqueezy", // or 'stripe'
-    auth: "clerk",
-    database: "supabase",
-  },
-  plans: [
-    {
-      id: "free",
-      name: "Hobby",
-      price: 0,
-      creditsPerMonth: 50,
-      rateLimitPerMin: 5,
-    },
-    {
-      id: "pro",
-      name: "Pro Developer",
-      price: 29,
-      popular: true,
-      creditsPerMonth: 2500,
-      rateLimitPerMin: 60,
-    },
-  ],
-};
-```
-
----
-
-## 🗄 Database Setup (Supabase)
-
-1. Create a project at [supabase.com](https://supabase.com).
-2. Open the **SQL Editor** in your Supabase dashboard.
-3. Paste the contents of [`supabase/schema.sql`](file:///d:/Program/Developer%20Monetization%20&%20Growth/All-in-One%20Payments%20+%20Auth%20+%20Hosting%20Wrapper%20for%20Developer%20Tools/supabase/schema.sql) and click **Run**.
-4. Copy your project URL and keys into `.env.local`:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
-   NEXT_PUBLIC_SUPABASE_ANON_KEY="your-anon-key"
-   SUPABASE_SERVICE_ROLE_KEY="your-service-role-key"
-   ```
-
----
-
-## 💳 Payments Setup (Lemon Squeezy)
-
-1. Create an account at [lemonsqueezy.com](https://lemonsqueezy.com) and create a Store.
-2. Under **Products**, create subscription variants matching your plans (e.g. Pro $29/mo).
-3. Copy your API Key, Store ID, and Variant IDs to `.env.local`:
-   ```env
-   LEMONSQUEEZY_API_KEY="your_api_key"
-   LEMONSQUEEZY_STORE_ID="your_store_id"
-   LEMONSQUEEZY_WEBHOOK_SECRET="your_webhook_secret"
-   NEXT_PUBLIC_LEMON_PRO_VARIANT_ID="variant_123456"
-   ```
-4. Set Webhook URL in Lemon Squeezy settings:
-   `https://yourdomain.com/api/webhooks/lemonsqueezy`
-   Listening for: `subscription_created`, `subscription_updated`, `subscription_cancelled`, `order_created`.
-
----
-
-## 📋 Indie Developer Validation Script
-
-Before spending weeks on extra features, validate with 5 indie developers who shipped code but have not yet charged:
-
-> *"Hey [Name], loved your tool [Project]. Question: How long did it take from having a functional product to taking your first payment, and where did you get stuck the most?"*
-
-- If they say: *"Setting up Stripe/taxes, figuring out webhooks, or gating API keys took 3 weeks"* ➔ You have immediate validation to sell this template for **$99–299 one-time** or **$29–49/month**.
-
----
-
 ## 🚢 Production Deployment
 
 Deploy seamlessly to Vercel in 1 click:
 ```bash
 vercel deploy --prod
 ```
-Ensure your environment variables are configured in the Vercel project settings.
+Ensure `DATABASE_URL`, Clerk, and Lemon Squeezy / Stripe keys are configured in your Vercel project environment variables.
