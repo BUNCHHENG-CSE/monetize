@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth/clerk";
-import { getUserSubscription } from "@/lib/supabase/service";
+import { getUserSubscription } from "@/lib/db/service";
 import { getBillingPortalUrl } from "@/lib/payments/unified";
 
 export async function POST(req: NextRequest) {

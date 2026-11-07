@@ -3,7 +3,7 @@ import postgres from "postgres";
 /**
  * Production-Optimized PostgreSQL Connection Pool
  * Supports:
- * 1. Local WSL Docker PostgreSQL (postgres://postgres:postgres@localhost:5432/devtool_monetize)
+ * 1. Local WSL Docker PostgreSQL (postgres://postgres:postgres@localhost:5432/tct_monetize)
  * 2. Supabase Transaction / Session Pooler (ports 6543 / 5432)
  * 3. Neon, AWS RDS, GCP Cloud SQL, or Fly.io Postgres
  */
@@ -12,6 +12,7 @@ const databaseUrl = process.env.DATABASE_URL || "";
 
 export const isPostgresConfigured = Boolean(
   databaseUrl &&
+  (databaseUrl.startsWith("postgres://") || databaseUrl.startsWith("postgresql://")) &&
   !databaseUrl.includes("placeholder") &&
   !databaseUrl.includes("example.com")
 );

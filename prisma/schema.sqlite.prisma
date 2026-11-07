@@ -1,0 +1,102 @@
+// ==============================================================================
+// Prisma Schema: TCT Monetize — All-in-One Payments + Auth + Hosting Wrapper for Developer Tools
+// Local Development with SQLite (Zero external dependencies)
+// ==============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Profile {
+  id             String         @id // User ID (e.g. user_2p... or local id)
+  email          String         @unique
+  name           String?
+  avatarUrl      String?        @map("avatar_url")
+  role           String         @default("user") // "user" | "admin"
+  status         String         @default("active") // "active" | "suspended"
+  passwordHash   String?        @map("password_hash")
+  creditsBalance Int            @default(50) @map("credits_balance")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+
+  subscriptions  Subscription[]
+  apiKeys        ApiKey[]
+  usageLogs      UsageLog[]
+
+  @@map("profiles")
+}
+
+model Subscription {
+  id                String    @id // Lemon Squeezy / Stripe Subscription ID
+  userId            String    @map("user_id")
+  provider          String    // "lemonsqueezy" | "stripe"
+  planId            String    @default("pro") @map("plan_id")
+  status            String    @default("active") // "active", "past_due", "canceled", "trialing"
+  customerId        String    @map("customer_id")
+  variantId         String?   @map("variant_id")
+  currentPeriodEnd  DateTime? @map("current_period_end")
+  cancelAtPeriodEnd Boolean   @default(false) @map("cancel_at_period_end")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
+
+  profile           Profile   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([status])
+  @@index([userId, status])
+  @@map("subscriptions")
+}
+
+model ApiKey {
+  id            String     @id // key_xxxx
+  userId        String     @map("user_id")
+  name          String     @default("Default API Key")
+  keyPrefix     String     @map("key_prefix") // e.g. "sk_live_abc..."
+  keyHash       String     @unique @map("key_hash") // SHA-256 hash
+  isActive      Boolean    @default(true) @map("is_active")
+  requestsCount Int        @default(0) @map("requests_count")
+  lastUsedAt    DateTime?  @map("last_used_at")
+  createdAt     DateTime   @default(now()) @map("created_at")
+
+  profile       Profile    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  usageLogs     UsageLog[]
+
+  @@index([userId])
+  @@index([keyHash, isActive])
+  @@map("api_keys")
+}
+
+model UsageLog {
+  id              String    @id @default(uuid())
+  userId          String    @map("user_id")
+  apiKeyId        String?   @map("api_key_id")
+  endpoint        String
+  creditsDeducted Int       @default(1) @map("credits_deducted")
+  durationMs      Int       @default(0) @map("duration_ms")
+  statusCode      Int       @default(200) @map("status_code")
+  metadata        Json?
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  profile         Profile   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apiKey          ApiKey?   @relation(fields: [apiKeyId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([userId, createdAt])
+  @@map("usage_logs")
+}
+
+model WebhookEvent {
+  id        String   @id // External webhook event ID
+  provider  String
+  eventType String   @map("event_type")
+  payload   Json?
+  processed Boolean  @default(true)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("webhook_events")
+}

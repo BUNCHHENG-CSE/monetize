@@ -14,16 +14,18 @@ export async function createBillingCheckout({
   redirectUrl: string;
 }): Promise<string> {
   const plan = monetizeConfig.plans.find((p) => p.id === planId);
-  if (!plan) {
-    throw new Error(`Plan with ID "${planId}" not found in monetize.config.ts`);
+  const creditPack = !plan ? monetizeConfig.creditPacks.find((cp) => cp.id === planId) : null;
+
+  if (!plan && !creditPack) {
+    throw new Error(`Plan or credit pack with ID "${planId}" not found in monetize.config.ts`);
   }
 
   const provider = monetizeConfig.providers.payments;
 
   if (provider === "lemonsqueezy") {
-    const variantId = plan.lemonSqueezyVariantId;
+    const variantId = plan?.lemonSqueezyVariantId || creditPack?.lemonSqueezyVariantId;
     if (!variantId) {
-      throw new Error(`Lemon Squeezy variantId missing for plan "${planId}"`);
+      throw new Error(`Lemon Squeezy variantId missing for "${planId}"`);
     }
     return createLemonCheckout({
       userId,
@@ -32,15 +34,17 @@ export async function createBillingCheckout({
       redirectUrl,
     });
   } else if (provider === "stripe") {
-    const priceId = plan.stripePriceId;
+    const priceId = plan?.stripePriceId || creditPack?.stripePriceId;
     if (!priceId) {
-      throw new Error(`Stripe priceId missing for plan "${planId}"`);
+      throw new Error(`Stripe priceId missing for "${planId}"`);
     }
+    const isOneTime = Boolean(creditPack || plan?.interval === "one-time");
     return createStripeCheckout({
       userId,
       userEmail,
       priceId,
       redirectUrl,
+      mode: isOneTime ? "payment" : "subscription",
     });
   }
 

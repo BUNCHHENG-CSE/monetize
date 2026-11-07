@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { constructStripeWebhookEvent, isStripeConfigured } from "@/lib/payments/stripe";
-import { upsertSubscription, addCredits } from "@/lib/supabase/service";
+import { upsertSubscription, addCredits } from "@/lib/db/service";
 import { monetizeConfig } from "@/../monetize.config";
 import Stripe from "stripe";
 
@@ -71,6 +71,45 @@ export async function POST(req: NextRequest) {
             current_period_end: null,
             cancel_at_period_end: true,
           });
+        }
+        break;
+      }
+
+      case "checkout.session.completed": {
+        const session = event.data.object as Stripe.Checkout.Session;
+        if (session.mode === "payment") {
+          const userId =
+            session.client_reference_id ||
+            session.metadata?.userId ||
+            session.metadata?.user_id;
+          const priceId = session.metadata?.priceId;
+
+          if (userId && priceId) {
+            // Check if price matches lifetime or one-time plan
+            const matchedPlan = monetizeConfig.plans.find((p) => p.stripePriceId === priceId);
+            if (matchedPlan) {
+              await upsertSubscription({
+                id: `sub_${userId}_${matchedPlan.id}`,
+                user_id: userId,
+                provider: "stripe",
+                plan_id: matchedPlan.id,
+                status: "active",
+                customer_id: (session.customer as string) || `cust_${userId}`,
+                variant_id: priceId,
+                current_period_end: null,
+                cancel_at_period_end: false,
+              });
+              await addCredits(userId, matchedPlan.creditsPerMonth);
+              console.log(`[Stripe Webhook] One-time plan activated: ${matchedPlan.id} for ${userId}`);
+            } else {
+              // Check if credit pack
+              const pack = monetizeConfig.creditPacks.find((p) => p.stripePriceId === priceId);
+              if (pack) {
+                await addCredits(userId, pack.credits);
+                console.log(`[Stripe Webhook] Added ${pack.credits} credits to ${userId}`);
+              }
+            }
+          }
         }
         break;
       }

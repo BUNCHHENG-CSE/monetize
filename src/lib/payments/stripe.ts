@@ -23,11 +23,13 @@ export async function createStripeCheckout({
   userEmail,
   priceId,
   redirectUrl,
+  mode = "subscription",
 }: {
   userId: string;
   userEmail: string;
   priceId: string;
   redirectUrl: string;
+  mode?: "subscription" | "payment";
 }): Promise<string> {
   if (!isStripeConfigured || !stripe) {
     return `${redirectUrl}?mock_checkout=stripe_success&price=${priceId}&user=${userId}`;
@@ -35,11 +37,12 @@ export async function createStripeCheckout({
 
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
-    mode: "subscription",
+    mode,
     customer_email: userEmail,
     client_reference_id: userId,
     metadata: {
       userId,
+      priceId,
     },
     line_items: [
       {

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth/clerk";
-import { revokeApiKey } from "@/lib/supabase/service";
+import { revokeApiKey } from "@/lib/db/service";
 
 export async function DELETE(
   req: NextRequest,

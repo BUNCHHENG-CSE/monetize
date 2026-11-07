@@ -7,6 +7,7 @@ export interface PlanConfig {
   creditsPerMonth: number;
   rateLimitPerMin: number;
   popular?: boolean;
+  badge?: string;
   features: string[];
   stripePriceId?: string;
   lemonSqueezyVariantId?: string;
@@ -42,7 +43,7 @@ export interface MonetizationConfig {
   providers: {
     payments: "lemonsqueezy" | "stripe";
     auth: "clerk";
-    database: "supabase";
+    database: "prisma" | "neon" | "sqlite";
   };
 
   // Pricing & Subscription Plans
@@ -62,16 +63,24 @@ export interface MonetizationConfig {
   toolEngine: {
     apiEndpoint: string;
     defaultCostInCredits: number;
+    activePreset?: "sql-optimizer" | "ai-agent" | "web-scraper" | "code-security" | "media-generator";
     inputSchema: ToolInputSchema[];
     sampleRequest: Record<string, any>;
     sampleResponse: Record<string, any>;
+  };
+
+  // Developer Outbound Webhook & Alert Settings
+  alerts?: {
+    lowCreditThresholdPercent: number; // e.g. alert when < 15% credits remain
+    enableSlackNotifications: boolean;
+    enableDiscordNotifications: boolean;
   };
 }
 
 export const monetizeConfig: MonetizationConfig = {
   tool: {
-    id: "dev-optimizer",
-    name: "DevTool Monetize Engine",
+    id: "tct-monetize",
+    name: "TCT Monetize",
     tagline: "The fastest wrapper to transform your CLI, script, or API into a revenue-generating product",
     description: "Plug in your custom TypeScript/Python business logic. We provide pre-wired Clerk auth, Lemon Squeezy/Stripe billing, credit metering, API key distribution, and customer portal in minutes.",
     badge: "Production Ready Starter",
@@ -88,7 +97,7 @@ export const monetizeConfig: MonetizationConfig = {
   providers: {
     payments: "lemonsqueezy", // or 'stripe'
     auth: "clerk",
-    database: "supabase",
+    database: "prisma",
   },
 
   plans: [
@@ -147,6 +156,26 @@ export const monetizeConfig: MonetizationConfig = {
         "Direct 1-on-1 Engineering Support",
       ],
     },
+    {
+      id: "lifetime",
+      name: "Lifetime Deal",
+      description: "Pay once and unlock perpetual access with recurring monthly credit renewals.",
+      price: 249,
+      interval: "one-time",
+      badge: "Lifetime Deal",
+      creditsPerMonth: 5000,
+      rateLimitPerMin: 120,
+      stripePriceId: process.env.NEXT_PUBLIC_STRIPE_LIFETIME_PRICE_ID || "price_lifetime_access",
+      lemonSqueezyVariantId: process.env.NEXT_PUBLIC_LEMON_LIFETIME_VARIANT_ID || "variant_lifetime_access",
+      features: [
+        "5,000 Tool Execution Credits / mo forever",
+        "Perpetual License — One-Time Payment",
+        "Unlimited API Keys & Webhooks",
+        "High Rate Limit (120 req/min)",
+        "All Future Updates & Presets Included",
+        "Priority VIP Developer Support",
+      ],
+    },
   ],
 
   creditPacks: [
@@ -171,6 +200,7 @@ export const monetizeConfig: MonetizationConfig = {
   toolEngine: {
     apiEndpoint: "/api/v1/tool/execute",
     defaultCostInCredits: 1,
+    activePreset: "sql-optimizer",
     inputSchema: [
       {
         name: "prompt",
@@ -210,5 +240,11 @@ export const monetizeConfig: MonetizationConfig = {
         estimatedSpeedup: "7.8x",
       },
     },
+  },
+
+  alerts: {
+    lowCreditThresholdPercent: 15,
+    enableSlackNotifications: true,
+    enableDiscordNotifications: true,
   },
 };

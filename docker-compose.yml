@@ -1,12 +1,12 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: devtool_postgres
+    container_name: tct_monetize_postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-devtool_monetize}
+      POSTGRES_DB: ${POSTGRES_DB:-tct_monetize}
       PGDATA: /var/lib/postgresql/data/pgdata
     command: >
       postgres 
@@ -22,36 +22,36 @@ services:
       - ./supabase/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
       - ./docker/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-devtool_monetize}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-tct_monetize}"]
       interval: 3s
       timeout: 3s
       retries: 5
       start_period: 5s
     networks:
-      - devtool_network
+      - tct_monetize_network
 
   # Optional lightweight Web GUI for inspecting queries & tables
   db_viewer:
     image: sosedoff/pgweb:latest
-    container_name: devtool_pgweb
+    container_name: tct_monetize_pgweb
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-devtool_monetize}?sslmode=disable
+      DATABASE_URL: postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-tct_monetize}?sslmode=disable
     ports:
       - "8082:8081"
     depends_on:
       postgres:
         condition: service_healthy
     networks:
-      - devtool_network
+      - tct_monetize_network
     profiles:
       - tools
 
 volumes:
   pgdata:
-    name: devtool_postgres_data
+    name: tct_monetize_postgres_data
 
 networks:
-  devtool_network:
-    name: devtool_network
+  tct_monetize_network:
+    name: tct_monetize_network
     driver: bridge

@@ -1,23 +1,45 @@
 import { PrismaClient } from "@prisma/client";
 
+const databaseUrl = process.env.DATABASE_URL || "file:./dev.db";
+const isSqlite =
+  databaseUrl.startsWith("file:") ||
+  databaseUrl.includes(".db") ||
+  databaseUrl.includes("sqlite");
+const isNeon = databaseUrl.includes("neon.tech");
+const dbLabel = isNeon ? "Neon PostgreSQL (Production)" : isSqlite ? "SQLite (Local Dev)" : "PostgreSQL";
+
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: process.env.DATABASE_URL || "postgres://postgres:postgres@127.0.0.1:5434/devtool_monetize",
+      url: databaseUrl,
     },
   },
 });
 
 console.log("\x1b[36m%s\x1b[0m", "=================================================");
-console.log("\x1b[36m%s\x1b[0m", "   Prisma ORM Optimization & Integration Test   ");
+console.log("\x1b[36m%s\x1b[0m", `   Prisma ORM Test (${dbLabel})`);
 console.log("\x1b[36m%s\x1b[0m", "=================================================\n");
 
 async function main() {
   const startTime = Date.now();
 
   try {
+    // 0. Ensure demo profile exists
+    console.log("0. Ensuring demo test profile exists...");
+    const profile = await prisma.profile.upsert({
+      where: { id: "user_demo_123" },
+      update: {},
+      create: {
+        id: "user_demo_123",
+        email: "demo@developer.local",
+        name: "Demo Developer",
+        creditsBalance: 100,
+      },
+    });
+    console.log(`✔ Demo profile ready: ${profile.email} (${profile.creditsBalance} credits)`);
+
     // 1. Test Profile query
-    console.log("1. Testing Profile query through Prisma...");
+    console.log("\n1. Testing Profile query through Prisma...");
     const profiles = await prisma.profile.findMany({
       include: {
         subscriptions: true,
@@ -41,12 +63,25 @@ async function main() {
     });
     console.log(`✔ Incremented balance. New balance: ${incremented.creditsBalance} credits.`);
 
-    // 3. Test Raw Query Execution through Prisma (PostgreSQL Stored Procedure)
-    console.log("\n3. Testing Atomic Stored Procedure via prisma.$queryRaw...");
-    const rawResult = await prisma.$queryRaw`
-      SELECT public.deduct_credits('user_demo_123', 10);
-    `;
-    console.log("✔ Stored Procedure Result:", rawResult[0].deduct_credits);
+    // 3. Test Query Execution through Prisma
+    console.log("\n3. Testing Atomic Prisma Transaction for Credit Deduction...");
+    const txResult = await prisma.$transaction(async (tx) => {
+      const u = await tx.profile.findUnique({ where: { id: "user_demo_123" } });
+      if (!u || u.creditsBalance < 10) throw new Error("Insufficient balance");
+      return await tx.profile.update({
+        where: { id: "user_demo_123" },
+        data: { creditsBalance: { decrement: 10 } },
+      });
+    });
+    console.log(`✔ Atomic ACID Transaction Success: New balance is ${txResult.creditsBalance} credits.`);
+
+    if (isSqlite) {
+      const rawResult = await prisma.$queryRaw`SELECT sqlite_version() as version;`;
+      console.log("✔ SQLite Version Result:", rawResult[0]?.version);
+    } else {
+      const rawResult = await prisma.$queryRaw`SELECT version();`;
+      console.log("✔ PostgreSQL Version Result:", (rawResult[0]?.version || "").split(",")[0]);
+    }
 
     // 4. Test UsageLog creation through Prisma Relations
     console.log("\n4. Testing UsageLog creation with Prisma relational foreign keys...");
@@ -57,7 +92,7 @@ async function main() {
         creditsDeducted: 10,
         durationMs: 42,
         statusCode: 200,
-        metadata: { engine: "prisma-optimized", runtime: "node24" },
+        metadata: { engine: "prisma-optimized", runtime: "bun", db: isSqlite ? "sqlite" : "postgres" },
       },
     });
     console.log(`✔ Created UsageLog record ID: ${log.id}`);

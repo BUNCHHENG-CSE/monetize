@@ -1,6 +1,6 @@
 import postgres from "postgres";
 
-const connectionUrl = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5434/devtool_monetize";
+const connectionUrl = process.env.DATABASE_URL || "postgres://postgres:postgres@localhost:5434/tct_monetize";
 
 console.log("Connecting to PostgreSQL at:", connectionUrl);
 

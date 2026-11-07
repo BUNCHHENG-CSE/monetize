@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Webhook } from "svix";
-import { getOrCreateProfile } from "@/lib/supabase/service";
+import { getOrCreateProfile } from "@/lib/db/service";
 
 export async function POST(req: NextRequest) {
   const webhookSecret = process.env.CLERK_WEBHOOK_SECRET;

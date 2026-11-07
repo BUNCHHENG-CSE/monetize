@@ -61,7 +61,7 @@ switch (action) {
     console.log("\x1b[32m%s\x1b[0m", "Starting Production-Tuned PostgreSQL in WSL Docker...");
     runCommand("up -d postgres");
     console.log("\x1b[32m%s\x1b[0m", "\n✔ PostgreSQL is running on localhost:5432!");
-    console.log("Connection URL: postgres://postgres:postgres@localhost:5432/devtool_monetize\n");
+    console.log("Connection URL: postgres://postgres:postgres@localhost:5432/tct_monetize\n");
     break;
 
   case "down":

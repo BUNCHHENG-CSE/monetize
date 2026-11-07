@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAuthSession } from "@/lib/auth/clerk";
-import { getUserApiKeys, createApiKey } from "@/lib/supabase/service";
+import { getUserApiKeys, createApiKey } from "@/lib/db/service";
 
 export async function GET() {
   const session = await getAuthSession();

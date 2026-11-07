@@ -1,6 +1,6 @@
 // ==============================================================================
-// Prisma Schema: All-in-One Payments + Auth + Hosting Wrapper for Developer Tools
-// Production-Tuned for PostgreSQL (Supabase, Neon, AWS RDS, and Local WSL Docker)
+// Prisma Schema: TCT Monetize — All-in-One Payments + Auth + Hosting Wrapper for Developer Tools
+// Local Development with SQLite (Zero external dependencies)
 // ==============================================================================
 
 generator client {
@@ -8,16 +8,18 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
 }
 
 model Profile {
-  id             String         @id // Clerk User ID (e.g. user_2p...)
+  id             String         @id // User ID (e.g. user_2p... or local id)
   email          String         @unique
   name           String?
   avatarUrl      String?        @map("avatar_url")
+  role           String         @default("user") // "user" | "admin"
+  status         String         @default("active") // "active" | "suspended"
+  passwordHash   String?        @map("password_hash")
   creditsBalance Int            @default(50) @map("credits_balance")
   createdAt      DateTime       @default(now()) @map("created_at")
   updatedAt      DateTime       @updatedAt @map("updated_at")
@@ -77,14 +79,14 @@ model UsageLog {
   creditsDeducted Int       @default(1) @map("credits_deducted")
   durationMs      Int       @default(0) @map("duration_ms")
   statusCode      Int       @default(200) @map("status_code")
-  metadata        Json?     @default("{}")
+  metadata        Json?
   createdAt       DateTime  @default(now()) @map("created_at")
 
   profile         Profile   @relation(fields: [userId], references: [id], onDelete: Cascade)
   apiKey          ApiKey?   @relation(fields: [apiKeyId], references: [id], onDelete: SetNull)
 
   @@index([userId])
-  @@index([userId, createdAt(sort: Desc)])
+  @@index([userId, createdAt])
   @@map("usage_logs")
 }
 
@@ -92,7 +94,7 @@ model WebhookEvent {
   id        String   @id // External webhook event ID
   provider  String
   eventType String   @map("event_type")
-  payload   Json     @default("{}")
+  payload   Json?
   processed Boolean  @default(true)
   createdAt DateTime @default(now()) @map("created_at")
 

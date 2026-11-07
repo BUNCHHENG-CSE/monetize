@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyLemonWebhookSignature } from "@/lib/payments/lemonsqueezy";
-import { upsertSubscription, addCredits } from "@/lib/supabase/service";
+import { upsertSubscription, addCredits } from "@/lib/db/service";
 import { monetizeConfig } from "@/../monetize.config";
 
 export async function POST(req: NextRequest) {
@@ -77,11 +77,32 @@ export async function POST(req: NextRequest) {
       }
 
       case "order_created": {
-        // One-time credit top-up pack purchase
+        // One-time credit top-up pack purchase or Lifetime plan purchase
         const userId = customData?.user_id;
         const variantId = data.attributes.first_order_item?.variant_id?.toString();
 
         if (userId && variantId) {
+          // Check if variant matches a lifetime or one-time plan
+          const matchedPlan = monetizeConfig.plans.find(
+            (p) => p.lemonSqueezyVariantId === variantId
+          );
+          if (matchedPlan) {
+            await upsertSubscription({
+              id: `sub_${userId}_${matchedPlan.id}`,
+              user_id: userId,
+              provider: "lemonsqueezy",
+              plan_id: matchedPlan.id,
+              status: "active",
+              customer_id: data.attributes.customer_id?.toString() || `cust_${userId}`,
+              variant_id: variantId,
+              current_period_end: null,
+              cancel_at_period_end: false,
+            });
+            await addCredits(userId, matchedPlan.creditsPerMonth);
+            console.log(`[LemonSqueezy Webhook] Lifetime plan ${matchedPlan.id} activated for ${userId}`);
+            break;
+          }
+
           const pack = monetizeConfig.creditPacks.find(
             (p) => p.lemonSqueezyVariantId === variantId
           );

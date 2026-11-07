@@ -1,213 +1,161 @@
-# All-in-One "Payments + Auth + Hosting" Wrapper for Developer Tools
+# TCT Monetize (`tct-monetize`) — All-in-One Wrapper for Developer Tools
 
-> **Turn code into revenue in 5 minutes.** In 2026, writing code is no longer the bottleneck—turning code into a product that can take money still is. This production-ready starter kit wraps your TypeScript or Python developer tool with **Clerk Auth**, **Lemon Squeezy (MoR) / Stripe Payments**, **Production-Optimized PostgreSQL / Supabase Credit Metering**, and **API Key Management** out of the box.
-
----
-
-## 💡 The Opportunity
-
-In 2019, launching a commercial developer SaaS required an agency or engineering team costing **$5,000/month** across weeks of sprints.
-
-In 2026, an indie developer can replace that entire team with an **$85–200/month stack**:
-- **Authentication**: Clerk (zero-maintenance modern auth & session management)
-- **Payments**: Lemon Squeezy (Merchant of Record: solves global sales tax & EU VAT compliance) or Stripe
-- **Database & Metering**: PostgreSQL / Supabase (compiled direct SQL connection pooling with atomic stored procedures)
-- **Hosting & Edge**: Vercel (Next.js 15 App Router)
-- **AI / Building**: Cursor + Claude
-
-The gap is not *"can it be built"*, but *"how do I charge for it once built."* This repository is the shortest path from code to first revenue.
+> **Turn your CLI, script, or API into a metered SaaS in 5 minutes.** A full-stack starter built on **Next.js 16.4.3 App Router (Turbopack)**, **Bun**, and **Prisma ORM** (zero-dependency **SQLite** locally, **Neon Serverless PostgreSQL** in production). Pre-wired with **Clerk Auth**, **Lemon Squeezy (Merchant of Record) / Stripe Billing**, **3-Phase Atomic Credit Reservation & Refund**, and **SHA-256 Hashed API Keys**.
 
 ---
 
-## ⚡ Architecture & How It Works
-
-```
-                     ┌────────────────────────────────────────────────────────┐
-                     │                 Customer / Developer                   │
-                     └──────────────────────────┬─────────────────────────────┘
-                                                │
-                     ┌──────────────────────────┴─────────────────────────────┐
-                     │          Authentication & Access Layer                 │
-                     │  • Web: Clerk OAuth / Email Session                    │
-                     │  • API / CLI: Bearer sk_live_... (SHA-256 Hashed)      │
-                     └──────────────────────────┬─────────────────────────────┘
-                                                │
-                     ┌──────────────────────────┴─────────────────────────────┐
-                     │         Middleware & Execution Wrapper                 │
-                     │  • Sliding-window rate limiter                         │
-                     │  • Active subscription plan verification               │
-                     │  • Atomic credit balance check (PostgreSQL RPC)        │
-                     └──────────────────────────┬─────────────────────────────┘
-                                                │
-                     ┌──────────────────────────┴─────────────────────────────┐
-                     │           YOUR BUSINESS LOGIC DROP-IN                  │
-                     │           (src/tool-engine/index.ts)                   │
-                     │  SQL Optimizer, AI Agent, Scraper, Parser, API         │
-                     └──────────────────────────┬─────────────────────────────┘
-                                                │
-                     ┌──────────────────────────┴─────────────────────────────┐
-                     │           Atomic Ledger & Response Headers             │
-                     │  • Atomically decrements credit balance                │
-                     │  • Asynchronously records usage in audit logs          │
-                     │  • Injects X-Credits-Remaining, X-Execution-Time-Ms    │
-                     └────────────────────────────────────────────────────────┘
-```
-
----
-
-## 🐘 Production PostgreSQL & Local WSL Docker Optimization
-
-This codebase includes an optimized three-tier database architecture supporting both **local development in WSL2 Docker** and **high-throughput production deployments**.
-
-### 1. High-Performance Direct PostgreSQL Connection Pool (`src/lib/db/index.ts`)
-- Powered by `postgres` (porsager's zero-dependency, ultra-fast compiled SQL driver).
-- **Singleton Pattern**: Prevents connection pool leaks during Next.js hot-reloads and serverless edge invocations.
-- **Auto SSL Detection**: Automatically enforces SSL for remote cloud databases (Supabase, Neon, AWS RDS) while disabling it for local Docker instances.
-- **Configurable Pool Size**: `max: 10`, `idle_timeout: 20s`, `connect_timeout: 10s`, tuned for serverless workloads.
-
-### 2. Local WSL Docker PostgreSQL (`docker-compose.yml`)
-Run an exact production-replica PostgreSQL 16 engine locally in WSL2 without installing heavy software on Windows:
+## ⚡ 60-Second Quick Start
 
 ```bash
-# Start production-tuned PostgreSQL in WSL Docker (port 5434)
-npm run db:up
+# 1. Install dependencies (works with bun or npm)
+bun install
 
-# Check container status & health
-npm run db:status
+# 2. Push Prisma schema to local SQLite (prisma/dev.db — zero Docker/external services)
+bun run db:push
 
-# View live PostgreSQL logs
-npm run db:logs
+# 3. Seed demo developer profile, API key, and active Pro subscription
+bun run db:seed
 
-# Reset volume & re-apply schema + seed data
-npm run db:reset
-
-# Stop database container
-npm run db:down
+# 4. Run diagnostics & start Next.js dev server
+bun run doctor
+bun run dev
 ```
 
-#### WSL2 Performance Optimizations Included:
-- **Native Named Volume (`pgdata`)**: Placed on the WSL2 native `ext4` virtual disk (`/var/lib/docker/volumes`), bypassing the slow Windows 9p translation layer for full NVMe SSD speed.
-- **Production-Tuned `docker/postgres.conf`**:
-  - `shared_buffers = 512MB`
-  - `effective_cache_size = 1536MB`
-  - `work_mem = 16MB`
-  - `wal_buffers = 16MB`
-  - `checkpoint_completion_target = 0.9`
-  - `random_page_cost = 1.1` (SSD / virtual disk optimization)
-  - `autovacuum` tuned for high-frequency append tables (`usage_logs`).
-- **Automated Schema Provisioning**: Mounts `supabase/schema.sql` and `docker/seed.sql` into `/docker-entrypoint-initdb.d/` to automatically create all tables, indexes, and stored procedures on container creation.
-
-### 3. Production Cloud Connection String (Supabase / Neon / AWS RDS)
-In production, point `DATABASE_URL` in your Vercel or production environment to your managed connection pooler:
-
-```env
-# Supabase Transaction Pooler (Port 6543 - Recommended for Serverless):
-DATABASE_URL="postgres://postgres.[PROJECT_REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:6543/postgres?pgbouncer=true"
-
-# Supabase Session Pooler (Port 5432):
-DATABASE_URL="postgres://postgres.[PROJECT_REF]:[PASSWORD]@aws-0-[REGION].pooler.supabase.com:5432/postgres"
-```
-
-### 4. Database Health & Diagnostics Endpoint (`/api/health`)
-Visit `http://localhost:3000/api/health` to view real-time database connection metrics:
-```json
-{
-  "status": "healthy",
-  "latencyMs": 2,
-  "database": {
-    "driver": "direct_postgresql",
-    "connected": true,
-    "latencyMs": 1,
-    "serverVersion": "PostgreSQL 16.15 on x86_64-pc-linux-musl"
-  }
-}
-```
+Open **[http://localhost:3000](http://localhost:3000)** to test the interactive playground, **[http://localhost:3000/dashboard](http://localhost:3000/dashboard)** for the customer console, and **[http://localhost:3000/admin](http://localhost:3000/admin)** for founder telemetry.
 
 ---
 
-## 📦 Features Summary
+## 🚀 Ship Your Own Tool in 3 Steps
 
-1. **Drop-in Business Logic Engine (`src/tool-engine/index.ts`)**:
-   - Simply export your `executeToolLogic(input, context)` function.
-   - The wrapper handles authentication, subscription plan gating, credit deduction, rate limiting, and response headers automatically.
-2. **Central Nervous System (`monetize.config.ts`)**:
-   - Single configuration file that drives your pricing table, plan names, rate limits, monthly credit allowances, and API schema.
-3. **Dual Payment Gateway Support**:
-   - **Lemon Squeezy (Default)**: Acts as Merchant of Record. Handles global checkout, VAT, customer portal, and invoice receipts.
-   - **Stripe**: Alternative direct billing mode with customer portal.
-4. **PostgreSQL Atomic Credit Metering**:
-   - PostgreSQL stored procedure (`deduct_credits`) with row-level locking (`FOR UPDATE`) to prevent concurrent race condition overdrafts.
-5. **Developer API Key Distribution & Revocation**:
-   - Users can generate scoped `sk_live_...` API keys in their dashboard.
-   - Keys are displayed once upon creation and stored hashed with SHA-256.
-6. **Live Interactive Playground**:
-   - Embedded both on the homepage and in the customer dashboard so users can test queries with real-time latency and credit tracking.
-7. **Founder Admin & Telemetry (`/admin`)**:
-   - Real-time MRR tracking, subscriber health, and an interactive payment webhook simulator.
-8. **Interactive CLI Setup Wizard (`npm run setup`)**:
-   - Validates environment variables, checks provider keys, and provides next steps.
-
----
-
-## 🚀 Quickstart in 5 Minutes
-
-### 1. Clone & Install Dependencies
-```bash
-git clone <your-repo>
-cd devtool-monetization-wrapper
-npm install
-```
-
-### 2. Start Local WSL Docker PostgreSQL
-```bash
-npm run db:up
-```
-
-### 3. Verify Database Connectivity
-```bash
-node scripts/test-db.mjs
-```
-
-### 4. Start Development Server
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) to view the landing page, interactive playground, and developer dashboard.
-
----
-
-## 🛠 How to Drop In Your Tool Logic
-
-Open [`src/tool-engine/index.ts`](file:///d:/Program/Developer%20Monetization%20&%20Growth/All-in-One%20Payments%20+%20Auth%20+%20Hosting%20Wrapper%20for%20Developer%20Tools/src/tool-engine/index.ts):
+### Step 1 — Drop in Your Business Logic (`src/tool-engine/index.ts`)
+Export `executeToolLogic(input, context)` in [`src/tool-engine/index.ts`](src/tool-engine/index.ts) or select one of the 5 built-in presets:
 
 ```typescript
 export async function executeToolLogic(
   input: ToolInput,
   context: ToolContext
 ): Promise<ToolOutput> {
-  // YOUR CUSTOM LOGIC HERE
-  // Examples:
-  // - Call Claude / OpenAI API
-  // - Parse AST or format SQL
-  // - Scrape / enrich web data
-  // - Generate images, charts, or PDFs
-
+  // Call your LLM, AST parser, SQL optimizer, scraper, or internal API
   return {
     success: true,
-    data: {
-      result: "Your computed output here",
-    },
-    costInCredits: 1, // Deduct 1 credit (or dynamic based on tokens)
+    data: { result: "Your computed output" },
+    costInCredits: 1, // If execution throws or returns success: false, 0 credits are charged!
   };
 }
 ```
 
----
+### Step 2 — Configure Plans & Credit Costs (`monetize.config.ts`)
+Edit [`monetize.config.ts`](monetize.config.ts) to set your tool name, pricing tiers, monthly credit quotas, per-minute sliding-window rate limits, and one-time credit packs. The landing page, dashboard, OpenAPI spec, and billing routes read from this single file.
 
-## 🚢 Production Deployment
-
-Deploy seamlessly to Vercel in 1 click:
+### Step 3 — Deploy to Production
 ```bash
+bun run check        # Runs system doctor + TypeScript typecheck
 vercel deploy --prod
 ```
-Ensure `DATABASE_URL`, Clerk, and Lemon Squeezy / Stripe keys are configured in your Vercel project environment variables.
+
+---
+
+## 🛡️ Execution Wrapper & Billing Semantics (`src/tool-engine/wrapper.ts`)
+
+Every call to `POST /api/v1/tool/execute` goes through a hardened pipeline in [`src/tool-engine/wrapper.ts`](src/tool-engine/wrapper.ts):
+
+1. **Authentication (`401 unauthorized`)**: Verifies `Authorization: Bearer sk_live_...` (SHA-256 hashed lookup) or active Clerk web session.
+2. **Pre-Flight Input Validation (`400 invalid_input` / `413 payload_too_large`)**: Validates JSON syntax, payload size (≤ 1 MB), preset existence (`400 unknown_preset`), and preset-specific required fields **before** touching the user's credit balance.
+3. **Parallel Profile & Subscription Lookup**: Fetches user profile and active subscription concurrently via `Promise.all`.
+4. **Bounded Sliding-Window Rate Limiter (`429 rate_limited`)**: Approximates a true 60-second sliding window per user with bounded memory (`MAX_TRACKED_KEYS = 10,000`) and returns `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`, and `Retry-After`.
+5. **Atomic Credit Reservation & Automatic Refund**:
+   - Reserves the preset's exact credit cost inside a Prisma ACID transaction (`prisma.$transaction`) **before** executing your tool.
+   - If your tool throws an exception (`500 internal_error`) or returns `{ success: false }` (`422 tool_failed`), the reserved credits are **automatically refunded** and the audit log records `0` credits charged.
+6. **Correlation & Telemetry Headers**: Every response includes `X-Request-Id`, `X-Credits-Used`, `X-Credits-Remaining`, and `X-Execution-Time-Ms`.
+
+### Uniform Error Envelope (v1.1)
+All `4xx` and `5xx` responses return a consistent JSON structure:
+```json
+{
+  "success": false,
+  "requestId": "req_7f83b20c19e4a12b9012",
+  "error": {
+    "code": "insufficient_credits",
+    "message": "This request costs 2 credit(s) but your balance is 1.",
+    "hint": "Buy a credit pack or upgrade your plan in the Billing tab.",
+    "docsUrl": "/docs#errors"
+  }
+}
+```
+
+| HTTP | `error.code` | Description | Credits Charged |
+| :--- | :--- | :--- | :--- |
+| `400` | `invalid_input` | Missing required field, malformed JSON, or invalid field type | `0` |
+| `400` | `unknown_preset` | Unrecognized `preset` key (returns `availablePresets[]`) | `0` |
+| `401` | `unauthorized` | Missing, inactive, or revoked API key | `0` |
+| `402` | `insufficient_credits` | Balance lower than required preset cost (includes `topUpUrl`) | `0` |
+| `403` | `plan_required` | Endpoint requires a higher subscription tier | `0` |
+| `413` | `payload_too_large` | Request body exceeds 1 MB | `0` |
+| `422` | `tool_failed` | Tool returned `success: false` (reserved credits refunded) | `0` |
+| `429` | `rate_limited` | Per-minute rate limit exceeded (includes `retryAfterSeconds`) | `0` |
+| `500` | `internal_error` | Unhandled exception (reserved credits refunded) | `0` |
+
+---
+
+## 🧩 5 Built-In Tool Archetype Presets (`src/tool-engine/presets/`)
+
+Query `GET /api/v1/tool/presets` or pass `{"preset": "<key>"}` in your `POST /api/v1/tool/execute` body:
+
+| Preset Key | Archetype | Cost | Required Input Field |
+| :--- | :--- | :--- | :--- |
+| `sql-optimizer` | **SQL Query Optimizer & Index Advisor** | 1 credit | `prompt` or `code` |
+| `ai-agent` | **AI Prompt & Structured Extractor** | 2 credits | `prompt` |
+| `web-scraper` | **Web Scraper & Metadata Extractor** | 1 credit | `url` or `prompt` (`http`/`https`) |
+| `code-security` | **Code Security & Secret Scanner** | 1 credit | `code` or `prompt` |
+| `media-generator` | **Dynamic SVG / OpenGraph Card Generator** | 1 credit | `title` or `prompt` |
+
+---
+
+## 🧪 Zero-Config Sandbox / Demo Mode
+
+You can run the entire platform locally **without** creating Clerk, Neon, Lemon Squeezy, or Stripe accounts first:
+- When `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` is omitted or left as `pk_test_sample_clerk_key`, authentication automatically resolves to the demo developer (`user_demo_123`).
+- Use `Authorization: Bearer sk_test_demo` (or `sk_live_demo88f29910a7b4c`) to test authenticated CLI / cURL requests immediately.
+- If `prisma/dev.db` is not yet initialized, [`src/lib/db/service.ts`](src/lib/db/service.ts) transparently falls back to an in-memory store.
+
+---
+
+## 💾 Database Commands (`package.json`)
+
+All commands work with either `bun run <script>` or `npm run <script>`:
+
+| Command | Description |
+| :--- | :--- |
+| `bun run dev` | Start Next.js 16 development server (Turbopack) on `http://localhost:3000` |
+| `bun run build` | Auto-sync Prisma schema (`sqlite` vs `postgresql`) and build for production |
+| `bun run check` | Run system health doctor (`scripts/doctor.mjs`) + `tsc --noEmit` |
+| `bun run doctor` | Inspect runtime, `.env.local`, SQLite/Postgres status, and API routes |
+| `bun run setup` | Create `.env.local` from `.env.example` (non-destructive) and print status |
+| `bun run db:push` | Sync Prisma schema to active database (`prisma/dev.db` or `DATABASE_URL`) |
+| `bun run db:seed` | Seed demo profile (`user_demo_123`), API key, and Pro subscription |
+| `bun run db:studio` | Launch Prisma Studio visual database browser |
+| `bun run db:switch sqlite` | Switch `prisma/schema.prisma` to local SQLite mode |
+| `bun run db:switch neon` | Switch `prisma/schema.prisma` to Neon Serverless PostgreSQL mode |
+| `bun run db:up` / `db:down` | Start / stop optional local Docker PostgreSQL container (`scripts/wsl-docker.mjs`) |
+
+---
+
+## ⚙️ Environment Variables Reference (`.env.example`)
+
+Copy `.env.example` to `.env.local` (or run `bun run setup`):
+
+| Variable | Required? | Purpose |
+| :--- | :--- | :--- |
+| `DATABASE_URL` | **Yes** (defaults to `file:./dev.db`) | SQLite path (`file:./dev.db`) locally or Neon/PostgreSQL connection string in production |
+| `DIRECT_URL` | Prod (Neon) | Direct non-pooled PostgreSQL URL for Prisma schema migrations |
+| `NEXT_PUBLIC_APP_URL` | Optional | Base URL for billing checkout/portal return links (`http://localhost:3000`) |
+| `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Optional in dev | Clerk publishable key (omit in dev to use `user_demo_123` sandbox mode) |
+| `CLERK_SECRET_KEY` | Optional in dev | Clerk backend secret key |
+| `CLERK_WEBHOOK_SECRET` | Optional | Svix webhook secret for `/api/webhooks/clerk` |
+| `LEMONSQUEEZY_API_KEY` | Optional in dev | Lemon Squeezy Merchant of Record API key |
+| `LEMONSQUEEZY_STORE_ID` | Optional in dev | Lemon Squeezy Store ID |
+| `LEMONSQUEEZY_WEBHOOK_SECRET` | Optional | HMAC signing secret for `/api/webhooks/lemonsqueezy` |
+| `STRIPE_SECRET_KEY` | Optional | Stripe secret key (when `providers.payments = "stripe"`) |
+| `STRIPE_WEBHOOK_SECRET` | Optional | Stripe signing secret for `/api/webhooks/stripe` |
+
+For deep architecture diagrams, webhook testing instructions, and database schema internals, see **[DOCUMENTATION.md](DOCUMENTATION.md)**.
