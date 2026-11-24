@@ -122,7 +122,7 @@ function LoginForm() {
           <div className="mb-6 rounded-2xl border border-blue-500/30 bg-blue-500/10 p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="h-9 w-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-md">
+                <div className="on-color h-9 w-9 rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-xs font-bold text-white shadow-md">
                   {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
                 </div>
                 <div>
@@ -137,7 +137,7 @@ function LoginForm() {
               </div>
               <Link
                 href={isAdmin ? "/admin" : "/dashboard"}
-                className="rounded-xl bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-500 transition"
+                className="on-color rounded-xl bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-blue-500 transition"
               >
                 Go to {isAdmin ? "Admin" : "Dashboard"}
               </Link>
@@ -334,7 +334,7 @@ function LoginForm() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-xs font-bold text-white shadow-lg hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 transition active:scale-95"
+            className="on-color w-full mt-2 flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-xs font-bold text-white shadow-lg hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 transition active:scale-95"
           >
             {loading ? (
               <>

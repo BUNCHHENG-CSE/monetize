@@ -405,7 +405,7 @@ export function InteractivePlayground() {
               <button
                 onClick={handleExecute}
                 disabled={isLoading || retryCountdown > 0}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
+                className="on-color flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.3)] hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
               >
                 {isLoading ? (
                   <>

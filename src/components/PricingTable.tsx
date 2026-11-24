@@ -299,13 +299,13 @@ export function PricingTable() {
                 )}
 
                 {!isCurrentPlan && isPopular && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(59,130,246,0.5)] border border-blue-400/40 whitespace-nowrap">
+                  <div className="on-color absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(59,130,246,0.5)] border border-blue-400/40 whitespace-nowrap">
                     Recommended for Builders
                   </div>
                 )}
 
                 {!isCurrentPlan && !isPopular && plan.badge && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(245,158,11,0.4)] border border-amber-300/40 whitespace-nowrap">
+                  <div className="on-color absolute -top-3.5 left-1/2 -translate-x-1/2 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 px-4 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow-[0_0_20px_rgba(245,158,11,0.4)] border border-amber-300/40 whitespace-nowrap">
                     {plan.badge}
                   </div>
                 )}
@@ -391,9 +391,9 @@ export function PricingTable() {
                       disabled={loadingPlan === plan.id}
                       className={`w-full flex items-center justify-center gap-2 rounded-xl py-3 px-4 text-xs sm:text-sm font-bold transition-all shadow-md active:scale-95 ${
                         isPopular
-                          ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 shadow-blue-500/25"
+                          ? "on-color bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 shadow-blue-500/25"
                           : isOneTime
-                          ? "bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white hover:from-amber-400 hover:to-orange-400 shadow-amber-500/25"
+                          ? "on-color bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white hover:from-amber-400 hover:to-orange-400 shadow-amber-500/25"
                           : "bg-fg/[0.06] text-fg hover:bg-fg/[0.12] border border-fg/[0.08]"
                       }`}
                     >
@@ -568,7 +568,7 @@ export function PricingTable() {
                 type="button"
                 onClick={confirmDowngrade}
                 disabled={downgrading}
-                className="flex-1 rounded-xl bg-amber-500 hover:bg-amber-400 text-black py-2.5 text-xs font-bold transition shadow-lg shadow-amber-500/20 disabled:opacity-50 flex items-center justify-center gap-2"
+                className="on-color flex-1 rounded-xl bg-amber-500 hover:bg-amber-400 text-black py-2.5 text-xs font-bold transition shadow-lg shadow-amber-500/20 disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 {downgrading ? (
                   <div className="h-4 w-4 animate-spin rounded-full border-2 border-black border-t-transparent" />

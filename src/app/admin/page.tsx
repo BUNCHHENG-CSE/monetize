@@ -519,7 +519,7 @@ export default function AdminPage() {
             </p>
             <Link
               href="/dashboard"
-              className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md hover:bg-blue-500 transition"
+              className="on-color inline-flex items-center justify-center rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-semibold text-white shadow-md hover:bg-blue-500 transition"
             >
               Return to Developer Dashboard
             </Link>
@@ -656,7 +656,7 @@ export default function AdminPage() {
               onClick={() => setActiveTab("accounts")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "accounts"
-                  ? "bg-blue-600 text-white shadow-md"
+                  ? "on-color bg-blue-600 text-white shadow-md"
                   : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
@@ -672,7 +672,7 @@ export default function AdminPage() {
               onClick={() => setActiveTab("simulator")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "simulator"
-                  ? "bg-blue-600 text-white shadow-md"
+                  ? "on-color bg-blue-600 text-white shadow-md"
                   : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
@@ -685,7 +685,7 @@ export default function AdminPage() {
               onClick={() => setActiveTab("logs")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "logs"
-                  ? "bg-blue-600 text-white shadow-md"
+                  ? "on-color bg-blue-600 text-white shadow-md"
                   : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
@@ -698,7 +698,7 @@ export default function AdminPage() {
               onClick={() => setActiveTab("checklist")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "checklist"
-                  ? "bg-blue-600 text-white shadow-md"
+                  ? "on-color bg-blue-600 text-white shadow-md"
                   : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
@@ -756,7 +756,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(true)}
-                  className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 shrink-0"
+                  className="on-color flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 shrink-0"
                 >
                   <UserPlus className="h-4 w-4" />
                   <span>Create Account</span>
@@ -969,7 +969,7 @@ export default function AdminPage() {
                   type="button"
                   onClick={() => simulateWebhook(selectedEvent)}
                   disabled={isSimulating}
-                  className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 transition active:scale-95"
+                  className="on-color flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 disabled:opacity-50 transition active:scale-95"
                 >
                   {isSimulating ? (
                     <>
@@ -1217,7 +1217,7 @@ export default function AdminPage() {
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className="rounded-xl bg-blue-600 px-5 py-2 font-bold text-white hover:bg-blue-500 disabled:opacity-50"
+                  className="on-color rounded-xl bg-blue-600 px-5 py-2 font-bold text-white hover:bg-blue-500 disabled:opacity-50"
                 >
                   {isCreating ? "Creating..." : "Create Account"}
                 </button>
@@ -1269,7 +1269,7 @@ export default function AdminPage() {
                     type="button"
                     onClick={() => handleAdjustCredits(creditModalAccount, adjustAmount)}
                     disabled={isAdjusting}
-                    className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 disabled:opacity-50"
+                    className="on-color rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 disabled:opacity-50"
                   >
                     Apply
                   </button>

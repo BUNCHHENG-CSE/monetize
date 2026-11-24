@@ -85,7 +85,7 @@ export function ApiKeysTab({
               setNewKeyName("");
               setIsModalOpen(true);
             }}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.25)] hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 shrink-0"
+            className="on-color flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.25)] hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 shrink-0"
           >
             <Plus className="h-4 w-4" />
             <span>Create New API Key</span>
@@ -237,7 +237,7 @@ export function ApiKeysTab({
                   <button
                     onClick={handleSubmitNewKey}
                     disabled={isCreatingKey || !newKeyName.trim()}
-                    className="rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
+                    className="on-color rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
                   >
                     {isCreatingKey ? "Generating..." : "Generate Key"}
                   </button>
@@ -283,7 +283,7 @@ export function ApiKeysTab({
                     setIsModalOpen(false);
                     setCreatedRawKey(null);
                   }}
-                  className="w-full rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white hover:bg-blue-500 transition"
+                  className="on-color w-full rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white hover:bg-blue-500 transition"
                 >
                   Done, I Have Saved My Key
                 </button>

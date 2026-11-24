@@ -13,7 +13,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/dashboard"
-        className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 transition shadow-lg"
+        className="on-color inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 transition shadow-lg"
       >
         <ArrowLeft className="h-3.5 w-3.5" />
         <span>Return to Dashboard</span>

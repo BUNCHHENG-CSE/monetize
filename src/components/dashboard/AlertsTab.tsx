@@ -191,7 +191,7 @@ export function AlertsTab({ alertSettings, onChange }: AlertsTabProps) {
               <button
                 onClick={handleSaveAlerts}
                 disabled={isSavingAlerts}
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
+                className="on-color flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5 py-2.5 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
               >
                 {isSavingAlerts ? "Saving..." : alertSaveSuccess ? "Saved!" : "Save Alert Settings"}
               </button>

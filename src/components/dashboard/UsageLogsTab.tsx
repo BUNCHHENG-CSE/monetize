@@ -92,11 +92,11 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
             </div>
             <div className="flex items-center gap-3 text-[11px] text-zinc-400">
               <span className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-sm bg-blue-500" />
+                <span className="on-color h-2.5 w-2.5 rounded-sm bg-blue-500" />
                 200 OK
               </span>
               <span className="flex items-center gap-1.5">
-                <span className="h-2.5 w-2.5 rounded-sm bg-rose-500" />
+                <span className="on-color h-2.5 w-2.5 rounded-sm bg-rose-500" />
                 Errors (0 cr)
               </span>
             </div>
@@ -113,12 +113,12 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
                   </div>
                   <div className="w-full max-w-[54px] h-24 flex items-end bg-fg/[0.02] rounded-t-lg overflow-hidden p-0.5">
                     <div
-                      className="w-full rounded-t-md bg-gradient-to-t from-blue-600 to-indigo-400 relative overflow-hidden transition-all"
+                      className="on-color w-full rounded-t-md bg-gradient-to-t from-blue-600 to-indigo-400 relative overflow-hidden transition-all"
                       style={{ height: `${day.requests > 0 ? heightPct : 4}%` }}
                     >
                       {errPct > 0 && (
                         <div
-                          className="w-full bg-rose-500 absolute top-0 left-0"
+                          className="on-color w-full bg-rose-500 absolute top-0 left-0"
                           style={{ height: `${errPct}%` }}
                         />
                       )}

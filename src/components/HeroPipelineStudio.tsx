@@ -251,7 +251,7 @@ export function HeroPipelineStudio() {
                 <button
                   onClick={triggerSimulation}
                   disabled={isSimulating}
-                  className="flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-[0_0_15px_rgba(59,130,246,0.5)] transition hover:bg-blue-500 active:scale-95 disabled:opacity-50 cursor-pointer"
+                  className="on-color flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-1.5 text-xs font-semibold text-white shadow-[0_0_15px_rgba(59,130,246,0.5)] transition hover:bg-blue-500 active:scale-95 disabled:opacity-50 cursor-pointer"
                 >
                   {isSimulating ? (
                     <>

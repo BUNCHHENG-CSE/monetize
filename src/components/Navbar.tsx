@@ -130,7 +130,7 @@ export function Navbar() {
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                   className="flex items-center gap-2 rounded-xl border border-fg/[0.08] bg-zinc-900/70 hover:bg-zinc-800 hover:border-fg/[0.15] pl-1.5 pr-2.5 py-1.5 transition text-left"
                 >
-                  <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm overflow-hidden shrink-0">
+                  <div className="on-color h-6 w-6 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm overflow-hidden shrink-0">
                     {user.avatarUrl ? (
                       <img src={user.avatarUrl} alt={user.name || "User"} className="h-full w-full object-cover" />
                     ) : (
@@ -235,7 +235,7 @@ export function Navbar() {
               {/* Compact Console Action */}
               <Link
                 href="/dashboard"
-                className="flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95"
+                className="on-color flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition active:scale-95"
               >
                 <span>Console</span>
                 <ChevronRight className="h-3.5 w-3.5 text-blue-200" />
@@ -251,7 +251,7 @@ export function Navbar() {
               </Link>
               <Link
                 href="/login?mode=signup"
-                className="flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:bg-blue-500 transition active:scale-95"
+                className="on-color flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-md hover:bg-blue-500 transition active:scale-95"
               >
                 <span>Get Started</span>
                 <ChevronRight className="h-3 w-3" />
@@ -266,14 +266,14 @@ export function Navbar() {
           {isAuthenticated ? (
             <Link
               href="/dashboard"
-              className="flex items-center gap-1 rounded-lg bg-blue-600 px-2.5 py-1.5 text-xs font-semibold text-white"
+              className="on-color flex items-center gap-1 rounded-lg bg-blue-600 px-2.5 py-1.5 text-xs font-semibold text-white"
             >
               <span>Console</span>
             </Link>
           ) : (
             <Link
               href="/login"
-              className="px-2.5 py-1.5 rounded-lg bg-blue-600 text-xs font-semibold text-white"
+              className="on-color px-2.5 py-1.5 rounded-lg bg-blue-600 text-xs font-semibold text-white"
             >
               Sign In
             </Link>
@@ -295,7 +295,7 @@ export function Navbar() {
           {isAuthenticated && user && (
             <div className="p-3 mb-2 rounded-2xl border border-fg/[0.08] bg-fg/[0.02]">
               <div className="flex items-center gap-3">
-                <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs">
+                <div className="on-color h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs">
                   {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 truncate">
@@ -381,7 +381,7 @@ export function Navbar() {
                 <Link
                   href="/login?mode=signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex-1 text-center py-2 rounded-xl bg-blue-600 text-xs font-semibold text-white"
+                  className="on-color flex-1 text-center py-2 rounded-xl bg-blue-600 text-xs font-semibold text-white"
                 >
                   Get Started
                 </Link>

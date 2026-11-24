@@ -120,7 +120,7 @@ export default function AccountPage() {
             </p>
             <Link
               href="/login?redirect=/account"
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-blue-500 transition"
+              className="on-color inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-blue-500 transition"
             >
               <span>Go to Sign In</span>
               <ArrowRight className="h-3.5 w-3.5" />
@@ -264,7 +264,7 @@ export default function AccountPage() {
                     <button
                       type="submit"
                       disabled={isSaving}
-                      className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-blue-500 disabled:opacity-50 transition"
+                      className="on-color rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-blue-500 disabled:opacity-50 transition"
                     >
                       {isSaving ? "Saving..." : "Save Changes"}
                     </button>
@@ -313,7 +313,7 @@ export default function AccountPage() {
                 <div className="mt-4 pt-4 border-t border-fg/[0.06]">
                   <Link
                     href="/dashboard?tab=billing"
-                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2 text-xs font-bold text-white hover:from-blue-500 hover:to-indigo-500 transition shadow-sm"
+                    className="on-color w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2 text-xs font-bold text-white hover:from-blue-500 hover:to-indigo-500 transition shadow-sm"
                   >
                     <Zap className="h-3.5 w-3.5 fill-current text-blue-200" />
                     <span>Top-Up Credits</span>

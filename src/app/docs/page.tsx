@@ -105,7 +105,7 @@ export default function DocsPage() {
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <Link
                 href="/dashboard"
-                className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition"
+                className="on-color flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-xs font-bold text-white shadow-md hover:from-blue-500 hover:to-indigo-500 transition"
               >
                 <Key className="h-3.5 w-3.5" />
                 <span>Get Your API Key</span>

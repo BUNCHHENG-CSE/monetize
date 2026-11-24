@@ -313,7 +313,7 @@ function DashboardContent() {
             </p>
             <Link
               href="/login?redirect=/dashboard"
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-blue-500 transition shadow-lg"
+              className="on-color inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-bold text-white hover:bg-blue-500 transition shadow-lg"
             >
               <span>Sign In to Continue</span>
               <ChevronRight className="h-3.5 w-3.5" />
@@ -344,7 +344,7 @@ function DashboardContent() {
             <div className="relative flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-6 border-b border-fg/[0.08]">
               {/* Profile details */}
               <div className="flex items-center gap-4 sm:gap-5">
-                <div className="relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-bold text-xl sm:text-2xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
+                <div className="on-color relative flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-bold text-xl sm:text-2xl shadow-[0_0_20px_rgba(59,130,246,0.3)]">
                   {initials}
                   <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-emerald-400 ring-4 ring-card" />
                 </div>
@@ -416,7 +416,7 @@ function DashboardContent() {
 
                 <Link
                   href="/#pricing"
-                  className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.25)] transition hover:from-blue-500 hover:to-indigo-500 active:scale-95"
+                  className="on-color flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2.5 text-xs font-bold text-white shadow-[0_0_20px_rgba(59,130,246,0.25)] transition hover:from-blue-500 hover:to-indigo-500 active:scale-95"
                 >
                   <Sparkles className="h-3.5 w-3.5 text-blue-200" />
                   <span>Upgrade Tier</span>
@@ -455,8 +455,8 @@ function DashboardContent() {
                     <div
                       className={`h-full rounded-full transition-all ${
                         isLowBalance
-                          ? "bg-gradient-to-r from-rose-500 to-amber-500"
-                          : "bg-gradient-to-r from-blue-500 via-indigo-400 to-emerald-400"
+                          ? "on-color bg-gradient-to-r from-rose-500 to-amber-500"
+                          : "on-color bg-gradient-to-r from-blue-500 via-indigo-400 to-emerald-400"
                       }`}
                       style={{ width: `${remainingCreditsPercent}%` }}
                     />

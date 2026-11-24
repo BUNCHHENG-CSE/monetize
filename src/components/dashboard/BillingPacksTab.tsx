@@ -176,7 +176,7 @@ export function BillingPacksTab({
                       setBuyingPackId(null);
                     }
                   }}
-                  className="mt-6 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-xs font-bold text-white shadow-sm hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
+                  className="on-color mt-6 w-full rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2.5 text-xs font-bold text-white shadow-sm hover:from-blue-500 hover:to-indigo-500 transition active:scale-95 disabled:opacity-50"
                 >
                   {buyingPackId === pack.id ? "Processing..." : "Buy Pack Now"}
                 </button>

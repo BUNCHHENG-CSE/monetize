@@ -79,7 +79,7 @@ export function HeroSection() {
             <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
               <Link
                 href="/dashboard"
-                className="flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 px-7 py-4 text-sm font-bold text-white shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] hover:scale-[1.02] active:scale-95 text-center cursor-pointer"
+                className="on-color flex items-center justify-center gap-2.5 rounded-2xl bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-500 px-7 py-4 text-sm font-bold text-white shadow-[0_0_30px_rgba(59,130,246,0.4)] transition-all hover:shadow-[0_0_40px_rgba(59,130,246,0.6)] hover:scale-[1.02] active:scale-95 text-center cursor-pointer"
               >
                 <Zap className="h-4 w-4 fill-current text-blue-200" />
                 <span>Open Developer Console</span>
