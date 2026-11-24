@@ -1,6 +1,7 @@
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { cookies } from "next/headers";
 import { getUserProfile, getOrCreateProfile } from "@/lib/db/service";
+import { SESSION_COOKIE, verifySessionToken } from "./session";
 
 export const isClerkConfigured = Boolean(
   process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY &&
@@ -26,31 +27,22 @@ export async function getAuthSession(): Promise<AuthSessionUser | null> {
   // 1. Check local session cookie first
   try {
     const cookieStore = await cookies();
-    const sessionCookie = cookieStore.get("devtool_session")?.value;
+    const userId = verifySessionToken(cookieStore.get(SESSION_COOKIE)?.value);
 
-    if (!sessionCookie || sessionCookie === "logged_out" || sessionCookie === "none") {
-      // Not logged in with local session
+    if (!userId) {
+      // No valid (signed, unexpired) local session
       if (!isClerkConfigured) {
         return null;
       }
     } else {
-      // Decode user ID if stored as JSON or raw ID
-      let userId = sessionCookie;
-      try {
-        if (sessionCookie.startsWith("{")) {
-          const parsed = JSON.parse(sessionCookie);
-          userId = parsed.userId || parsed.id || sessionCookie;
-        }
-      } catch {}
-
       const profile = await getUserProfile(userId);
-      if (profile) {
+      if (profile && profile.status !== "suspended") {
         return {
           userId: profile.id,
           email: profile.email,
           name: profile.name,
           imageUrl: profile.avatar_url || profile.avatarUrl || null,
-          role: profile.role || (profile.email.includes("admin") ? "admin" : "user"),
+          role: profile.role || "user",
           status: profile.status || "active",
         };
       }
@@ -79,7 +71,7 @@ export async function getAuthSession(): Promise<AuthSessionUser | null> {
         email: primaryEmail,
         name: name || profile.name,
         imageUrl: user?.imageUrl || profile.avatar_url || null,
-        role: profile.role || (primaryEmail.includes("admin") ? "admin" : "user"),
+        role: profile.role || "user",
         status: profile.status || "active",
       };
     } catch (error) {

@@ -79,7 +79,7 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
     <div className="space-y-6">
       {/* Lightweight Daily Usage Chart & Summary Cards */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <div className="lg:col-span-8 rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 p-6 backdrop-blur-xl">
+        <div className="lg:col-span-8 rounded-2xl border border-fg/[0.08] bg-card/90 p-6 backdrop-blur-xl">
           <div className="flex items-center justify-between mb-4">
             <div>
               <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-400">
@@ -102,16 +102,16 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
             </div>
           </div>
 
-          <div className="h-40 flex items-end justify-between gap-3 pt-6 px-2 border-b border-white/[0.06]">
+          <div className="h-40 flex items-end justify-between gap-3 pt-6 px-2 border-b border-fg/[0.06]">
             {stats.days.map((day) => {
               const heightPct = Math.max(8, Math.round((day.requests / stats.maxRequests) * 100));
               const errPct = day.requests > 0 ? Math.round((day.errors / day.requests) * 100) : 0;
               return (
                 <div key={day.key} className="flex-1 flex flex-col items-center gap-2 group">
-                  <div className="text-[10px] font-mono text-zinc-400 opacity-80 group-hover:text-white">
+                  <div className="text-[10px] font-mono text-zinc-400 opacity-80 group-hover:text-fg">
                     {day.requests > 0 ? `${day.requests} (${day.credits}cr)` : "0"}
                   </div>
-                  <div className="w-full max-w-[54px] h-24 flex items-end bg-white/[0.02] rounded-t-lg overflow-hidden p-0.5">
+                  <div className="w-full max-w-[54px] h-24 flex items-end bg-fg/[0.02] rounded-t-lg overflow-hidden p-0.5">
                     <div
                       className="w-full rounded-t-md bg-gradient-to-t from-blue-600 to-indigo-400 relative overflow-hidden transition-all"
                       style={{ height: `${day.requests > 0 ? heightPct : 4}%` }}
@@ -132,10 +132,10 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
         </div>
 
         <div className="lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 gap-4">
-          <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 p-5 flex items-center justify-between">
+          <div className="rounded-2xl border border-fg/[0.08] bg-card/90 p-5 flex items-center justify-between">
             <div>
               <div className="text-xs text-zinc-400">Success vs Error Calls</div>
-              <div className="text-xl font-extrabold text-white font-mono mt-1">
+              <div className="text-xl font-extrabold text-fg font-mono mt-1">
                 {stats.okCount} OK{" "}
                 <span className="text-xs font-normal text-rose-400">/ {stats.errCount} Err</span>
               </div>
@@ -146,10 +146,10 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
             <CheckCircle2 className="h-8 w-8 text-emerald-400/80" />
           </div>
 
-          <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 p-5 flex items-center justify-between">
+          <div className="rounded-2xl border border-fg/[0.08] bg-card/90 p-5 flex items-center justify-between">
             <div>
               <div className="text-xs text-zinc-400">Avg Execution Latency & Spend</div>
-              <div className="text-xl font-extrabold text-white font-mono mt-1">
+              <div className="text-xl font-extrabold text-fg font-mono mt-1">
                 {stats.avgLatency}ms{" "}
                 <span className="text-xs font-normal text-amber-400">• {stats.totalCredits} cr</span>
               </div>
@@ -163,10 +163,10 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
       </div>
 
       {/* Audit Logs Table */}
-      <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 p-6 backdrop-blur-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
+      <div className="rounded-2xl border border-fg/[0.08] bg-card/90 p-6 backdrop-blur-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-fg/[0.08]">
           <div>
-            <h3 className="text-lg font-bold text-white tracking-tight">
+            <h3 className="text-lg font-bold text-fg tracking-tight">
               Execution Telemetry & Audit Logs
             </h3>
             <p className="text-xs sm:text-sm text-zinc-400 mt-1">
@@ -178,7 +178,7 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
             <a
               href="/api/logs?format=csv"
               download
-              className="flex items-center gap-1.5 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 py-2 text-xs font-semibold text-zinc-200 hover:bg-white/[0.08] hover:text-white transition shadow-sm"
+              className="flex items-center gap-1.5 rounded-xl border border-fg/[0.1] bg-fg/[0.04] px-3.5 py-2 text-xs font-semibold text-zinc-200 hover:bg-fg/[0.08] hover:text-fg transition shadow-sm"
             >
               <Download className="h-3.5 w-3.5 text-blue-400" />
               <span>Export CSV</span>
@@ -186,7 +186,7 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
             <a
               href="/api/logs?format=json"
               download
-              className="flex items-center gap-1.5 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3.5 py-2 text-xs font-semibold text-zinc-200 hover:bg-white/[0.08] hover:text-white transition shadow-sm"
+              className="flex items-center gap-1.5 rounded-xl border border-fg/[0.1] bg-fg/[0.04] px-3.5 py-2 text-xs font-semibold text-zinc-200 hover:bg-fg/[0.08] hover:text-fg transition shadow-sm"
             >
               <FileCode className="h-3.5 w-3.5 text-emerald-400" />
               <span>Export JSON</span>
@@ -204,7 +204,7 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
                 className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition ${
                   logFilter === filter
                     ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                    : "bg-white/[0.02] text-zinc-400 hover:text-white"
+                    : "bg-fg/[0.02] text-zinc-400 hover:text-fg"
                 }`}
               >
                 {filter === "all"
@@ -218,7 +218,7 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
 
           <button
             onClick={onRefresh}
-            className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition"
+            className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-fg transition"
           >
             <RefreshCw className={`h-3 w-3 ${isLoading ? "animate-spin" : ""}`} />
             <span>Refresh Logs</span>
@@ -226,9 +226,9 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
         </div>
 
         {/* Logs Table */}
-        <div className="mt-5 overflow-x-auto rounded-xl border border-white/[0.06]">
+        <div className="mt-5 overflow-x-auto rounded-xl border border-fg/[0.06]">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-white/[0.08] bg-white/[0.02] text-zinc-400 font-semibold">
+            <thead className="border-b border-fg/[0.08] bg-fg/[0.02] text-zinc-400 font-semibold">
               <tr>
                 <th className="px-4 py-3">Time</th>
                 <th className="px-4 py-3">Endpoint & Preset</th>
@@ -238,7 +238,7 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
                 <th className="px-4 py-3 text-right">Request / Log ID</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.04]">
+            <tbody className="divide-y divide-fg/[0.04]">
               {filteredLogs.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="px-4 py-8 text-center text-zinc-500">
@@ -250,7 +250,7 @@ export function UsageLogsTab({ logs, isLoading, onRefresh }: UsageLogsTabProps) 
                   const reqId = log.metadata?.requestId || log.id;
                   const preset = log.metadata?.preset;
                   return (
-                    <tr key={log.id} className="hover:bg-white/[0.01] transition">
+                    <tr key={log.id} className="hover:bg-fg/[0.01] transition">
                       <td className="px-4 py-3 text-zinc-400 whitespace-nowrap" title={new Date(log.created_at).toLocaleString()}>
                         {formatRelativeTime(log.created_at)}
                       </td>

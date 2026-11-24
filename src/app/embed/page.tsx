@@ -15,17 +15,17 @@ function EmbedContent() {
   return (
     <div
       className={`min-h-screen p-4 sm:p-6 ${
-        theme === "transparent" ? "bg-transparent" : "bg-[#08090c]"
+        theme === "transparent" ? "bg-transparent" : "bg-background"
       } text-zinc-100 font-sans`}
     >
       <div className="mx-auto max-w-5xl">
-        <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/[0.08]">
+        <div className="flex items-center justify-between pb-4 mb-6 border-b border-fg/[0.08]">
           <div className="flex items-center gap-2">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600/20 text-blue-400 border border-blue-500/30">
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <div className="text-sm font-bold text-white tracking-tight">
+              <div className="text-sm font-bold text-fg tracking-tight">
                 {monetizeConfig.tool.name}
               </div>
               <div className="text-[11px] text-zinc-400">

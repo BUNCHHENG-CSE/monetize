@@ -96,14 +96,14 @@ export function OnboardingChecklist({
   const curlCmd = `curl -X POST "${origin}/api/v1/tool/execute" -H "Authorization: Bearer ${sampleKey}" -H "Content-Type: application/json" -d '{"prompt":"SELECT * FROM users;","preset":"sql-optimizer"}'`;
 
   return (
-    <div className="rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-950/20 via-[#0c0e14]/90 to-[#0c0e14]/90 p-5 sm:p-6 mb-8 backdrop-blur-xl">
-      <div className="flex items-start justify-between gap-4 pb-4 border-b border-white/[0.08]">
+    <div className="rounded-2xl border border-blue-500/20 bg-gradient-to-br from-blue-950/20 via-card/90 to-card/90 p-5 sm:p-6 mb-8 backdrop-blur-xl">
+      <div className="flex items-start justify-between gap-4 pb-4 border-b border-fg/[0.08]">
         <div>
           <div className="flex items-center gap-2.5">
             <span className="rounded-full bg-blue-500/20 border border-blue-500/30 px-2.5 py-0.5 text-[11px] font-mono font-bold text-blue-300">
               {completedCount}/{steps.length} Completed
             </span>
-            <h2 className="text-sm sm:text-base font-bold text-white">
+            <h2 className="text-sm sm:text-base font-bold text-fg">
               Quickstart Onboarding Checklist
             </h2>
           </div>
@@ -117,7 +117,7 @@ export function OnboardingChecklist({
             setDismissed(true);
             if (typeof window !== "undefined") localStorage.setItem(STORAGE_KEY, "1");
           }}
-          className="rounded-lg p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-white/[0.04] transition"
+          className="rounded-lg p-1.5 text-zinc-500 hover:text-zinc-200 hover:bg-fg/[0.04] transition"
           title="Dismiss onboarding checklist"
         >
           <X className="h-4 w-4" />
@@ -133,7 +133,7 @@ export function OnboardingChecklist({
               className={`rounded-2xl border p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 ${
                 step.done
                   ? "border-emerald-500/25 bg-emerald-500/[0.04]"
-                  : "border-white/[0.08] bg-white/[0.02] hover:border-white/[0.14] hover:bg-white/[0.04]"
+                  : "border-fg/[0.08] bg-fg/[0.02] hover:border-fg/[0.14] hover:bg-fg/[0.04]"
               }`}
             >
               <div>
@@ -147,7 +147,7 @@ export function OnboardingChecklist({
                     <Circle className="h-4 w-4 text-zinc-600" />
                   )}
                 </div>
-                <div className="text-xs sm:text-sm font-bold text-white">{step.title}</div>
+                <div className="text-xs sm:text-sm font-bold text-fg">{step.title}</div>
                 <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed">
                   {step.description}
                 </p>
@@ -166,7 +166,7 @@ export function OnboardingChecklist({
       </div>
 
       {/* Quick copyable first request bar */}
-      <div className="mt-5 rounded-2xl border border-white/[0.08] bg-[#07090e] px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-inner">
+      <div className="mt-5 rounded-2xl border border-fg/[0.08] bg-background px-4 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-inner">
         <div className="font-mono text-xs text-zinc-300 truncate flex items-center gap-2">
           <span className="text-emerald-400 select-none font-bold">$</span>
           <span className="truncate">{curlCmd}</span>

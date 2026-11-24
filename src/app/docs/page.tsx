@@ -83,18 +83,18 @@ export default function DocsPage() {
   const schema = monetizeConfig.toolEngine.inputSchema;
 
   return (
-    <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-background text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
       <Navbar />
 
       <main className="flex-1 py-12">
         <div className="mx-auto w-full max-w-[1760px] 2xl:max-w-[1920px] px-4 sm:px-6 lg:px-8 xl:px-12">
           {/* Docs Header */}
-          <div className="border-b border-white/[0.08] pb-8 mb-10">
+          <div className="border-b border-fg/[0.08] pb-8 mb-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-400 mb-4">
               <BookOpen className="h-3.5 w-3.5" />
               <span>Developer API Reference v{monetizeConfig.tool.version} (Contract v1.1)</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <h1 className="text-3xl sm:text-5xl font-extrabold text-fg tracking-tight">
               {monetizeConfig.tool.name} Developer API
             </h1>
             <p className="mt-3 text-base sm:text-lg text-zinc-400 max-w-3xl leading-relaxed">
@@ -112,7 +112,7 @@ export default function DocsPage() {
               </Link>
               <Link
                 href="/#playground"
-                className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-xs font-semibold text-zinc-200 hover:bg-white/[0.08] transition"
+                className="flex items-center gap-2 rounded-xl border border-fg/[0.08] bg-fg/[0.04] px-4 py-2 text-xs font-semibold text-zinc-200 hover:bg-fg/[0.08] transition"
               >
                 <Terminal className="h-3.5 w-3.5 text-emerald-400" />
                 <span>Open in Playground</span>
@@ -126,7 +126,7 @@ export default function DocsPage() {
               </a>
               <a
                 href="/api/openapi?format=postman&download=true"
-                className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-white/[0.04] px-4 py-2 text-xs font-semibold text-zinc-300 hover:bg-white/[0.08] transition"
+                className="flex items-center gap-2 rounded-xl border border-fg/[0.08] bg-fg/[0.04] px-4 py-2 text-xs font-semibold text-zinc-300 hover:bg-fg/[0.08] transition"
               >
                 <Layers className="h-3.5 w-3.5 text-purple-400" />
                 <span>Postman Collection</span>
@@ -137,29 +137,29 @@ export default function DocsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
             {/* Table of contents sidebar */}
             <aside className="hidden lg:block lg:col-span-1">
-              <div className="sticky top-24 space-y-1 rounded-2xl border border-white/[0.08] bg-[#0c0e14]/70 p-4 text-xs font-medium backdrop-blur-xl">
+              <div className="sticky top-24 space-y-1 rounded-2xl border border-fg/[0.08] bg-card/70 p-4 text-xs font-medium backdrop-blur-xl">
                 <div className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider px-3 mb-2">
                   Navigation
                 </div>
-                <a href="#auth" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.04] transition">
+                <a href="#auth" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-fg hover:bg-fg/[0.04] transition">
                   1. Authentication
                 </a>
-                <a href="#endpoint" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.04] transition">
+                <a href="#endpoint" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-fg hover:bg-fg/[0.04] transition">
                   2. Execute Endpoint & Schema
                 </a>
-                <a href="#billing-semantics" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.04] transition">
+                <a href="#billing-semantics" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-fg hover:bg-fg/[0.04] transition">
                   3. Billing Semantics & Refunds
                 </a>
-                <a href="#headers" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.04] transition">
+                <a href="#headers" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-fg hover:bg-fg/[0.04] transition">
                   4. Rate Limits & Headers
                 </a>
-                <a href="#errors" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.04] transition">
+                <a href="#errors" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-fg hover:bg-fg/[0.04] transition">
                   5. Uniform Error Codes
                 </a>
-                <a href="#presets" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.04] transition">
+                <a href="#presets" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-fg hover:bg-fg/[0.04] transition">
                   6. Tool Archetype Presets
                 </a>
-                <a href="#sdks" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-white hover:bg-white/[0.04] transition">
+                <a href="#sdks" className="block px-3 py-2 rounded-xl text-zinc-300 hover:text-fg hover:bg-fg/[0.04] transition">
                   7. SDK & Code Examples
                 </a>
               </div>
@@ -169,23 +169,23 @@ export default function DocsPage() {
             <div className="lg:col-span-3 space-y-12">
               {/* 1. Authentication */}
               <section id="auth" className="space-y-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-fg flex items-center gap-2.5">
                   <Key className="h-5 w-5 text-blue-400" />
                   <span>1. Authentication</span>
                 </h2>
                 <p className="text-sm text-zinc-400 leading-relaxed">
                   All programmatic requests to the API must include your secret API key in the standard{" "}
-                  <code className="text-blue-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-white/[0.06]">
+                  <code className="text-blue-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-fg/[0.06]">
                     Authorization
                   </code>{" "}
                   HTTP header using the Bearer token scheme:
                 </p>
 
-                <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14] p-4 font-mono text-xs text-zinc-200">
+                <div className="rounded-2xl border border-fg/[0.08] bg-card p-4 font-mono text-xs text-zinc-200">
                   <code>Authorization: Bearer sk_live_your_secret_key_here</code>
                 </div>
 
-                <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 text-xs text-zinc-400">
+                <div className="rounded-2xl border border-fg/[0.06] bg-fg/[0.02] p-4 text-xs text-zinc-400">
                   Keys can be generated instantly inside the{" "}
                   <Link href="/dashboard" className="text-blue-400 font-semibold underline hover:text-blue-300">
                     Developer Dashboard
@@ -196,7 +196,7 @@ export default function DocsPage() {
 
               {/* 2. Endpoint Specification */}
               <section id="endpoint" className="space-y-5">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-fg flex items-center gap-2.5">
                   <Terminal className="h-5 w-5 text-emerald-400" />
                   <span>2. Execute Tool Endpoint</span>
                 </h2>
@@ -205,13 +205,13 @@ export default function DocsPage() {
                   <span className="rounded-lg bg-emerald-500/10 px-3 py-1 text-xs font-mono font-bold text-emerald-400 border border-emerald-500/20">
                     POST
                   </span>
-                  <code className="text-sm font-mono text-white bg-zinc-900 px-3 py-1 rounded-lg border border-white/[0.06]">
+                  <code className="text-sm font-mono text-fg bg-zinc-900 px-3 py-1 rounded-lg border border-fg/[0.06]">
                     /api/v1/tool/execute
                   </code>
                   <span className="rounded-lg bg-blue-500/10 px-3 py-1 text-xs font-mono font-bold text-blue-400 border border-blue-500/20">
                     GET
                   </span>
-                  <code className="text-sm font-mono text-white bg-zinc-900 px-3 py-1 rounded-lg border border-white/[0.06]">
+                  <code className="text-sm font-mono text-fg bg-zinc-900 px-3 py-1 rounded-lg border border-fg/[0.06]">
                     /api/v1/tool/presets
                   </code>
                 </div>
@@ -221,22 +221,22 @@ export default function DocsPage() {
                 </p>
 
                 {/* Input Schema Table */}
-                <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 overflow-hidden shadow-xl backdrop-blur-xl mt-4">
-                  <div className="p-4 border-b border-white/[0.08] bg-white/[0.02] font-bold text-xs uppercase tracking-wider text-zinc-400">
+                <div className="rounded-2xl border border-fg/[0.08] bg-card/90 overflow-hidden shadow-xl backdrop-blur-xl mt-4">
+                  <div className="p-4 border-b border-fg/[0.08] bg-fg/[0.02] font-bold text-xs uppercase tracking-wider text-zinc-400">
                     Request Payload Parameters (JSON)
                   </div>
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-white/[0.06] bg-white/[0.01] text-zinc-400 font-semibold">
+                      <tr className="border-b border-fg/[0.06] bg-fg/[0.01] text-zinc-400 font-semibold">
                         <th className="py-3 px-5">Parameter</th>
                         <th className="py-3 px-5">Type</th>
                         <th className="py-3 px-5">Required</th>
                         <th className="py-3 px-5">Description</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.04] text-zinc-300">
+                    <tbody className="divide-y divide-fg/[0.04] text-zinc-300">
                       {schema.map((field) => (
-                        <tr key={field.name} className="hover:bg-white/[0.02]">
+                        <tr key={field.name} className="hover:bg-fg/[0.02]">
                           <td className="py-3.5 px-5 font-mono font-bold text-blue-400">{field.name}</td>
                           <td className="py-3.5 px-5 font-mono text-zinc-400">{field.type}</td>
                           <td className="py-3.5 px-5">
@@ -253,7 +253,7 @@ export default function DocsPage() {
                           <td className="py-3.5 px-5 text-zinc-400">{field.description}</td>
                         </tr>
                       ))}
-                      <tr className="hover:bg-white/[0.02]">
+                      <tr className="hover:bg-fg/[0.02]">
                         <td className="py-3.5 px-5 font-mono font-bold text-blue-400">preset</td>
                         <td className="py-3.5 px-5 font-mono text-zinc-400">string</td>
                         <td className="py-3.5 px-5">
@@ -272,13 +272,13 @@ export default function DocsPage() {
 
               {/* 3. Billing Semantics */}
               <section id="billing-semantics" className="space-y-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-fg flex items-center gap-2.5">
                   <RotateCcw className="h-5 w-5 text-emerald-400" />
                   <span>3. Billing Semantics & Automatic Refunds</span>
                 </h2>
                 <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-5 space-y-2 text-xs sm:text-sm text-zinc-300 leading-relaxed">
                   <p>
-                    <strong className="text-white">Failed runs never cost credits.</strong> Every request follows a 3-phase atomic reservation flow:
+                    <strong className="text-fg">Failed runs never cost credits.</strong> Every request follows a 3-phase atomic reservation flow:
                   </p>
                   <ol className="list-decimal list-inside space-y-1.5 text-zinc-400 pt-1">
                     <li>
@@ -296,7 +296,7 @@ export default function DocsPage() {
 
               {/* 4. Response Headers */}
               <section id="headers" className="space-y-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-fg flex items-center gap-2.5">
                   <Zap className="h-5 w-5 text-amber-400" />
                   <span>4. Rate Limits & Response Headers</span>
                 </h2>
@@ -304,15 +304,15 @@ export default function DocsPage() {
                   Every API response includes diagnostic headers for correlation, credit accounting, and sliding-window rate limits:
                 </p>
 
-                <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 overflow-hidden shadow-xl backdrop-blur-xl">
+                <div className="rounded-2xl border border-fg/[0.08] bg-card/90 overflow-hidden shadow-xl backdrop-blur-xl">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-white/[0.06] bg-white/[0.02] text-zinc-400 font-semibold">
+                      <tr className="border-b border-fg/[0.06] bg-fg/[0.02] text-zinc-400 font-semibold">
                         <th className="py-3 px-5">Response Header</th>
                         <th className="py-3 px-5">Description</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.04] text-zinc-300">
+                    <tbody className="divide-y divide-fg/[0.04] text-zinc-300">
                       <tr>
                         <td className="py-3.5 px-5 font-mono text-emerald-400">X-Request-Id</td>
                         <td className="py-3.5 px-5 text-zinc-400">Unique request correlation ID (<code className="text-zinc-300">req_...</code>) recorded in audit logs</td>
@@ -352,7 +352,7 @@ export default function DocsPage() {
 
               {/* 5. Uniform Error Codes */}
               <section id="errors" className="space-y-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-fg flex items-center gap-2.5">
                   <ShieldAlert className="h-5 w-5 text-rose-400" />
                   <span>5. Uniform Error Codes</span>
                 </h2>
@@ -360,7 +360,7 @@ export default function DocsPage() {
                   All 4xx and 5xx responses return a predictable JSON envelope with a machine-readable <code className="text-rose-300 font-mono">error.code</code> and actionable <code className="text-zinc-200 font-mono">error.hint</code>:
                 </p>
 
-                <pre className="rounded-2xl border border-white/[0.08] bg-[#0c0e14] p-4 font-mono text-xs text-zinc-300 overflow-x-auto">
+                <pre className="rounded-2xl border border-fg/[0.08] bg-card p-4 font-mono text-xs text-zinc-300 overflow-x-auto">
                   <code>{`{
   "success": false,
   "requestId": "req_7f83b20c19e4a12b9012",
@@ -376,19 +376,19 @@ export default function DocsPage() {
 }`}</code>
                 </pre>
 
-                <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 overflow-x-auto shadow-xl backdrop-blur-xl">
+                <div className="rounded-2xl border border-fg/[0.08] bg-card/90 overflow-x-auto shadow-xl backdrop-blur-xl">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-white/[0.06] bg-white/[0.02] text-zinc-400 font-semibold">
+                      <tr className="border-b border-fg/[0.06] bg-fg/[0.02] text-zinc-400 font-semibold">
                         <th className="py-3 px-4">HTTP</th>
                         <th className="py-3 px-4">Error Code</th>
                         <th className="py-3 px-4">When It Happens</th>
                         <th className="py-3 px-4">How to Resolve</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.04] text-zinc-300">
+                    <tbody className="divide-y divide-fg/[0.04] text-zinc-300">
                       {ERROR_CATALOG.map((item) => (
-                        <tr key={item.code} className="hover:bg-white/[0.02]">
+                        <tr key={item.code} className="hover:bg-fg/[0.02]">
                           <td className="py-3.5 px-4 font-mono font-bold text-amber-400">{item.http}</td>
                           <td className="py-3.5 px-4 font-mono font-bold text-rose-400">{item.code}</td>
                           <td className="py-3.5 px-4 text-zinc-300">{item.meaning}</td>
@@ -402,7 +402,7 @@ export default function DocsPage() {
 
               {/* 6. Tool Archetype Presets */}
               <section id="presets" className="space-y-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-fg flex items-center gap-2.5">
                   <Sparkles className="h-5 w-5 text-emerald-400" />
                   <span>6. Drop-In Tool Archetype Presets</span>
                 </h2>
@@ -410,17 +410,17 @@ export default function DocsPage() {
                   Pass an optional <code className="text-blue-300 font-mono">&quot;preset&quot;</code> parameter in your request body, or query <code className="text-zinc-200 font-mono">GET /api/v1/tool/presets</code> to discover available presets programmatically:
                 </p>
 
-                <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 overflow-hidden shadow-xl backdrop-blur-xl">
+                <div className="rounded-2xl border border-fg/[0.08] bg-card/90 overflow-hidden shadow-xl backdrop-blur-xl">
                   <table className="w-full text-left text-xs border-collapse">
                     <thead>
-                      <tr className="border-b border-white/[0.06] bg-white/[0.02] text-zinc-400 font-semibold">
+                      <tr className="border-b border-fg/[0.06] bg-fg/[0.02] text-zinc-400 font-semibold">
                         <th className="py-3 px-5">Preset Key</th>
                         <th className="py-3 px-5">Archetype Name</th>
                         <th className="py-3 px-5">Credit Cost</th>
                         <th className="py-3 px-5">Required Field</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.04] text-zinc-300">
+                    <tbody className="divide-y divide-fg/[0.04] text-zinc-300">
                       <tr>
                         <td className="py-3.5 px-5 font-mono text-blue-400 font-bold">sql-optimizer</td>
                         <td className="py-3.5 px-5">SQL Optimizer & Index Advisor</td>
@@ -458,7 +458,7 @@ export default function DocsPage() {
 
               {/* 7. SDK Code Example */}
               <section id="sdks" className="space-y-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2.5">
+                <h2 className="text-xl sm:text-2xl font-bold text-fg flex items-center gap-2.5">
                   <Terminal className="h-5 w-5 text-blue-400" />
                   <span>7. SDK & Code Examples</span>
                 </h2>

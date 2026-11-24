@@ -3,11 +3,11 @@ import { Terminal, ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col items-center justify-center p-6 bg-grid-pattern">
+    <div className="min-h-screen bg-background text-zinc-100 flex flex-col items-center justify-center p-6 bg-grid-pattern">
       <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 border border-blue-500/20 text-blue-400 mb-4">
         <Terminal className="h-6 w-6" />
       </div>
-      <h2 className="text-3xl font-extrabold text-white mb-2">404 - Not Found</h2>
+      <h2 className="text-3xl font-extrabold text-fg mb-2">404 - Not Found</h2>
       <p className="text-sm text-zinc-400 max-w-sm text-center mb-6">
         The requested developer resource or workspace could not be found.
       </p>

@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import { usePathname } from "next/navigation";
 import {
   Terminal,
@@ -55,17 +56,17 @@ export function Navbar() {
     : baseNavItems;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#08090c]/90 backdrop-blur-xl transition-all">
+    <header className="sticky top-0 z-50 w-full border-b border-fg/[0.08] bg-background/90 backdrop-blur-xl transition-all">
       <div className="mx-auto flex h-16 w-full max-w-[1760px] 2xl:max-w-[1920px] items-center justify-between px-4 sm:px-6 lg:px-10 xl:px-14">
         
         {/* Brand (Clean, compact, no overcrowding) */}
         <Link href="/" className="group flex items-center gap-2.5 transition shrink-0">
           <div className="relative flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600/30 to-indigo-600/20 border border-blue-500/30 text-blue-400 shadow-[0_0_15px_rgba(59,130,246,0.25)] group-hover:border-blue-400 group-hover:scale-105 transition-all">
             <Terminal className="h-4.5 w-4.5 transition-transform group-hover:rotate-6" />
-            <div className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-[#08090c]" />
+            <div className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-emerald-400 ring-2 ring-background" />
           </div>
           <div className="flex items-center gap-2">
-            <span className="font-bold tracking-tight text-white text-sm sm:text-base">
+            <span className="font-bold tracking-tight text-fg text-sm sm:text-base">
               {monetizeConfig.tool.name}
             </span>
             <span className="hidden sm:inline-flex items-center rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-medium text-blue-400 border border-blue-500/20">
@@ -75,7 +76,7 @@ export function Navbar() {
         </Link>
 
         {/* Center Desktop Navigation Pill */}
-        <nav className="hidden md:flex items-center gap-1 rounded-full border border-white/[0.06] bg-white/[0.02] p-1 backdrop-blur-md">
+        <nav className="hidden md:flex items-center gap-1 rounded-full border border-fg/[0.06] bg-fg/[0.02] p-1 backdrop-blur-md">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -84,8 +85,8 @@ export function Navbar() {
                 href={item.href}
                 className={`relative px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
                   isActive
-                    ? "text-white bg-white/[0.08] shadow-sm font-semibold"
-                    : "text-zinc-400 hover:text-white hover:bg-white/[0.04]"
+                    ? "text-fg bg-fg/[0.08] shadow-sm font-semibold"
+                    : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
                 }`}
               >
                 {item.label}
@@ -108,16 +109,17 @@ export function Navbar() {
 
         {/* Right Section: Auth State & Actions */}
         <div className="hidden sm:flex items-center gap-2.5">
+          <ThemeToggle />
           {isAuthenticated && user ? (
             <div className="flex items-center gap-2">
               {/* Credits Pill (Clickable shortcut to top-up) */}
               <Link
                 href="/dashboard?tab=billing"
-                className="flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-zinc-900/50 hover:bg-zinc-800/80 px-2.5 py-1.5 text-xs font-mono text-zinc-300 hover:text-white transition"
+                className="flex items-center gap-1.5 rounded-xl border border-fg/[0.08] bg-zinc-900/50 hover:bg-zinc-800/80 px-2.5 py-1.5 text-xs font-mono text-zinc-300 hover:text-fg transition"
                 title="Available credits balance - Click to top up"
               >
                 <Coins className="h-3.5 w-3.5 text-amber-400" />
-                <span className="font-semibold text-white">{user.creditsBalance}</span>
+                <span className="font-semibold text-fg">{user.creditsBalance}</span>
                 <span className="text-[10px] text-zinc-500 hidden xl:inline">credits</span>
               </Link>
 
@@ -126,7 +128,7 @@ export function Navbar() {
                 <button
                   type="button"
                   onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                  className="flex items-center gap-2 rounded-xl border border-white/[0.08] bg-zinc-900/70 hover:bg-zinc-800 hover:border-white/[0.15] pl-1.5 pr-2.5 py-1.5 transition text-left"
+                  className="flex items-center gap-2 rounded-xl border border-fg/[0.08] bg-zinc-900/70 hover:bg-zinc-800 hover:border-fg/[0.15] pl-1.5 pr-2.5 py-1.5 transition text-left"
                 >
                   <div className="h-6 w-6 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-[11px] font-bold text-white shadow-sm overflow-hidden shrink-0">
                     {user.avatarUrl ? (
@@ -136,7 +138,7 @@ export function Navbar() {
                     )}
                   </div>
 
-                  <span className="text-xs font-medium text-white max-w-[120px] truncate">
+                  <span className="text-xs font-medium text-fg max-w-[120px] truncate">
                     {user.name || user.email.split("@")[0]}
                   </span>
 
@@ -151,10 +153,10 @@ export function Navbar() {
 
                 {/* Dropdown Menu */}
                 {userDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-white/[0.1] bg-[#0c0e14] p-2 shadow-2xl backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95">
+                  <div className="absolute right-0 mt-2 w-64 rounded-2xl border border-fg/[0.1] bg-card p-2 shadow-2xl backdrop-blur-2xl z-50 animate-in fade-in zoom-in-95">
                     {/* User info card */}
-                    <div className="p-3 border-b border-white/[0.06] mb-1">
-                      <div className="text-xs font-bold text-white truncate">{user.name || "Developer"}</div>
+                    <div className="p-3 border-b border-fg/[0.06] mb-1">
+                      <div className="text-xs font-bold text-fg truncate">{user.name || "Developer"}</div>
                       <div className="text-[11px] text-zinc-400 font-mono truncate">{user.email}</div>
                       <div className="mt-2 flex items-center gap-2">
                         <span className="rounded-full bg-blue-500/10 px-2 py-0.5 text-[10px] font-mono text-blue-400 border border-blue-500/20 uppercase">
@@ -169,7 +171,7 @@ export function Navbar() {
                     <Link
                       href="/dashboard"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/[0.05] rounded-xl transition"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-zinc-300 hover:text-fg hover:bg-fg/[0.05] rounded-xl transition"
                     >
                       <Zap className="h-4 w-4 text-blue-400" />
                       <span>Developer Dashboard</span>
@@ -178,7 +180,7 @@ export function Navbar() {
                     <Link
                       href="/account"
                       onClick={() => setUserDropdownOpen(false)}
-                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-zinc-300 hover:text-white hover:bg-white/[0.05] rounded-xl transition"
+                      className="flex items-center gap-2.5 px-3 py-2 text-xs font-medium text-zinc-300 hover:text-fg hover:bg-fg/[0.05] rounded-xl transition"
                     >
                       <User className="h-4 w-4 text-emerald-400" />
                       <span>Account Settings</span>
@@ -197,7 +199,7 @@ export function Navbar() {
 
                     {/* Quick Role Switcher - Only visible for admin in sandbox mode */}
                     {isAdmin && (
-                      <div className="my-1.5 pt-1.5 border-t border-white/[0.06]">
+                      <div className="my-1.5 pt-1.5 border-t border-fg/[0.06]">
                         <div className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-zinc-500">
                           Fast Sandbox Switch
                         </div>
@@ -207,7 +209,7 @@ export function Navbar() {
                             await loginAsDemo("user");
                             setUserDropdownOpen(false);
                           }}
-                          className="w-full flex items-center justify-between px-3 py-1.5 text-xs text-zinc-400 hover:text-white hover:bg-white/[0.04] rounded-lg transition"
+                          className="w-full flex items-center justify-between px-3 py-1.5 text-xs text-zinc-400 hover:text-fg hover:bg-fg/[0.04] rounded-lg transition"
                         >
                           <span>Switch to Developer</span>
                           <RefreshCw className="h-3 w-3 text-zinc-500" />
@@ -216,7 +218,7 @@ export function Navbar() {
                     )}
 
                     {/* Sign Out */}
-                    <div className="pt-1 border-t border-white/[0.06]">
+                    <div className="pt-1 border-t border-fg/[0.06]">
                       <button
                         type="button"
                         onClick={() => logout()}
@@ -243,7 +245,7 @@ export function Navbar() {
             <div className="flex items-center gap-2">
               <Link
                 href="/login"
-                className="px-3.5 py-1.5 rounded-xl border border-white/[0.08] bg-zinc-900/60 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition"
+                className="px-3.5 py-1.5 rounded-xl border border-fg/[0.08] bg-zinc-900/60 text-xs font-semibold text-zinc-300 hover:text-fg hover:bg-zinc-800 transition"
               >
                 Sign In
               </Link>
@@ -260,6 +262,7 @@ export function Navbar() {
 
         {/* Mobile menu hamburger button */}
         <div className="flex md:hidden items-center gap-2">
+          <ThemeToggle className="sm:hidden" />
           {isAuthenticated ? (
             <Link
               href="/dashboard"
@@ -278,7 +281,7 @@ export function Navbar() {
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 rounded-lg border border-white/[0.08] bg-zinc-900/60 text-zinc-300 hover:text-white"
+            className="p-1.5 rounded-lg border border-fg/[0.08] bg-zinc-900/60 text-zinc-300 hover:text-fg"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -288,15 +291,15 @@ export function Navbar() {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-b border-white/[0.08] bg-[#0c0e14] px-4 pt-3 pb-5 space-y-2 animate-in fade-in">
+        <div className="md:hidden border-b border-fg/[0.08] bg-card px-4 pt-3 pb-5 space-y-2 animate-in fade-in">
           {isAuthenticated && user && (
-            <div className="p-3 mb-2 rounded-2xl border border-white/[0.08] bg-white/[0.02]">
+            <div className="p-3 mb-2 rounded-2xl border border-fg/[0.08] bg-fg/[0.02]">
               <div className="flex items-center gap-3">
                 <div className="h-8 w-8 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white text-xs">
                   {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
                 </div>
                 <div className="flex-1 truncate">
-                  <div className="text-xs font-bold text-white">{user.name || user.email}</div>
+                  <div className="text-xs font-bold text-fg">{user.name || user.email}</div>
                   <div className="text-[10px] text-zinc-400 font-mono">{user.email}</div>
                 </div>
                 <span className="text-xs text-amber-400 font-mono font-bold">
@@ -316,7 +319,7 @@ export function Navbar() {
                 className={`flex items-center justify-between px-3 py-2.5 rounded-xl text-sm transition ${
                   isActive
                     ? "bg-blue-600/15 text-blue-400 font-semibold border border-blue-500/20"
-                    : "text-zinc-300 hover:bg-white/[0.05]"
+                    : "text-zinc-300 hover:bg-fg/[0.05]"
                 }`}
               >
                 <span>{item.label}</span>
@@ -339,13 +342,13 @@ export function Navbar() {
             </Link>
           )}
 
-          <div className="pt-3 border-t border-white/[0.06] space-y-2">
+          <div className="pt-3 border-t border-fg/[0.06] space-y-2">
             {isAuthenticated ? (
               <>
                 <Link
                   href="/account"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-zinc-300 hover:bg-white/[0.05]"
+                  className="flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold text-zinc-300 hover:bg-fg/[0.05]"
                 >
                   <span className="flex items-center gap-2">
                     <User className="h-4 w-4 text-emerald-400" />
@@ -371,7 +374,7 @@ export function Navbar() {
                 <Link
                   href="/login"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="flex-1 text-center py-2 rounded-xl border border-white/[0.1] bg-zinc-900 text-xs font-semibold text-white"
+                  className="flex-1 text-center py-2 rounded-xl border border-fg/[0.1] bg-zinc-900 text-xs font-semibold text-fg"
                 >
                   Sign In
                 </Link>

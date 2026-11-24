@@ -37,8 +37,8 @@ export function BillingPacksTab({
   return (
     <div className="space-y-6">
       {/* Subscription Summary Card */}
-      <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 p-6 sm:p-8 backdrop-blur-xl">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
+      <div className="rounded-2xl border border-fg/[0.08] bg-card/90 p-6 sm:p-8 backdrop-blur-xl">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-fg/[0.08]">
           <div>
             <div className="flex items-center gap-2 text-blue-400 mb-1">
               <CreditCard className="h-4 w-4" />
@@ -46,7 +46,7 @@ export function BillingPacksTab({
                 Active Subscription & Plan
               </span>
             </div>
-            <h3 className="text-xl font-bold text-white">
+            <h3 className="text-xl font-bold text-fg">
               {planDetails?.name || "Pro Developer"} Tier{" "}
               <span className="text-sm font-mono text-zinc-400">
                 (${planDetails?.price ?? 29}
@@ -90,7 +90,7 @@ export function BillingPacksTab({
             <button
               onClick={onOpenPortal}
               disabled={portalLoading}
-              className="flex items-center gap-2 rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-2.5 text-xs font-semibold text-zinc-200 hover:bg-white/[0.08] hover:text-white transition"
+              className="flex items-center gap-2 rounded-xl border border-fg/[0.1] bg-fg/[0.04] px-4 py-2.5 text-xs font-semibold text-zinc-200 hover:bg-fg/[0.08] hover:text-fg transition"
             >
               <CreditCard className="h-4 w-4 text-blue-400" />
               <span>{portalLoading ? "Opening..." : "Customer Billing Portal"}</span>
@@ -107,7 +107,7 @@ export function BillingPacksTab({
               Refill Balance On Demand (Current: {creditsBalance.toLocaleString()} cr)
             </span>
           </div>
-          <h4 className="text-lg font-bold text-white tracking-tight">
+          <h4 className="text-lg font-bold text-fg tracking-tight">
             One-Time Credit Top-Up Bundles & Auto-Recharge
           </h4>
           <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-2xl leading-relaxed">
@@ -115,9 +115,9 @@ export function BillingPacksTab({
           </p>
 
           {/* Auto-recharge toggle */}
-          <div className="mt-5 rounded-2xl border border-white/[0.08] bg-white/[0.02] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="mt-5 rounded-2xl border border-fg/[0.08] bg-fg/[0.02] p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="text-sm font-bold text-white flex items-center gap-2">
+              <div className="text-sm font-bold text-fg flex items-center gap-2">
                 <Zap className="h-4 w-4 text-amber-400 fill-current" />
                 <span>Automatic Balance Recharge (Zero Downtime)</span>
               </div>
@@ -141,14 +141,14 @@ export function BillingPacksTab({
             {monetizeConfig.creditPacks.map((pack) => (
               <div
                 key={pack.id}
-                className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 hover:border-white/[0.15] hover:bg-white/[0.04] transition flex flex-col justify-between"
+                className="rounded-2xl border border-fg/[0.08] bg-fg/[0.02] p-6 hover:border-fg/[0.15] hover:bg-fg/[0.04] transition flex flex-col justify-between"
               >
                 <div>
-                  <div className="text-base font-bold text-white">{pack.name}</div>
+                  <div className="text-base font-bold text-fg">{pack.name}</div>
                   <div className="text-xs text-zinc-400 mt-1">
                     {pack.credits.toLocaleString()} Tool Invocations
                   </div>
-                  <div className="text-3xl font-extrabold text-white mt-4 font-mono">
+                  <div className="text-3xl font-extrabold text-fg mt-4 font-mono">
                     ${pack.price}
                   </div>
                   <div className="text-[11px] text-emerald-400 mt-1 font-mono">

@@ -10,7 +10,7 @@ export async function PATCH(
 ) {
   try {
     const session = await getAuthSession();
-    if (!session || (session.role !== "admin" && !session.email.includes("admin"))) {
+    if (!session || session.role !== "admin") {
       return NextResponse.json(
         { success: false, error: "Forbidden: Admin privileges required" },
         { status: 403 }
@@ -63,7 +63,7 @@ export async function DELETE(
 ) {
   try {
     const session = await getAuthSession();
-    if (!session || (session.role !== "admin" && !session.email.includes("admin"))) {
+    if (!session || session.role !== "admin") {
       return NextResponse.json(
         { success: false, error: "Forbidden: Admin privileges required" },
         { status: 403 }

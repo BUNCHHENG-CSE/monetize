@@ -1,5 +1,10 @@
 import type { Config } from "tailwindcss";
 
+/** Theme-aware color backed by an RGB-triplet CSS variable (supports /opacity modifiers). */
+const v = (name: string) => `rgb(var(--${name}) / <alpha-value>)`;
+
+const zincShades = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -12,22 +17,31 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-        border: "var(--border)",
-        card: "var(--card)",
-        "card-foreground": "var(--card-foreground)",
+        // Neutral scale flips between themes (see globals.css), so every existing
+        // zinc-* class adapts automatically: zinc-950 is the page in dark, near-white in light.
+        zinc: Object.fromEntries(zincShades.map((s) => [s, v(`zinc-${s}`)])),
+        // "fg" = maximum-contrast foreground: white in dark mode, near-black in light mode.
+        fg: v("fg"),
+        background: v("background"),
+        foreground: v("foreground"),
+        border: v("border"),
+        card: {
+          DEFAULT: v("card"),
+          hover: v("card-hover"),
+          foreground: v("card-foreground"),
+        },
+        "card-foreground": v("card-foreground"),
         primary: {
-          DEFAULT: "var(--primary)",
-          foreground: "var(--primary-foreground)",
+          DEFAULT: v("primary"),
+          foreground: v("primary-foreground"),
         },
         muted: {
-          DEFAULT: "var(--muted)",
-          foreground: "var(--muted-foreground)",
+          DEFAULT: v("muted"),
+          foreground: v("muted-foreground"),
         },
         accent: {
-          DEFAULT: "var(--accent)",
-          foreground: "var(--accent-foreground)",
+          DEFAULT: v("accent"),
+          foreground: v("accent-foreground"),
         },
       },
       fontFamily: {

@@ -167,16 +167,16 @@ export function HeroPipelineStudio() {
   ];
 
   return (
-    <div className="relative w-full rounded-2xl sm:rounded-3xl border border-white/[0.1] bg-[#0c0e15]/95 shadow-[0_25px_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden transition-all hover:border-white/[0.16] flex flex-col">
+    <div className="relative w-full rounded-2xl sm:rounded-3xl border border-fg/[0.1] bg-card/95 shadow-[0_25px_80px_rgba(0,0,0,0.8)] backdrop-blur-2xl overflow-hidden transition-all hover:border-fg/[0.16] flex flex-col">
       {/* Top Header Bar / Mac Window Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/[0.08] bg-[#090b10]/80 px-4 py-3 sm:px-6 shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-fg/[0.08] bg-background/80 px-4 py-3 sm:px-6 shrink-0">
         <div className="flex items-center gap-2.5">
           <div className="flex items-center gap-1.5">
             <span className="h-3 w-3 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.4)]" />
             <span className="h-3 w-3 rounded-full bg-amber-500/80 shadow-[0_0_8px_rgba(245,158,11,0.4)]" />
             <span className="h-3 w-3 rounded-full bg-emerald-500/80 shadow-[0_0_8px_rgba(16,185,129,0.4)]" />
           </div>
-          <span className="hidden sm:inline-block h-4 w-px bg-white/[0.1] mx-1" />
+          <span className="hidden sm:inline-block h-4 w-px bg-fg/[0.1] mx-1" />
           <span className="text-xs font-mono text-zinc-300 font-semibold flex items-center gap-1.5">
             <FileCode className="h-3.5 w-3.5 text-blue-400" />
             api-request-pipeline.ts
@@ -184,7 +184,7 @@ export function HeroPipelineStudio() {
         </div>
 
         {/* View Switcher Tabs */}
-        <div className="flex items-center gap-1 rounded-xl border border-white/[0.08] bg-white/[0.03] p-1 text-xs">
+        <div className="flex items-center gap-1 rounded-xl border border-fg/[0.08] bg-fg/[0.03] p-1 text-xs">
           <button
             onClick={() => setActiveTab("pipeline")}
             className={`px-3 py-1 rounded-lg font-medium transition-all cursor-pointer ${
@@ -240,7 +240,7 @@ export function HeroPipelineStudio() {
         {activeTab === "pipeline" && (
           <div className="flex-1 flex flex-col justify-between space-y-4">
             {/* Simulation Controller Bar */}
-            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-white/[0.02] px-4 py-2.5 shrink-0">
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-fg/[0.06] bg-fg/[0.02] px-4 py-2.5 shrink-0">
               <div className="flex items-center gap-2 text-xs text-zinc-400 font-mono">
                 <span className="inline-block h-2 w-2 rounded-full bg-blue-400" />
                 <span>Simulated Flow:</span>
@@ -282,8 +282,8 @@ export function HeroPipelineStudio() {
                       isCurrentlyExecuting
                         ? `${step.borderColor} ${step.accentBg} ring-1 ring-blue-500 scale-[1.02] shadow-[0_0_20px_rgba(59,130,246,0.3)]`
                         : isStepActive
-                        ? "border-white/[0.1] bg-[#10131d] hover:border-white/[0.2]"
-                        : "border-white/[0.04] bg-white/[0.01] opacity-50"
+                        ? "border-fg/[0.1] bg-card-hover hover:border-fg/[0.2]"
+                        : "border-fg/[0.04] bg-fg/[0.01] opacity-50"
                     }`}
                   >
                     <div>
@@ -315,7 +315,7 @@ export function HeroPipelineStudio() {
                         <div className={`p-1.5 rounded-lg ${step.accentBg} ${step.color}`}>
                           <IconComponent className="h-4 w-4" />
                         </div>
-                        <div className="font-bold text-white text-xs sm:text-sm">{step.name}</div>
+                        <div className="font-bold text-fg text-xs sm:text-sm">{step.name}</div>
                       </div>
 
                       {/* Technology details */}
@@ -326,7 +326,7 @@ export function HeroPipelineStudio() {
                     </div>
 
                     {/* Micro metric */}
-                    <div className="mt-3 pt-2.5 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-zinc-400">
+                    <div className="mt-3 pt-2.5 border-t border-fg/[0.06] flex items-center justify-between text-[10px] font-mono text-zinc-400">
                       <span>Telemetry</span>
                       <span className="text-zinc-300 font-medium">{step.metric}</span>
                     </div>
@@ -336,8 +336,8 @@ export function HeroPipelineStudio() {
             </div>
 
             {/* Live Terminal Output Drawer */}
-            <div className="rounded-xl border border-white/[0.08] bg-[#07090e] p-3.5 font-mono text-xs shrink-0">
-              <div className="flex items-center justify-between text-[11px] text-zinc-400 pb-2 border-b border-white/[0.06] mb-2.5">
+            <div className="rounded-xl border border-fg/[0.08] bg-background p-3.5 font-mono text-xs shrink-0">
+              <div className="flex items-center justify-between text-[11px] text-zinc-400 pb-2 border-b border-fg/[0.06] mb-2.5">
                 <div className="flex items-center gap-2">
                   <Terminal className="h-3.5 w-3.5 text-emerald-400" />
                   <span>Pipeline Execution Stream</span>
@@ -385,9 +385,9 @@ export function HeroPipelineStudio() {
         {activeTab === "curl" && (
           <div className="flex-1 flex flex-col justify-between space-y-4">
             {/* Editor Container Filling Height */}
-            <div className="relative rounded-xl border border-white/[0.08] bg-[#07090e] p-4 font-mono text-xs flex-1 flex flex-col justify-between">
+            <div className="relative rounded-xl border border-fg/[0.08] bg-background p-4 font-mono text-xs flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.06]">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-fg/[0.06]">
                   <div className="flex items-center gap-2">
                     <span className="rounded bg-blue-500/10 px-2 py-0.5 text-[10px] font-bold text-blue-400 border border-blue-500/20">
                       BASH / SHELL
@@ -433,20 +433,20 @@ export function HeroPipelineStudio() {
               </div>
 
               {/* Explanatory Payload Drawer to keep height balanced */}
-              <div className="mt-4 pt-3 border-t border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono text-zinc-400">
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+              <div className="mt-4 pt-3 border-t border-fg/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono text-zinc-400">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">Method</div>
                   <div className="text-blue-400 font-semibold mt-0.5">POST (JSON)</div>
                 </div>
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">Auth Header</div>
                   <div className="text-amber-400 font-semibold mt-0.5">Bearer sk_live_...</div>
                 </div>
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">Credit Cost</div>
                   <div className="text-emerald-400 font-semibold mt-0.5">1 Credit / req</div>
                 </div>
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">Response Code</div>
                   <div className="text-purple-400 font-semibold mt-0.5">200 OK / 402 Pay</div>
                 </div>
@@ -454,7 +454,7 @@ export function HeroPipelineStudio() {
             </div>
 
             {/* Bottom cURL helper strip */}
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 flex flex-wrap items-center justify-between text-xs text-zinc-400 font-mono shrink-0">
+            <div className="rounded-xl border border-fg/[0.06] bg-fg/[0.02] p-3 flex flex-wrap items-center justify-between text-xs text-zinc-400 font-mono shrink-0">
               <div className="flex items-center gap-2">
                 <Terminal className="h-3.5 w-3.5 text-blue-400" />
                 <span>Replace <code className="text-zinc-200 font-bold">sk_live_...</code> with your subscriber key</span>
@@ -468,9 +468,9 @@ export function HeroPipelineStudio() {
         {activeTab === "sdk" && (
           <div className="flex-1 flex flex-col justify-between space-y-4">
             {/* Editor Container Filling Height */}
-            <div className="relative rounded-xl border border-white/[0.08] bg-[#07090e] p-4 font-mono text-xs flex-1 flex flex-col justify-between">
+            <div className="relative rounded-xl border border-fg/[0.08] bg-background p-4 font-mono text-xs flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.06]">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-fg/[0.06]">
                   <div className="flex items-center gap-2">
                     <span className="rounded bg-blue-500/10 px-2 py-0.5 text-[10px] font-bold text-blue-400 border border-blue-500/20">
                       TYPESCRIPT
@@ -518,7 +518,7 @@ export function HeroPipelineStudio() {
               </div>
 
               {/* Install strip inside SDK */}
-              <div className="mt-4 pt-3 border-t border-white/[0.06] flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-zinc-400">
+              <div className="mt-4 pt-3 border-t border-fg/[0.06] flex flex-wrap items-center justify-between gap-3 text-[11px] font-mono text-zinc-400">
                 <div className="flex items-center gap-2">
                   <span className="text-zinc-500">Package:</span>
                   <code className="text-zinc-200 font-semibold">npm i @yourtool/sdk</code>
@@ -536,7 +536,7 @@ export function HeroPipelineStudio() {
             </div>
 
             {/* Bottom SDK helper strip */}
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 flex flex-wrap items-center justify-between text-xs text-zinc-400 font-mono shrink-0">
+            <div className="rounded-xl border border-fg/[0.06] bg-fg/[0.02] p-3 flex flex-wrap items-center justify-between text-xs text-zinc-400 font-mono shrink-0">
               <div className="flex items-center gap-2">
                 <Code2 className="h-3.5 w-3.5 text-blue-400" />
                 <span>Zero runtime dependencies • Built-in retry logic & types</span>
@@ -550,9 +550,9 @@ export function HeroPipelineStudio() {
         {activeTab === "json" && (
           <div className="flex-1 flex flex-col justify-between space-y-4">
             {/* Editor Container Filling Height */}
-            <div className="relative rounded-xl border border-white/[0.08] bg-[#07090e] p-4 font-mono text-xs flex-1 flex flex-col justify-between">
+            <div className="relative rounded-xl border border-fg/[0.08] bg-background p-4 font-mono text-xs flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/[0.06]">
+                <div className="flex items-center justify-between pb-3 mb-3 border-b border-fg/[0.06]">
                   <div className="flex items-center gap-2">
                     <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-400 border border-emerald-500/20">
                       HTTP 200 OK
@@ -598,20 +598,20 @@ export function HeroPipelineStudio() {
               </div>
 
               {/* Response Headers Drawer inside JSON */}
-              <div className="mt-4 pt-3 border-t border-white/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono text-zinc-400">
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+              <div className="mt-4 pt-3 border-t border-fg/[0.06] grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] font-mono text-zinc-400">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">X-RateLimit-Limit</div>
                   <div className="text-zinc-200 font-semibold mt-0.5">60 req / min</div>
                 </div>
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">X-RateLimit-Remaining</div>
                   <div className="text-emerald-400 font-semibold mt-0.5">59 remaining</div>
                 </div>
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">X-Credit-Balance</div>
                   <div className="text-amber-400 font-semibold mt-0.5">4,999 credits</div>
                 </div>
-                <div className="rounded-lg bg-white/[0.02] border border-white/[0.04] p-2">
+                <div className="rounded-lg bg-fg/[0.02] border border-fg/[0.04] p-2">
                   <div className="text-zinc-500">X-Request-Id</div>
                   <div className="text-zinc-200 font-semibold mt-0.5 truncate">req_88f0a2e9b1</div>
                 </div>
@@ -619,7 +619,7 @@ export function HeroPipelineStudio() {
             </div>
 
             {/* Bottom JSON helper strip */}
-            <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-3 flex flex-wrap items-center justify-between text-xs text-zinc-400 font-mono shrink-0">
+            <div className="rounded-xl border border-fg/[0.06] bg-fg/[0.02] p-3 flex flex-wrap items-center justify-between text-xs text-zinc-400 font-mono shrink-0">
               <div className="flex items-center gap-2">
                 <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
                 <span>Deterministic envelope format matching standard API gateways</span>
@@ -631,7 +631,7 @@ export function HeroPipelineStudio() {
       </div>
 
       {/* Footer ticker */}
-      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/[0.08] bg-[#090b10]/80 px-4 py-2.5 sm:px-6 text-[11px] font-mono text-zinc-400 shrink-0">
+      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-fg/[0.08] bg-background/80 px-4 py-2.5 sm:px-6 text-[11px] font-mono text-zinc-400 shrink-0">
         <div className="flex items-center gap-2">
           <Sparkles className="h-3.5 w-3.5 text-blue-400" />
           <span>Atomic transactions backed by Prisma ORM & Neon Serverless PostgreSQL</span>

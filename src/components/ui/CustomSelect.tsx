@@ -227,7 +227,7 @@ export function CustomSelect({
 
   // Badge theme colors
   const badgeThemeClasses: Record<string, string> = {
-    zinc: "border-white/[0.08] bg-zinc-900/90 text-zinc-300 hover:bg-zinc-800 hover:border-white/20",
+    zinc: "border-fg/[0.08] bg-zinc-900/90 text-zinc-300 hover:bg-zinc-800 hover:border-fg/20",
     blue: "border-blue-500/30 bg-blue-950/40 text-blue-200 hover:bg-blue-900/50 hover:border-blue-500/50",
     purple: "border-purple-500/30 bg-purple-950/40 text-purple-200 hover:bg-purple-900/50 hover:border-purple-500/50",
     amber: "border-amber-500/30 bg-amber-950/40 text-amber-200 hover:bg-amber-900/50 hover:border-amber-500/50",
@@ -240,7 +240,7 @@ export function CustomSelect({
   const triggerVariantClasses =
     variant === "badge"
       ? `border font-semibold transition-all ${activeBadgeClass}`
-      : `border border-white/[0.08] bg-zinc-950/90 text-zinc-200 hover:border-white/20 hover:bg-zinc-900/90 transition-all`;
+      : `border border-fg/[0.08] bg-zinc-950/90 text-zinc-200 hover:border-fg/20 hover:bg-zinc-900/90 transition-all`;
 
   const openFocusClasses = isOpen
     ? "border-blue-500/60 ring-1 ring-blue-500/30 shadow-[0_0_15px_rgba(59,130,246,0.2)]"
@@ -308,7 +308,7 @@ export function CustomSelect({
               transform: coords.placement === "top" ? "translateY(-100%)" : "translateY(0)",
               zIndex: 9999,
             }}
-            className="rounded-2xl border border-white/10 bg-[#0c0f17]/95 p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_1px_1px_rgba(255,255,255,0.06)] backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
+            className="rounded-2xl border border-fg/10 bg-card/95 p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.85),0_0_1px_1px_rgba(255,255,255,0.06)] backdrop-blur-2xl animate-in fade-in zoom-in-95 duration-150 overflow-hidden"
           >
             <div className="max-h-64 overflow-y-auto space-y-0.5 custom-scrollbar">
               {options.map((option, index) => {
@@ -336,8 +336,8 @@ export function CustomSelect({
                         : isSelected
                         ? "bg-blue-600/15 text-blue-200 font-semibold"
                         : isHighlighted
-                        ? "bg-white/[0.06] text-white"
-                        : "text-zinc-300 hover:bg-white/[0.04] hover:text-white"
+                        ? "bg-fg/[0.06] text-fg"
+                        : "text-zinc-300 hover:bg-fg/[0.04] hover:text-fg"
                     }`}
                   >
                     <div className="flex items-center gap-2.5 truncate">
@@ -360,7 +360,7 @@ export function CustomSelect({
                           className={`text-[10px] px-2 py-0.5 rounded-md border font-mono ${
                             isSelected
                               ? "bg-blue-500/20 text-blue-300 border-blue-500/30"
-                              : "bg-white/[0.04] text-zinc-400 border-white/[0.06]"
+                              : "bg-fg/[0.04] text-zinc-400 border-fg/[0.06]"
                           }`}
                         >
                           {option.sublabel}

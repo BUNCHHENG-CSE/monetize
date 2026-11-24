@@ -1,6 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getUserProfileByEmail, createUserAccount } from "@/lib/db/service";
-import crypto from "crypto";
+import {
+  SESSION_COOKIE,
+  SESSION_MAX_AGE,
+  createSessionToken,
+  hashPassword,
+  sessionCookieOptions,
+} from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
@@ -9,7 +15,7 @@ export async function POST(req: NextRequest) {
     const body = await req.json().catch(() => ({}));
     const { email, name, password } = body;
 
-    if (!email || !email.includes("@")) {
+    if (typeof email !== "string" || !email.includes("@")) {
       return NextResponse.json(
         { success: false, error: "Valid email address is required" },
         { status: 400 }
@@ -25,14 +31,22 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const passwordHash = password ? crypto.createHash("sha256").update(password).digest("hex") : null;
-    const role = normalizedEmail.includes("admin") ? "admin" : "user";
+    if (typeof password !== "string" || password.length < 8) {
+      return NextResponse.json(
+        { success: false, error: "Password must be at least 8 characters" },
+        { status: 400 }
+      );
+    }
+
+    // Self-registration always creates a regular user; admins are promoted via the admin panel.
+    const passwordHash = hashPassword(password);
+    const role = "user";
 
     const userProfile = await createUserAccount({
       email: normalizedEmail,
       name: name || normalizedEmail.split("@")[0],
       role,
-      creditsBalance: role === "admin" ? 10000 : 150,
+      creditsBalance: 150,
       planId: "free",
       passwordHash,
     });
@@ -50,19 +64,16 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    response.cookies.set("devtool_session", userProfile.id, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 30,
+    response.cookies.set(SESSION_COOKIE, createSessionToken(userProfile.id), {
+      ...sessionCookieOptions,
+      maxAge: SESSION_MAX_AGE,
     });
 
     return response;
   } catch (error: any) {
     console.error("[api/auth/register] error:", error);
     return NextResponse.json(
-      { success: false, error: error.message || "Failed to create account" },
+      { success: false, error: "Failed to create account" },
       { status: 500 }
     );
   }

@@ -91,9 +91,9 @@ export function CodeSnippet({
   };
 
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 overflow-hidden shadow-2xl backdrop-blur-xl">
+    <div className="rounded-2xl border border-fg/[0.08] bg-card/90 overflow-hidden shadow-2xl backdrop-blur-xl">
       {/* Tab Header */}
-      <div className="flex flex-wrap items-center justify-between border-b border-white/[0.08] px-4 py-3 bg-white/[0.02] gap-3">
+      <div className="flex flex-wrap items-center justify-between border-b border-fg/[0.08] px-4 py-3 bg-fg/[0.02] gap-3">
         <div className="flex items-center gap-1.5 overflow-x-auto">
           {LANGUAGE_TABS.map((tab) => (
             <button
@@ -102,7 +102,7 @@ export function CodeSnippet({
               className={`rounded-xl px-3 py-1.5 text-xs font-semibold transition whitespace-nowrap ${
                 activeTab === tab.id
                   ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                  : "text-zinc-400 hover:text-white hover:bg-white/[0.04]"
+                  : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
               {tab.label}
@@ -114,7 +114,7 @@ export function CodeSnippet({
           {/* Download Client SDK File button */}
           <button
             onClick={() => downloadStandaloneSdk(activeTab === "python" ? "python" : "ts")}
-            className="flex items-center gap-1.5 rounded-xl border border-white/[0.1] bg-white/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-300 hover:bg-white/[0.08] hover:text-white transition"
+            className="flex items-center gap-1.5 rounded-xl border border-fg/[0.1] bg-fg/[0.04] px-3 py-1.5 text-xs font-medium text-zinc-300 hover:bg-fg/[0.08] hover:text-fg transition"
             title="Download Standalone Client SDK file"
           >
             {downloadSuccess ? (
@@ -151,14 +151,14 @@ export function CodeSnippet({
       </div>
 
       {/* Code Area */}
-      <div className="relative p-4 sm:p-6 overflow-x-auto bg-[#07090e]">
+      <div className="relative p-4 sm:p-6 overflow-x-auto bg-background">
         <pre className="font-mono text-xs text-zinc-300 leading-relaxed">
           <code>{activeSnippet}</code>
         </pre>
       </div>
 
       {/* Bottom info banner */}
-      <div className="flex flex-wrap items-center justify-between border-t border-white/[0.06] bg-white/[0.01] px-5 py-2.5 text-[11px] text-zinc-400 gap-2">
+      <div className="flex flex-wrap items-center justify-between border-t border-fg/[0.06] bg-fg/[0.01] px-5 py-2.5 text-[11px] text-zinc-400 gap-2">
         <div className="flex items-center gap-2">
           <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
           <span>Stateless Bearer Auth • SHA-256 Hashed • Zero Charge on Errors</span>

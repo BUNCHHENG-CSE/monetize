@@ -94,8 +94,8 @@ export function verifyLemonWebhookSignature(
   signatureHeader: string
 ): boolean {
   if (!webhookSecret || webhookSecret === "webhook_secret_placeholder") {
-    // In local dev without secret, allow simulation
-    return true;
+    // In local dev without secret, allow simulation. Never accept unsigned events in production.
+    return process.env.NODE_ENV !== "production";
   }
 
   const hmac = createHmac("sha256", webhookSecret);

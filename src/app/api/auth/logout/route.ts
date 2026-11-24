@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { SESSION_COOKIE, sessionCookieOptions } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
@@ -8,14 +9,8 @@ export async function POST() {
     message: "Successfully signed out",
   });
 
-  // Explicitly mark cookie as logged_out with persistent maxAge
-  response.cookies.set("devtool_session", "logged_out", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 30, // 30 days
-  });
+  // Expire the session cookie immediately
+  response.cookies.set(SESSION_COOKIE, "", { ...sessionCookieOptions, maxAge: 0 });
 
   return response;
 }

@@ -422,18 +422,21 @@ export async function deductCredits(
 ): Promise<{ success: boolean; balance: number; error?: string }> {
   if (isPrismaConfigured && prisma) {
     try {
-      return await prisma.$transaction(async (tx) => {
-        const profile = await tx.profile.findUnique({ where: { id: userId } });
-        if (!profile) return { success: false, balance: 0, error: "Profile not found" };
-        if (profile.creditsBalance < amount) {
-          return { success: false, balance: profile.creditsBalance, error: "Insufficient credit balance" };
-        }
-        const updated = await tx.profile.update({
-          where: { id: userId },
-          data: { creditsBalance: { decrement: amount } },
-        });
-        return { success: true, balance: updated.creditsBalance };
+      // Single conditional UPDATE: the balance check and decrement happen atomically in the
+      // database, so concurrent requests can never drive the balance negative.
+      const { count } = await prisma.profile.updateMany({
+        where: { id: userId, creditsBalance: { gte: amount } },
+        data: { creditsBalance: { decrement: amount } },
       });
+      const profile = await prisma.profile.findUnique({
+        where: { id: userId },
+        select: { creditsBalance: true },
+      });
+      if (!profile) return { success: false, balance: 0, error: "Profile not found" };
+      if (count === 0) {
+        return { success: false, balance: profile.creditsBalance, error: "Insufficient credit balance" };
+      }
+      return { success: true, balance: profile.creditsBalance };
     } catch (err: any) {
       console.warn("[DB Service] Prisma credit deduction transaction failed:", err.message);
     }

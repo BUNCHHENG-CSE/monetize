@@ -235,7 +235,7 @@ export function InteractivePlayground() {
   return (
     <div className="space-y-6">
       {/* Archetype Preset Selector Pills */}
-      <div className="rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 p-4 sm:p-5 backdrop-blur-xl">
+      <div className="rounded-2xl border border-fg/[0.08] bg-card/90 p-4 sm:p-5 backdrop-blur-xl">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
           <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-400">
             <Sparkles className="h-4 w-4" />
@@ -262,8 +262,8 @@ export function InteractivePlayground() {
                 onClick={() => handleSelectArchetype(item.id as ToolPresetKey)}
                 className={`flex flex-col items-start p-3 rounded-xl border text-left transition ${
                   isSelected
-                    ? "bg-blue-600/15 border-blue-500/50 text-white shadow-[0_0_15px_rgba(59,130,246,0.2)]"
-                    : "bg-white/[0.02] border-white/[0.06] text-zinc-400 hover:text-zinc-200 hover:bg-white/[0.04]"
+                    ? "bg-blue-600/15 border-blue-500/50 text-fg shadow-[0_0_15px_rgba(59,130,246,0.2)]"
+                    : "bg-fg/[0.02] border-fg/[0.06] text-zinc-400 hover:text-zinc-200 hover:bg-fg/[0.04]"
                 }`}
               >
                 <div className="flex items-center justify-between w-full mb-1.5">
@@ -286,11 +286,11 @@ export function InteractivePlayground() {
       {/* Main Sandbox Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left: Input Payload Column */}
-        <div className="lg:col-span-6 flex flex-col rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 backdrop-blur-xl overflow-hidden shadow-2xl">
-          <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-3.5 bg-white/[0.02]">
+        <div className="lg:col-span-6 flex flex-col rounded-2xl border border-fg/[0.08] bg-card/90 backdrop-blur-xl overflow-hidden shadow-2xl">
+          <div className="flex items-center justify-between border-b border-fg/[0.08] px-5 py-3.5 bg-fg/[0.02]">
             <div className="flex items-center gap-2">
               <Code2 className="h-4 w-4 text-blue-400" />
-              <span className="text-xs font-bold text-white uppercase tracking-wider">
+              <span className="text-xs font-bold text-fg uppercase tracking-wider">
                 Tool Input Payload
               </span>
             </div>
@@ -301,7 +301,7 @@ export function InteractivePlayground() {
                 className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
                   activeInputTab === "input"
                     ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-400 hover:text-fg"
                 }`}
               >
                 Payload
@@ -311,7 +311,7 @@ export function InteractivePlayground() {
                 className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
                   activeInputTab === "options"
                     ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-400 hover:text-fg"
                 }`}
               >
                 Options JSON
@@ -321,7 +321,7 @@ export function InteractivePlayground() {
                 className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition flex items-center gap-1 ${
                   activeInputTab === "code"
                     ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-400 hover:text-fg"
                 }`}
               >
                 <Terminal className="h-3 w-3" />
@@ -347,7 +347,7 @@ export function InteractivePlayground() {
                   onChange={(e) => setPrompt(e.target.value)}
                   rows={activePreset === "code-security" ? 8 : 6}
                   placeholder="Enter input..."
-                  className="w-full rounded-xl border border-white/[0.1] bg-[#07090e] p-3.5 font-mono text-xs text-zinc-200 placeholder-zinc-600 focus:border-blue-500 focus:outline-none resize-none leading-relaxed"
+                  className="w-full rounded-xl border border-fg/[0.1] bg-background p-3.5 font-mono text-xs text-zinc-200 placeholder-zinc-600 focus:border-blue-500 focus:outline-none resize-none leading-relaxed"
                 />
               </div>
             ) : activeInputTab === "options" ? (
@@ -359,7 +359,7 @@ export function InteractivePlayground() {
                   value={optionsJson}
                   onChange={(e) => setOptionsJson(e.target.value)}
                   rows={8}
-                  className="w-full rounded-xl border border-white/[0.1] bg-[#07090e] p-3.5 font-mono text-xs text-zinc-200 focus:border-blue-500 focus:outline-none resize-none leading-relaxed"
+                  className="w-full rounded-xl border border-fg/[0.1] bg-background p-3.5 font-mono text-xs text-zinc-200 focus:border-blue-500 focus:outline-none resize-none leading-relaxed"
                 />
               </div>
             ) : (
@@ -373,7 +373,7 @@ export function InteractivePlayground() {
                         className={`rounded-md px-2 py-0.5 text-[11px] font-mono uppercase transition ${
                           codeLang === lang
                             ? "bg-blue-500/20 text-blue-300 border border-blue-500/30"
-                            : "text-zinc-400 hover:text-white"
+                            : "text-zinc-400 hover:text-fg"
                         }`}
                       >
                         {lang}
@@ -388,13 +388,13 @@ export function InteractivePlayground() {
                     <span>{copiedCode ? "Copied!" : "Copy Snippet"}</span>
                   </button>
                 </div>
-                <pre className="w-full max-h-[210px] overflow-auto rounded-xl border border-white/[0.1] bg-[#07090e] p-3.5 font-mono text-[11px] text-zinc-300 leading-relaxed">
+                <pre className="w-full max-h-[210px] overflow-auto rounded-xl border border-fg/[0.1] bg-background p-3.5 font-mono text-[11px] text-zinc-300 leading-relaxed">
                   <code>{liveSnippet}</code>
                 </pre>
               </div>
             )}
 
-            <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4">
+            <div className="mt-5 flex items-center justify-between border-t border-fg/[0.06] pt-4">
               <div className="text-[11px] text-zinc-400 flex items-center gap-2 font-mono">
                 <Zap className="h-3.5 w-3.5 text-amber-400 fill-current" />
                 <span>
@@ -429,15 +429,15 @@ export function InteractivePlayground() {
         </div>
 
         {/* Right: Output & Telemetry Column */}
-        <div className="lg:col-span-6 flex flex-col rounded-2xl border border-white/[0.08] bg-[#0c0e14]/90 backdrop-blur-xl overflow-hidden shadow-2xl">
+        <div className="lg:col-span-6 flex flex-col rounded-2xl border border-fg/[0.08] bg-card/90 backdrop-blur-xl overflow-hidden shadow-2xl">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-white/[0.08] px-5 py-3.5 bg-white/[0.02]">
+          <div className="flex items-center justify-between border-b border-fg/[0.08] px-5 py-3.5 bg-fg/[0.02]">
             <div className="flex items-center gap-2">
               <CheckCircle2 className={`h-4 w-4 ${errorInfo ? "text-rose-400" : "text-emerald-400"}`} />
-              <span className="text-xs font-bold text-white uppercase tracking-wider">
+              <span className="text-xs font-bold text-fg uppercase tracking-wider">
                 Execution Output
               </span>
-              <span className="hidden sm:inline-block font-mono text-[10px] text-zinc-500 bg-white/[0.03] px-2 py-0.5 rounded border border-white/[0.05]">
+              <span className="hidden sm:inline-block font-mono text-[10px] text-zinc-500 bg-fg/[0.03] px-2 py-0.5 rounded border border-fg/[0.05]">
                 {metrics.requestId}
               </span>
             </div>
@@ -448,7 +448,7 @@ export function InteractivePlayground() {
                 className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
                   activeOutputTab === "visual"
                     ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-400 hover:text-fg"
                 }`}
               >
                 Visual Result
@@ -458,7 +458,7 @@ export function InteractivePlayground() {
                 className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
                   activeOutputTab === "json"
                     ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-400 hover:text-fg"
                 }`}
               >
                 Raw JSON
@@ -468,7 +468,7 @@ export function InteractivePlayground() {
                 className={`rounded-lg px-2.5 py-1 text-xs font-semibold transition ${
                   activeOutputTab === "headers"
                     ? "bg-blue-600/20 text-blue-400 border border-blue-500/30"
-                    : "text-zinc-400 hover:text-white"
+                    : "text-zinc-400 hover:text-fg"
                 }`}
               >
                 Headers
@@ -477,7 +477,7 @@ export function InteractivePlayground() {
           </div>
 
           {/* Telemetry ribbon */}
-          <div className="grid grid-cols-4 border-b border-white/[0.06] bg-white/[0.01] divide-x divide-white/[0.06] text-center text-xs py-2 px-3">
+          <div className="grid grid-cols-4 border-b border-fg/[0.06] bg-fg/[0.01] divide-x divide-fg/[0.06] text-center text-xs py-2 px-3">
             <div>
               <div className="text-[10px] text-zinc-500 uppercase font-mono">Status</div>
               <div
@@ -490,7 +490,7 @@ export function InteractivePlayground() {
             </div>
             <div>
               <div className="text-[10px] text-zinc-500 uppercase font-mono">Latency</div>
-              <div className="font-bold text-white font-mono mt-0.5">{metrics.durationMs}ms</div>
+              <div className="font-bold text-fg font-mono mt-0.5">{metrics.durationMs}ms</div>
             </div>
             <div>
               <div className="text-[10px] text-zinc-500 uppercase font-mono">Credits Used</div>
@@ -507,7 +507,7 @@ export function InteractivePlayground() {
           </div>
 
           {/* Output Display Body */}
-          <div className="p-5 flex-1 overflow-y-auto max-h-[380px] bg-[#07090e]">
+          <div className="p-5 flex-1 overflow-y-auto max-h-[380px] bg-background">
             {errorInfo ? (
               <div className="rounded-xl border border-rose-500/30 bg-rose-500/10 p-4 text-xs text-rose-200 space-y-3">
                 <div className="flex items-start gap-3">
@@ -525,7 +525,7 @@ export function InteractivePlayground() {
                     </div>
                     <div className="mt-1 text-zinc-200">{errorInfo.message}</div>
                     {errorInfo.hint && (
-                      <div className="mt-1.5 text-[11px] text-zinc-300 bg-black/30 rounded-lg p-2 border border-white/[0.06]">
+                      <div className="mt-1.5 text-[11px] text-zinc-300 bg-zinc-950/30 rounded-lg p-2 border border-fg/[0.06]">
                         💡 {errorInfo.hint}
                       </div>
                     )}
@@ -555,7 +555,7 @@ export function InteractivePlayground() {
                   )}
                   <Link
                     href="/docs#errors"
-                    className="inline-flex items-center gap-1 text-[11px] text-zinc-400 hover:text-white underline"
+                    className="inline-flex items-center gap-1 text-[11px] text-zinc-400 hover:text-fg underline"
                   >
                     View Error Code Reference
                   </Link>
@@ -572,7 +572,7 @@ export function InteractivePlayground() {
                         {response.data.estimatedSpeedup || "3.8x"} faster
                       </span>
                     </div>
-                    <pre className="rounded-xl border border-white/[0.08] bg-black/50 p-3 font-mono text-xs text-emerald-300 whitespace-pre-wrap leading-relaxed">
+                    <pre className="rounded-xl border border-fg/[0.08] bg-zinc-950/50 p-3 font-mono text-xs text-emerald-300 whitespace-pre-wrap leading-relaxed">
                       <code>{response.data.optimizedQuery}</code>
                     </pre>
 
@@ -584,7 +584,7 @@ export function InteractivePlayground() {
                         {response.data.recommendations.map((rec: string, i: number) => (
                           <div
                             key={i}
-                            className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-2.5 text-xs text-zinc-300 flex items-start gap-2"
+                            className="rounded-lg border border-fg/[0.06] bg-fg/[0.02] p-2.5 text-xs text-zinc-300 flex items-start gap-2"
                           >
                             <span className="text-blue-400 font-bold">•</span>
                             <span>{rec}</span>
@@ -607,7 +607,7 @@ export function InteractivePlayground() {
                       <div className="space-y-1.5">
                         <div className="text-[11px] font-bold text-zinc-400 uppercase">Key Findings</div>
                         {response.data.structuredOutput.keyFindings.map((finding: string, idx: number) => (
-                          <div key={idx} className="rounded-lg bg-white/[0.02] border border-white/[0.06] p-2 text-xs text-zinc-300">
+                          <div key={idx} className="rounded-lg bg-fg/[0.02] border border-fg/[0.06] p-2 text-xs text-zinc-300">
                             ✔ {finding}
                           </div>
                         ))}
@@ -620,8 +620,8 @@ export function InteractivePlayground() {
                 {response?.data?.metadata && (
                   <div className="space-y-2.5 text-xs">
                     <div className="text-[11px] font-bold text-zinc-400 uppercase">Scraped Metadata</div>
-                    <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-3 space-y-1.5 font-mono text-xs">
-                      <div><span className="text-zinc-500">Title:</span> <span className="text-white">{response.data.metadata.title}</span></div>
+                    <div className="rounded-xl border border-fg/[0.08] bg-fg/[0.02] p-3 space-y-1.5 font-mono text-xs">
+                      <div><span className="text-zinc-500">Title:</span> <span className="text-fg">{response.data.metadata.title}</span></div>
                       <div><span className="text-zinc-500">Host:</span> <span className="text-blue-400">{response.data.hostname}</span></div>
                       <div><span className="text-zinc-500">Bytes:</span> <span className="text-emerald-400">{response.data.contentLengthBytes}</span></div>
                     </div>
@@ -631,10 +631,10 @@ export function InteractivePlayground() {
                 {/* Visualizer for Code Security */}
                 {response?.data?.securityScore !== undefined && (
                   <div className="space-y-3">
-                    <div className="flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.02] p-3">
+                    <div className="flex items-center justify-between rounded-xl border border-fg/[0.08] bg-fg/[0.02] p-3">
                       <div className="text-xs">
                         <div className="text-zinc-400">Security Score</div>
-                        <div className="text-xl font-bold text-white font-mono mt-0.5">
+                        <div className="text-xl font-bold text-fg font-mono mt-0.5">
                           {response.data.securityScore} / 100
                         </div>
                       </div>
@@ -663,7 +663,7 @@ export function InteractivePlayground() {
                   <div className="space-y-3">
                     <div className="text-[11px] font-bold text-zinc-400 uppercase">SVG Dynamic Card Preview</div>
                     <div
-                      className="rounded-xl border border-white/[0.1] p-3 bg-black/60 overflow-hidden"
+                      className="rounded-xl border border-fg/[0.1] p-3 bg-zinc-950/60 overflow-hidden"
                       dangerouslySetInnerHTML={{ __html: response.data.svgContent }}
                     />
                   </div>
@@ -686,25 +686,25 @@ export function InteractivePlayground() {
               </pre>
             ) : (
               <div className="space-y-2 font-mono text-xs text-zinc-300">
-                <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+                <div className="p-2 rounded bg-fg/[0.02] border border-fg/[0.06]">
                   <span className="text-blue-400">X-Request-Id:</span> {metrics.requestId}
                 </div>
-                <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+                <div className="p-2 rounded bg-fg/[0.02] border border-fg/[0.06]">
                   <span className="text-blue-400">X-Credits-Used:</span> {metrics.creditsUsed}
                 </div>
-                <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+                <div className="p-2 rounded bg-fg/[0.02] border border-fg/[0.06]">
                   <span className="text-blue-400">X-Credits-Remaining:</span> {metrics.creditsRemaining}
                 </div>
-                <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+                <div className="p-2 rounded bg-fg/[0.02] border border-fg/[0.06]">
                   <span className="text-blue-400">X-Execution-Time-Ms:</span> {metrics.durationMs}ms
                 </div>
-                <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+                <div className="p-2 rounded bg-fg/[0.02] border border-fg/[0.06]">
                   <span className="text-blue-400">X-RateLimit-Limit:</span> {metrics.rateLimitLimit}
                 </div>
-                <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+                <div className="p-2 rounded bg-fg/[0.02] border border-fg/[0.06]">
                   <span className="text-blue-400">X-RateLimit-Remaining:</span> {metrics.rateLimitRemaining}
                 </div>
-                <div className="p-2 rounded bg-white/[0.02] border border-white/[0.06]">
+                <div className="p-2 rounded bg-fg/[0.02] border border-fg/[0.06]">
                   <span className="text-blue-400">X-RateLimit-Reset:</span> {metrics.rateLimitReset}
                 </div>
               </div>
@@ -712,14 +712,14 @@ export function InteractivePlayground() {
           </div>
 
           {/* Bottom Actions */}
-          <div className="flex items-center justify-between border-t border-white/[0.06] bg-white/[0.01] px-5 py-2.5">
+          <div className="flex items-center justify-between border-t border-fg/[0.06] bg-fg/[0.01] px-5 py-2.5">
             <span className="text-[11px] text-zinc-500 font-mono">
               Engine: {response?.metadata?.processedBy || "DevTool Engine"} • Rate Left: {metrics.rateLimitRemaining}/{metrics.rateLimitLimit}
             </span>
 
             <button
               onClick={copyJson}
-              className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition font-medium"
+              className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-fg transition font-medium"
             >
               {copiedJson ? (
                 <>

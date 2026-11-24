@@ -4,12 +4,12 @@ import { monetizeConfig } from "@/../monetize.config";
 
 export function Footer() {
   return (
-    <footer className="border-t border-white/[0.08] bg-[#06070a] py-14 text-zinc-400">
+    <footer className="border-t border-fg/[0.08] bg-background py-14 text-zinc-400">
       <div className="mx-auto w-full max-w-[1760px] 2xl:max-w-[1920px] px-4 sm:px-6 lg:px-10 xl:px-14">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12">
           {/* Brand & Stack Info */}
           <div className="md:col-span-2 space-y-4">
-            <div className="flex items-center gap-2.5 text-white font-bold text-lg">
+            <div className="flex items-center gap-2.5 text-fg font-bold text-lg">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400">
                 <Terminal className="h-4 w-4" />
               </div>
@@ -33,27 +33,27 @@ export function Footer() {
 
           {/* Product links */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-bold text-fg uppercase tracking-wider mb-4">
               Developer Product
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/#playground" className="text-zinc-400 hover:text-white transition">
+                <Link href="/#playground" className="text-zinc-400 hover:text-fg transition">
                   Interactive Sandbox
                 </Link>
               </li>
               <li>
-                <Link href="/#pricing" className="text-zinc-400 hover:text-white transition">
+                <Link href="/#pricing" className="text-zinc-400 hover:text-fg transition">
                   Plans & Pricing
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="text-zinc-400 hover:text-white transition">
+                <Link href="/dashboard" className="text-zinc-400 hover:text-fg transition">
                   Developer Dashboard
                 </Link>
               </li>
               <li>
-                <Link href="/docs" className="text-zinc-400 hover:text-white transition">
+                <Link href="/docs" className="text-zinc-400 hover:text-fg transition">
                   API Reference & SDKs
                 </Link>
               </li>
@@ -62,12 +62,12 @@ export function Footer() {
 
           {/* Architecture / Developer Kit */}
           <div>
-            <h4 className="text-xs font-bold text-white uppercase tracking-wider mb-4">
+            <h4 className="text-xs font-bold text-fg uppercase tracking-wider mb-4">
               Infrastructure Kit
             </h4>
             <ul className="space-y-2.5 text-xs">
               <li>
-                <Link href="/admin" className="text-zinc-400 hover:text-white transition">
+                <Link href="/admin" className="text-zinc-400 hover:text-fg transition">
                   Founder Admin Telemetry
                 </Link>
               </li>
@@ -88,7 +88,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/[0.06] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
+        <div className="border-t border-fg/[0.06] pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
           <p>© {new Date().getFullYear()} {monetizeConfig.tool.name}. Built for technical founders shipping fast.</p>
           <div className="flex items-center gap-3">
             <span className="text-zinc-400">Zero-to-Revenue in 5–7 Days</span>

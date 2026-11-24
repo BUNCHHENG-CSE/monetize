@@ -2,26 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #08090c;
-  --foreground: #f4f4f6;
-  --card: #0e1015;
-  --card-foreground: #f4f4f6;
-  --border: #1e222d;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --muted: #151820;
-  --muted-foreground: #94a3b8;
-  --accent: #10b981;
-  --accent-foreground: #08090c;
+/* -----------------------------------------------------------------------------
+   Theme tokens (RGB triplets so Tailwind opacity modifiers work: bg-card/80)
+   Dark is the default; `html.light` swaps every token. The zinc scale is inverted
+   in light mode so existing zinc-* utilities adapt without per-component edits.
+----------------------------------------------------------------------------- */
+:root,
+html.dark {
+  color-scheme: dark;
+  --fg: 255 255 255;
+  --background: 8 9 12;
+  --foreground: 244 244 246;
+  --card: 12 14 20;
+  --card-hover: 16 19 30;
+  --card-foreground: 244 244 246;
+  --border: 30 34 45;
+  --primary: 59 130 246;
+  --primary-foreground: 255 255 255;
+  --muted: 21 24 32;
+  --muted-foreground: 148 163 184;
+  --accent: 16 185 129;
+  --accent-foreground: 8 9 12;
+
+  --zinc-50: 250 250 250;
+  --zinc-100: 244 244 245;
+  --zinc-200: 228 228 231;
+  --zinc-300: 212 212 216;
+  --zinc-400: 161 161 170;
+  --zinc-500: 113 113 122;
+  --zinc-600: 82 82 91;
+  --zinc-700: 63 63 70;
+  --zinc-800: 39 39 42;
+  --zinc-900: 24 24 27;
+  --zinc-950: 9 9 11;
+
+  --scrollbar-track: #08090c;
+  --scrollbar-thumb: #232733;
+  --scrollbar-thumb-hover: #373d50;
+  --pattern-line: rgba(255, 255, 255, 0.03);
+  --pattern-dot: rgba(255, 255, 255, 0.08);
+  --glass-panel-bg: rgba(14, 16, 21, 0.7);
+  --glass-card-bg: rgba(18, 21, 28, 0.6);
+  --glass-card-bg-hover: rgba(22, 26, 36, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-border-hover: rgba(255, 255, 255, 0.12);
+}
+
+html.light {
+  color-scheme: light;
+  --fg: 9 9 11;
+  --background: 248 249 251;
+  --foreground: 24 24 27;
+  --card: 255 255 255;
+  --card-hover: 243 244 247;
+  --card-foreground: 24 24 27;
+  --border: 226 228 233;
+  --primary: 37 99 235;
+  --primary-foreground: 255 255 255;
+  --muted: 241 243 246;
+  --muted-foreground: 82 89 104;
+  --accent: 5 150 105;
+  --accent-foreground: 255 255 255;
+
+  /* Inverted neutral scale, tuned for WCAG AA contrast on white */
+  --zinc-50: 9 9 11;
+  --zinc-100: 24 24 27;
+  --zinc-200: 39 39 42;
+  --zinc-300: 52 52 58;
+  --zinc-400: 82 82 91;
+  --zinc-500: 107 107 116;
+  --zinc-600: 140 140 150;
+  --zinc-700: 190 190 198;
+  --zinc-800: 228 228 233;
+  --zinc-900: 241 242 245;
+  --zinc-950: 248 249 251;
+
+  --scrollbar-track: #f3f4f6;
+  --scrollbar-thumb: #cfd3da;
+  --scrollbar-thumb-hover: #aab0bb;
+  --pattern-line: rgba(9, 9, 11, 0.05);
+  --pattern-dot: rgba(9, 9, 11, 0.1);
+  --glass-panel-bg: rgba(255, 255, 255, 0.75);
+  --glass-card-bg: rgba(255, 255, 255, 0.7);
+  --glass-card-bg-hover: rgba(255, 255, 255, 0.9);
+  --glass-border: rgba(9, 9, 11, 0.08);
+  --glass-border-hover: rgba(9, 9, 11, 0.16);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: rgb(var(--foreground));
+  background: rgb(var(--background));
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   overflow-x: hidden;
   letter-spacing: -0.01em;
+}
+
+/* Smooth theme switch without animating every hover transition on load */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, fill 0.25s ease !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition,
+  html.theme-transition * {
+    transition: none !important;
+  }
 }
 
 /* Custom Sleek Scrollbars */
@@ -30,27 +118,27 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #08090c;
+  background: var(--scrollbar-track);
 }
 ::-webkit-scrollbar-thumb {
-  background: #232733;
+  background: var(--scrollbar-thumb);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #373d50;
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* High-tech developer grid & ambient mesh */
 .bg-grid-pattern {
   background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    linear-gradient(to right, var(--pattern-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--pattern-line) 1px, transparent 1px);
 }
 
 .bg-dot-pattern {
   background-size: 24px 24px;
-  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-image: radial-gradient(var(--pattern-dot) 1px, transparent 1px);
 }
 
 .glow-blue {
@@ -71,23 +159,23 @@ body {
 
 /* Glassmorphism helpers */
 .glass-panel {
-  background: rgba(14, 16, 21, 0.7);
+  background: var(--glass-panel-bg);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  border: 1px solid var(--glass-border);
 }
 
 .glass-card {
-  background: rgba(18, 21, 28, 0.6);
+  background: var(--glass-card-bg);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: rgba(22, 26, 36, 0.75);
+  border-color: var(--glass-border-hover);
+  background: var(--glass-card-bg-hover);
 }
 
 /* Gradient Borders */
@@ -106,3 +194,78 @@ body {
   mask-composite: exclude;
   pointer-events: none;
 }
+
+/* Light mode: pastel accent text (tuned for dark bg) -> deeper shades for contrast */
+html.light .text-blue-100, html.light .hover\:text-blue-100:hover, html.light .group:hover .group-hover\:text-blue-100 { color: theme('colors.blue.800'); }
+html.light .text-blue-200, html.light .hover\:text-blue-200:hover, html.light .group:hover .group-hover\:text-blue-200 { color: theme('colors.blue.800'); }
+html.light .text-blue-300, html.light .hover\:text-blue-300:hover, html.light .group:hover .group-hover\:text-blue-300 { color: theme('colors.blue.700'); }
+html.light .text-blue-400, html.light .hover\:text-blue-400:hover, html.light .group:hover .group-hover\:text-blue-400 { color: theme('colors.blue.600'); }
+html.light .text-indigo-100, html.light .hover\:text-indigo-100:hover, html.light .group:hover .group-hover\:text-indigo-100 { color: theme('colors.indigo.800'); }
+html.light .text-indigo-200, html.light .hover\:text-indigo-200:hover, html.light .group:hover .group-hover\:text-indigo-200 { color: theme('colors.indigo.800'); }
+html.light .text-indigo-300, html.light .hover\:text-indigo-300:hover, html.light .group:hover .group-hover\:text-indigo-300 { color: theme('colors.indigo.700'); }
+html.light .text-indigo-400, html.light .hover\:text-indigo-400:hover, html.light .group:hover .group-hover\:text-indigo-400 { color: theme('colors.indigo.600'); }
+html.light .text-emerald-100, html.light .hover\:text-emerald-100:hover, html.light .group:hover .group-hover\:text-emerald-100 { color: theme('colors.emerald.800'); }
+html.light .text-emerald-200, html.light .hover\:text-emerald-200:hover, html.light .group:hover .group-hover\:text-emerald-200 { color: theme('colors.emerald.800'); }
+html.light .text-emerald-300, html.light .hover\:text-emerald-300:hover, html.light .group:hover .group-hover\:text-emerald-300 { color: theme('colors.emerald.700'); }
+html.light .text-emerald-400, html.light .hover\:text-emerald-400:hover, html.light .group:hover .group-hover\:text-emerald-400 { color: theme('colors.emerald.600'); }
+html.light .text-green-100, html.light .hover\:text-green-100:hover, html.light .group:hover .group-hover\:text-green-100 { color: theme('colors.green.800'); }
+html.light .text-green-200, html.light .hover\:text-green-200:hover, html.light .group:hover .group-hover\:text-green-200 { color: theme('colors.green.800'); }
+html.light .text-green-300, html.light .hover\:text-green-300:hover, html.light .group:hover .group-hover\:text-green-300 { color: theme('colors.green.700'); }
+html.light .text-green-400, html.light .hover\:text-green-400:hover, html.light .group:hover .group-hover\:text-green-400 { color: theme('colors.green.600'); }
+html.light .text-red-100, html.light .hover\:text-red-100:hover, html.light .group:hover .group-hover\:text-red-100 { color: theme('colors.red.800'); }
+html.light .text-red-200, html.light .hover\:text-red-200:hover, html.light .group:hover .group-hover\:text-red-200 { color: theme('colors.red.800'); }
+html.light .text-red-300, html.light .hover\:text-red-300:hover, html.light .group:hover .group-hover\:text-red-300 { color: theme('colors.red.700'); }
+html.light .text-red-400, html.light .hover\:text-red-400:hover, html.light .group:hover .group-hover\:text-red-400 { color: theme('colors.red.600'); }
+html.light .text-rose-100, html.light .hover\:text-rose-100:hover, html.light .group:hover .group-hover\:text-rose-100 { color: theme('colors.rose.800'); }
+html.light .text-rose-200, html.light .hover\:text-rose-200:hover, html.light .group:hover .group-hover\:text-rose-200 { color: theme('colors.rose.800'); }
+html.light .text-rose-300, html.light .hover\:text-rose-300:hover, html.light .group:hover .group-hover\:text-rose-300 { color: theme('colors.rose.700'); }
+html.light .text-rose-400, html.light .hover\:text-rose-400:hover, html.light .group:hover .group-hover\:text-rose-400 { color: theme('colors.rose.600'); }
+html.light .text-purple-100, html.light .hover\:text-purple-100:hover, html.light .group:hover .group-hover\:text-purple-100 { color: theme('colors.purple.800'); }
+html.light .text-purple-200, html.light .hover\:text-purple-200:hover, html.light .group:hover .group-hover\:text-purple-200 { color: theme('colors.purple.800'); }
+html.light .text-purple-300, html.light .hover\:text-purple-300:hover, html.light .group:hover .group-hover\:text-purple-300 { color: theme('colors.purple.700'); }
+html.light .text-purple-400, html.light .hover\:text-purple-400:hover, html.light .group:hover .group-hover\:text-purple-400 { color: theme('colors.purple.600'); }
+html.light .text-violet-100, html.light .hover\:text-violet-100:hover, html.light .group:hover .group-hover\:text-violet-100 { color: theme('colors.violet.800'); }
+html.light .text-violet-200, html.light .hover\:text-violet-200:hover, html.light .group:hover .group-hover\:text-violet-200 { color: theme('colors.violet.800'); }
+html.light .text-violet-300, html.light .hover\:text-violet-300:hover, html.light .group:hover .group-hover\:text-violet-300 { color: theme('colors.violet.700'); }
+html.light .text-violet-400, html.light .hover\:text-violet-400:hover, html.light .group:hover .group-hover\:text-violet-400 { color: theme('colors.violet.600'); }
+html.light .text-cyan-100, html.light .hover\:text-cyan-100:hover, html.light .group:hover .group-hover\:text-cyan-100 { color: theme('colors.cyan.800'); }
+html.light .text-cyan-200, html.light .hover\:text-cyan-200:hover, html.light .group:hover .group-hover\:text-cyan-200 { color: theme('colors.cyan.800'); }
+html.light .text-cyan-300, html.light .hover\:text-cyan-300:hover, html.light .group:hover .group-hover\:text-cyan-300 { color: theme('colors.cyan.700'); }
+html.light .text-cyan-400, html.light .hover\:text-cyan-400:hover, html.light .group:hover .group-hover\:text-cyan-400 { color: theme('colors.cyan.600'); }
+html.light .text-sky-100, html.light .hover\:text-sky-100:hover, html.light .group:hover .group-hover\:text-sky-100 { color: theme('colors.sky.800'); }
+html.light .text-sky-200, html.light .hover\:text-sky-200:hover, html.light .group:hover .group-hover\:text-sky-200 { color: theme('colors.sky.800'); }
+html.light .text-sky-300, html.light .hover\:text-sky-300:hover, html.light .group:hover .group-hover\:text-sky-300 { color: theme('colors.sky.700'); }
+html.light .text-sky-400, html.light .hover\:text-sky-400:hover, html.light .group:hover .group-hover\:text-sky-400 { color: theme('colors.sky.600'); }
+html.light .text-amber-100, html.light .hover\:text-amber-100:hover, html.light .group:hover .group-hover\:text-amber-100 { color: theme('colors.amber.800'); }
+html.light .text-amber-200, html.light .hover\:text-amber-200:hover, html.light .group:hover .group-hover\:text-amber-200 { color: theme('colors.amber.800'); }
+html.light .text-amber-300, html.light .hover\:text-amber-300:hover, html.light .group:hover .group-hover\:text-amber-300 { color: theme('colors.amber.700'); }
+html.light .text-amber-400, html.light .hover\:text-amber-400:hover, html.light .group:hover .group-hover\:text-amber-400 { color: theme('colors.amber.600'); }
+html.light .text-orange-100, html.light .hover\:text-orange-100:hover, html.light .group:hover .group-hover\:text-orange-100 { color: theme('colors.orange.800'); }
+html.light .text-orange-200, html.light .hover\:text-orange-200:hover, html.light .group:hover .group-hover\:text-orange-200 { color: theme('colors.orange.800'); }
+html.light .text-orange-300, html.light .hover\:text-orange-300:hover, html.light .group:hover .group-hover\:text-orange-300 { color: theme('colors.orange.700'); }
+html.light .text-orange-400, html.light .hover\:text-orange-400:hover, html.light .group:hover .group-hover\:text-orange-400 { color: theme('colors.orange.600'); }
+html.light .text-pink-100, html.light .hover\:text-pink-100:hover, html.light .group:hover .group-hover\:text-pink-100 { color: theme('colors.pink.800'); }
+html.light .text-pink-200, html.light .hover\:text-pink-200:hover, html.light .group:hover .group-hover\:text-pink-200 { color: theme('colors.pink.800'); }
+html.light .text-pink-300, html.light .hover\:text-pink-300:hover, html.light .group:hover .group-hover\:text-pink-300 { color: theme('colors.pink.700'); }
+html.light .text-pink-400, html.light .hover\:text-pink-400:hover, html.light .group:hover .group-hover\:text-pink-400 { color: theme('colors.pink.600'); }
+html.light .text-teal-100, html.light .hover\:text-teal-100:hover, html.light .group:hover .group-hover\:text-teal-100 { color: theme('colors.teal.800'); }
+html.light .text-teal-200, html.light .hover\:text-teal-200:hover, html.light .group:hover .group-hover\:text-teal-200 { color: theme('colors.teal.800'); }
+html.light .text-teal-300, html.light .hover\:text-teal-300:hover, html.light .group:hover .group-hover\:text-teal-300 { color: theme('colors.teal.700'); }
+html.light .text-teal-400, html.light .hover\:text-teal-400:hover, html.light .group:hover .group-hover\:text-teal-400 { color: theme('colors.teal.600'); }
+html.light .text-yellow-100, html.light .hover\:text-yellow-100:hover, html.light .group:hover .group-hover\:text-yellow-100 { color: theme('colors.yellow.800'); }
+html.light .text-yellow-200, html.light .hover\:text-yellow-200:hover, html.light .group:hover .group-hover\:text-yellow-200 { color: theme('colors.yellow.800'); }
+html.light .text-yellow-300, html.light .hover\:text-yellow-300:hover, html.light .group:hover .group-hover\:text-yellow-300 { color: theme('colors.yellow.700'); }
+html.light .text-yellow-400, html.light .hover\:text-yellow-400:hover, html.light .group:hover .group-hover\:text-yellow-400 { color: theme('colors.yellow.600'); }
+html.light .text-fuchsia-100, html.light .hover\:text-fuchsia-100:hover, html.light .group:hover .group-hover\:text-fuchsia-100 { color: theme('colors.fuchsia.800'); }
+html.light .text-fuchsia-200, html.light .hover\:text-fuchsia-200:hover, html.light .group:hover .group-hover\:text-fuchsia-200 { color: theme('colors.fuchsia.800'); }
+html.light .text-fuchsia-300, html.light .hover\:text-fuchsia-300:hover, html.light .group:hover .group-hover\:text-fuchsia-300 { color: theme('colors.fuchsia.700'); }
+html.light .text-fuchsia-400, html.light .hover\:text-fuchsia-400:hover, html.light .group:hover .group-hover\:text-fuchsia-400 { color: theme('colors.fuchsia.600'); }
+html.light .text-lime-100, html.light .hover\:text-lime-100:hover, html.light .group:hover .group-hover\:text-lime-100 { color: theme('colors.lime.800'); }
+html.light .text-lime-200, html.light .hover\:text-lime-200:hover, html.light .group:hover .group-hover\:text-lime-200 { color: theme('colors.lime.800'); }
+html.light .text-lime-300, html.light .hover\:text-lime-300:hover, html.light .group:hover .group-hover\:text-lime-300 { color: theme('colors.lime.700'); }
+html.light .text-lime-400, html.light .hover\:text-lime-400:hover, html.light .group:hover .group-hover\:text-lime-400 { color: theme('colors.lime.600'); }
+html.light .text-emerald-300, html.light .text-emerald-400 { color: theme('colors.emerald.700'); }
+html.light .text-amber-300, html.light .text-amber-400, html.light .text-yellow-400 { color: theme('colors.amber.700'); }
+html.light [class*='shadow-[0_'][class*='rgba(0,0,0'] { --tw-shadow-color: rgba(15, 23, 42, 0.12); box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12); }
+/* Light mode: modal backdrops dim instead of blacking out */
+html.light .bg-black\/70, html.light .bg-black\/80 { background-color: rgba(15, 23, 42, 0.35); }

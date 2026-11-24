@@ -506,14 +506,14 @@ export default function AdminPage() {
 
   if (!isAdmin) {
     return (
-      <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
+      <div className="min-h-screen bg-background text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
         <Navbar />
         <main className="flex-1 py-24 flex items-center justify-center">
           <div className="mx-auto max-w-md px-4 text-center">
             <div className="mx-auto h-16 w-16 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-5 shadow-lg shadow-rose-500/10">
               <Shield className="h-8 w-8" />
             </div>
-            <h1 className="text-2xl font-bold text-white mb-2">Access Denied</h1>
+            <h1 className="text-2xl font-bold text-fg mb-2">Access Denied</h1>
             <p className="text-sm text-zinc-400 mb-6 leading-relaxed">
               You do not have administrative privileges to access the Admin Control Center.
             </p>
@@ -531,7 +531,7 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-background text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
       <Navbar />
 
       <main className="flex-1 py-10">
@@ -553,13 +553,13 @@ export default function AdminPage() {
           )}
 
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/[0.08]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-fg/[0.08]">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/20 bg-purple-500/10 px-3 py-1 text-xs font-semibold text-purple-400 mb-2">
                 <ShieldCheck className="h-3.5 w-3.5" />
                 <span>Founder Commercialization Center</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-fg tracking-tight">
                 Admin Control & Account Management
               </h1>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1">
@@ -572,7 +572,7 @@ export default function AdminPage() {
                 type="button"
                 onClick={loadAdminData}
                 disabled={isLoading}
-                className="flex items-center gap-1.5 rounded-xl border border-white/[0.08] bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-300 hover:text-white transition"
+                className="flex items-center gap-1.5 rounded-xl border border-fg/[0.08] bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-300 hover:text-fg transition"
               >
                 <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? "animate-spin text-blue-400" : ""}`} />
                 <span>Refresh</span>
@@ -587,14 +587,14 @@ export default function AdminPage() {
 
           {/* Telemetry Metric Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-            <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 backdrop-blur-xl shadow-lg">
+            <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 backdrop-blur-xl shadow-lg">
               <div className="flex items-center justify-between text-zinc-400 text-xs font-semibold">
                 <span>Monthly Recurring Revenue</span>
                 <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
                   <DollarSign className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white font-mono">
+              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-fg font-mono">
                 ${telemetry ? telemetry.monthlyRecurringRevenue.toLocaleString() : "2,842"}
               </div>
               <div className="mt-2.5 flex items-center gap-1.5 text-xs text-emerald-400 font-medium">
@@ -603,14 +603,14 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 backdrop-blur-xl shadow-lg">
+            <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 backdrop-blur-xl shadow-lg">
               <div className="flex items-center justify-between text-zinc-400 text-xs font-semibold">
                 <span>Total Registered Accounts</span>
                 <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400">
                   <Users className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white font-mono">
+              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-fg font-mono">
                 {telemetry ? telemetry.totalUsers : accounts.length}
               </div>
               <div className="mt-2.5 text-xs text-zinc-400">
@@ -618,14 +618,14 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 backdrop-blur-xl shadow-lg">
+            <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 backdrop-blur-xl shadow-lg">
               <div className="flex items-center justify-between text-zinc-400 text-xs font-semibold">
                 <span>Total Tool Invocations</span>
                 <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400">
                   <Activity className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white font-mono">
+              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-fg font-mono">
                 {telemetry ? telemetry.totalUsageLogs.toLocaleString() : "128,490"}
               </div>
               <div className="mt-2.5 text-xs text-zinc-400">
@@ -633,14 +633,14 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 backdrop-blur-xl shadow-lg">
+            <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 backdrop-blur-xl shadow-lg">
               <div className="flex items-center justify-between text-zinc-400 text-xs font-semibold">
                 <span>Total Credits Distributed</span>
                 <div className="p-2 rounded-xl bg-amber-500/10 text-amber-400">
                   <Coins className="h-4 w-4" />
                 </div>
               </div>
-              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-white font-mono">
+              <div className="mt-3 text-3xl sm:text-4xl font-extrabold text-fg font-mono">
                 {telemetry ? telemetry.totalCreditsDistributed.toLocaleString() : "11,420"}
               </div>
               <div className="mt-2.5 text-xs text-emerald-400 font-medium">
@@ -650,19 +650,19 @@ export default function AdminPage() {
           </div>
 
           {/* Navigation Tabs */}
-          <div className="flex flex-wrap items-center gap-2 mb-8 border-b border-white/[0.08] pb-4">
+          <div className="flex flex-wrap items-center gap-2 mb-8 border-b border-fg/[0.08] pb-4">
             <button
               type="button"
               onClick={() => setActiveTab("accounts")}
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "accounts"
                   ? "bg-blue-600 text-white shadow-md"
-                  : "text-zinc-400 hover:text-white hover:bg-white/[0.04]"
+                  : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
               <Users className="h-4 w-4" />
               <span>Accounts & Users Control</span>
-              <span className="rounded-full bg-white/20 px-1.5 py-0.2 text-[10px] font-mono">
+              <span className="rounded-full bg-fg/20 px-1.5 py-0.2 text-[10px] font-mono">
                 {accounts.length}
               </span>
             </button>
@@ -673,7 +673,7 @@ export default function AdminPage() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "simulator"
                   ? "bg-blue-600 text-white shadow-md"
-                  : "text-zinc-400 hover:text-white hover:bg-white/[0.04]"
+                  : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
               <CreditCard className="h-4 w-4" />
@@ -686,7 +686,7 @@ export default function AdminPage() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "logs"
                   ? "bg-blue-600 text-white shadow-md"
-                  : "text-zinc-400 hover:text-white hover:bg-white/[0.04]"
+                  : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
               <Activity className="h-4 w-4" />
@@ -699,7 +699,7 @@ export default function AdminPage() {
               className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition ${
                 activeTab === "checklist"
                   ? "bg-blue-600 text-white shadow-md"
-                  : "text-zinc-400 hover:text-white hover:bg-white/[0.04]"
+                  : "text-zinc-400 hover:text-fg hover:bg-fg/[0.04]"
               }`}
             >
               <ShieldCheck className="h-4 w-4" />
@@ -711,7 +711,7 @@ export default function AdminPage() {
           {activeTab === "accounts" && (
             <div className="space-y-6">
               {/* Filter & Action Controls */}
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-5 backdrop-blur-xl">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 rounded-3xl border border-fg/[0.08] bg-card/80 p-5 backdrop-blur-xl">
                 <div className="flex flex-wrap items-center gap-3 flex-1">
                   {/* Search Bar */}
                   <div className="relative flex-1 min-w-[220px]">
@@ -721,7 +721,7 @@ export default function AdminPage() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder="Search accounts by email, name, or ID..."
-                      className="w-full rounded-xl border border-white/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
+                      className="w-full rounded-xl border border-fg/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2 text-xs text-fg placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
                     />
                   </div>
 
@@ -764,10 +764,10 @@ export default function AdminPage() {
               </div>
 
               {/* Accounts Table */}
-              <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 overflow-hidden backdrop-blur-xl shadow-2xl">
+              <div className="rounded-3xl border border-fg/[0.08] bg-card/80 overflow-hidden backdrop-blur-xl shadow-2xl">
                 <div className="overflow-x-auto">
                   <table className="w-full text-left text-xs">
-                    <thead className="border-b border-white/[0.08] bg-zinc-950/60 text-[11px] font-mono text-zinc-400 uppercase tracking-wider">
+                    <thead className="border-b border-fg/[0.08] bg-zinc-950/60 text-[11px] font-mono text-zinc-400 uppercase tracking-wider">
                       <tr>
                         <th className="px-6 py-4">Account / Developer</th>
                         <th className="px-6 py-4">Role</th>
@@ -778,7 +778,7 @@ export default function AdminPage() {
                         <th className="px-6 py-4 text-right">Quick Controls</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.04]">
+                    <tbody className="divide-y divide-fg/[0.04]">
                       {filteredAccounts.length === 0 ? (
                         <tr>
                           <td colSpan={7} className="px-6 py-12 text-center text-zinc-500 font-mono">
@@ -787,7 +787,7 @@ export default function AdminPage() {
                         </tr>
                       ) : (
                         filteredAccounts.map((acc) => (
-                          <tr key={acc.id} className="hover:bg-white/[0.02] transition">
+                          <tr key={acc.id} className="hover:bg-fg/[0.02] transition">
                             {/* User details */}
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-3">
@@ -799,7 +799,7 @@ export default function AdminPage() {
                                   )}
                                 </div>
                                 <div className="truncate">
-                                  <div className="font-bold text-white flex items-center gap-2">
+                                  <div className="font-bold text-fg flex items-center gap-2">
                                     <span>{acc.name || "Developer"}</span>
                                     {acc.id === user?.id && (
                                       <span className="rounded bg-blue-500/20 px-1.5 py-0.2 text-[9px] font-mono text-blue-300">
@@ -834,7 +834,7 @@ export default function AdminPage() {
                                 className={`rounded-lg px-2.5 py-1 text-[11px] font-mono font-semibold transition border ${
                                   acc.role === "admin"
                                     ? "bg-purple-500/10 text-purple-300 border-purple-500/30 hover:bg-purple-500/20"
-                                    : "bg-zinc-900 text-zinc-300 border-white/[0.08] hover:bg-zinc-800"
+                                    : "bg-zinc-900 text-zinc-300 border-fg/[0.08] hover:bg-zinc-800"
                                 }`}
                                 title="Click to toggle Role"
                               >
@@ -879,7 +879,7 @@ export default function AdminPage() {
                             {/* Balance & Adjust */}
                             <td className="px-6 py-4">
                               <div className="flex items-center gap-2">
-                                <span className="font-mono font-bold text-white text-xs">
+                                <span className="font-mono font-bold text-fg text-xs">
                                   {acc.creditsBalance}
                                 </span>
                                 <button
@@ -905,7 +905,7 @@ export default function AdminPage() {
                                 <button
                                   type="button"
                                   onClick={() => handleImpersonate(acc)}
-                                  className="p-1.5 rounded-lg border border-white/[0.06] bg-zinc-900 text-zinc-300 hover:text-white hover:bg-zinc-800 transition"
+                                  className="p-1.5 rounded-lg border border-fg/[0.06] bg-zinc-900 text-zinc-300 hover:text-fg hover:bg-zinc-800 transition"
                                   title="Log in / View as this user"
                                 >
                                   <LogIn className="h-3.5 w-3.5" />
@@ -933,10 +933,10 @@ export default function AdminPage() {
 
           {/* TAB 2: PAYMENT & WEBHOOK SIMULATOR */}
           {activeTab === "simulator" && (
-            <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 sm:p-8 shadow-xl backdrop-blur-xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
+            <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 sm:p-8 shadow-xl backdrop-blur-xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-fg/[0.08]">
                 <div>
-                  <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                  <h2 className="text-lg font-bold text-fg flex items-center gap-2">
                     <CreditCard className="h-5 w-5 text-blue-400" />
                     <span>Payment Gateway & Webhook Simulator</span>
                   </h2>
@@ -945,7 +945,7 @@ export default function AdminPage() {
                   </p>
                 </div>
 
-                <span className="text-xs font-mono text-zinc-400 bg-zinc-900 px-3 py-1.5 rounded-xl border border-white/[0.06]">
+                <span className="text-xs font-mono text-zinc-400 bg-zinc-900 px-3 py-1.5 rounded-xl border border-fg/[0.06]">
                   Target: /api/webhooks/{monetizeConfig.providers.payments}
                 </span>
               </div>
@@ -973,7 +973,7 @@ export default function AdminPage() {
                 >
                   {isSimulating ? (
                     <>
-                      <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                      <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-fg border-t-transparent" />
                       <span>Dispatching Event...</span>
                     </>
                   ) : (
@@ -993,7 +993,7 @@ export default function AdminPage() {
               )}
 
               {/* Simulation History Feed */}
-              <div className="mt-6 rounded-2xl border border-white/[0.06] bg-zinc-950/60 p-4">
+              <div className="mt-6 rounded-2xl border border-fg/[0.06] bg-zinc-950/60 p-4">
                 <div className="text-[11px] font-mono font-semibold text-zinc-400 uppercase tracking-wider mb-3">
                   Simulation Dispatch Audit Feed
                 </div>
@@ -1001,7 +1001,7 @@ export default function AdminPage() {
                   {history.map((item) => (
                     <div
                       key={item.id}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl border border-white/[0.04] bg-white/[0.01] p-3 text-xs"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 rounded-xl border border-fg/[0.04] bg-fg/[0.01] p-3 text-xs"
                     >
                       <div className="flex items-center gap-2.5">
                         <span className="rounded bg-blue-500/10 px-2 py-0.5 font-mono text-[11px] text-blue-400 border border-blue-500/20">
@@ -1022,10 +1022,10 @@ export default function AdminPage() {
 
           {/* TAB 3: GLOBAL API INVOCATION LOGS */}
           {activeTab === "logs" && (
-            <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 sm:p-8 shadow-xl backdrop-blur-xl">
-              <div className="flex items-center justify-between pb-6 border-b border-white/[0.08] mb-6">
+            <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 sm:p-8 shadow-xl backdrop-blur-xl">
+              <div className="flex items-center justify-between pb-6 border-b border-fg/[0.08] mb-6">
                 <div>
-                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <h3 className="text-base font-bold text-fg flex items-center gap-2">
                     <Activity className="h-4 w-4 text-purple-400" />
                     <span>Real-time Global Invocation Stream</span>
                   </h3>
@@ -1036,7 +1036,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={loadAdminData}
-                  className="rounded-xl border border-white/[0.08] bg-zinc-900 px-3 py-1.5 text-xs text-zinc-300 hover:text-white"
+                  className="rounded-xl border border-fg/[0.08] bg-zinc-900 px-3 py-1.5 text-xs text-zinc-300 hover:text-fg"
                 >
                   Refresh Logs
                 </button>
@@ -1049,13 +1049,13 @@ export default function AdminPage() {
                   globalLogs.map((log) => (
                     <div
                       key={log.id}
-                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl border border-white/[0.04] bg-zinc-950/70"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl border border-fg/[0.04] bg-zinc-950/70"
                     >
                       <div className="flex items-center gap-3">
                         <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-400 border border-emerald-500/20">
                           {log.statusCode}
                         </span>
-                        <span className="font-bold text-white">{log.endpoint}</span>
+                        <span className="font-bold text-fg">{log.endpoint}</span>
                         <span className="text-zinc-500 text-[11px]">{log.userEmail}</span>
                       </div>
 
@@ -1073,47 +1073,47 @@ export default function AdminPage() {
 
           {/* TAB 4: PRODUCTION CHECKLIST */}
           {activeTab === "checklist" && (
-            <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 sm:p-8 backdrop-blur-xl">
-              <h3 className="text-base font-bold text-white mb-4 flex items-center gap-2">
+            <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 sm:p-8 backdrop-blur-xl">
+              <h3 className="text-base font-bold text-fg mb-4 flex items-center gap-2">
                 <ShieldCheck className="h-5 w-5 text-emerald-400" />
                 <span>Production Commercialization Checklist</span>
               </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                <div className="flex items-start gap-3 rounded-2xl border border-white/[0.06] bg-zinc-950/70 p-4">
+                <div className="flex items-start gap-3 rounded-2xl border border-fg/[0.06] bg-zinc-950/70 p-4">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white">1. MoR Tax Handling Configured</h4>
+                    <h4 className="font-bold text-fg">1. MoR Tax Handling Configured</h4>
                     <p className="text-zinc-400 mt-1 leading-relaxed">
                       Lemon Squeezy configured as Merchant of Record. Global sales tax, EU VAT, and cross-border currency conversions handled automatically.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 rounded-2xl border border-white/[0.06] bg-zinc-950/70 p-4">
+                <div className="flex items-start gap-3 rounded-2xl border border-fg/[0.06] bg-zinc-950/70 p-4">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white">2. Atomic Credit Deductions Verified</h4>
+                    <h4 className="font-bold text-fg">2. Atomic Credit Deductions Verified</h4>
                     <p className="text-zinc-400 mt-1 leading-relaxed">
                       PostgreSQL row locking prevents race conditions and overdrafts across concurrent API callers. Balance checked before tool logic runs.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 rounded-2xl border border-white/[0.06] bg-zinc-950/70 p-4">
+                <div className="flex items-start gap-3 rounded-2xl border border-fg/[0.06] bg-zinc-950/70 p-4">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white">3. Customer Billing Portal Enabled</h4>
+                    <h4 className="font-bold text-fg">3. Customer Billing Portal Enabled</h4>
                     <p className="text-zinc-400 mt-1 leading-relaxed">
                       Subscribers can self-service cancel, upgrade, switch payment methods, and download PDF tax receipts without support tickets.
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-start gap-3 rounded-2xl border border-white/[0.06] bg-zinc-950/70 p-4">
+                <div className="flex items-start gap-3 rounded-2xl border border-fg/[0.06] bg-zinc-950/70 p-4">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="font-bold text-white">4. API Key Hashing Guard</h4>
+                    <h4 className="font-bold text-fg">4. API Key Hashing Guard</h4>
                     <p className="text-zinc-400 mt-1 leading-relaxed">
                       Secret keys are SHA-256 hashed before storage; plaintext keys are never stored in the database.
                     </p>
@@ -1128,16 +1128,16 @@ export default function AdminPage() {
       {/* MODAL: CREATE ACCOUNT */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-          <div className="w-full max-w-md rounded-3xl border border-white/[0.1] bg-[#0c0e14] p-6 sm:p-8 shadow-2xl">
-            <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-6">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+          <div className="w-full max-w-md rounded-3xl border border-fg/[0.1] bg-card p-6 sm:p-8 shadow-2xl">
+            <div className="flex items-center justify-between pb-4 border-b border-fg/[0.08] mb-6">
+              <h3 className="text-base font-bold text-fg flex items-center gap-2">
                 <UserPlus className="h-4 w-4 text-blue-400" />
                 <span>Create New Account</span>
               </h3>
               <button
                 type="button"
                 onClick={() => setShowCreateModal(false)}
-                className="text-zinc-400 hover:text-white"
+                className="text-zinc-400 hover:text-fg"
               >
                 ✕
               </button>
@@ -1152,7 +1152,7 @@ export default function AdminPage() {
                   value={createEmail}
                   onChange={(e) => setCreateEmail(e.target.value)}
                   placeholder="developer@startup.com"
-                  className="w-full rounded-xl border border-white/[0.08] bg-zinc-950 px-3.5 py-2.5 text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-fg/[0.08] bg-zinc-950 px-3.5 py-2.5 text-fg focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -1163,7 +1163,7 @@ export default function AdminPage() {
                   value={createName}
                   onChange={(e) => setCreateName(e.target.value)}
                   placeholder="Jordan Lee"
-                  className="w-full rounded-xl border border-white/[0.08] bg-zinc-950 px-3.5 py-2.5 text-white focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-fg/[0.08] bg-zinc-950 px-3.5 py-2.5 text-fg focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -1202,7 +1202,7 @@ export default function AdminPage() {
                   type="number"
                   value={createCredits}
                   onChange={(e) => setCreateCredits(Number(e.target.value))}
-                  className="w-full rounded-xl border border-white/[0.08] bg-zinc-950 px-3.5 py-2.5 text-white font-mono focus:outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-fg/[0.08] bg-zinc-950 px-3.5 py-2.5 text-fg font-mono focus:outline-none focus:border-blue-500"
                 />
               </div>
 
@@ -1210,7 +1210,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => setShowCreateModal(false)}
-                  className="px-4 py-2 rounded-xl text-zinc-400 hover:text-white"
+                  className="px-4 py-2 rounded-xl text-zinc-400 hover:text-fg"
                 >
                   Cancel
                 </button>
@@ -1230,13 +1230,13 @@ export default function AdminPage() {
       {/* MODAL: ADJUST CREDITS */}
       {creditModalAccount && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
-          <div className="w-full max-w-sm rounded-3xl border border-white/[0.1] bg-[#0c0e14] p-6 shadow-2xl">
-            <h3 className="text-base font-bold text-white mb-2 flex items-center gap-2">
+          <div className="w-full max-w-sm rounded-3xl border border-fg/[0.1] bg-card p-6 shadow-2xl">
+            <h3 className="text-base font-bold text-fg mb-2 flex items-center gap-2">
               <Coins className="h-4 w-4 text-emerald-400" />
               <span>Adjust Credit Balance</span>
             </h3>
             <p className="text-xs text-zinc-400 mb-4">
-              Account: <span className="text-white font-mono">{creditModalAccount.email}</span>
+              Account: <span className="text-fg font-mono">{creditModalAccount.email}</span>
               <br />
               Current balance: <span className="text-emerald-400 font-mono font-bold">{creditModalAccount.creditsBalance}</span>
             </p>
@@ -1249,7 +1249,7 @@ export default function AdminPage() {
                     type="button"
                     onClick={() => handleAdjustCredits(creditModalAccount, amt)}
                     disabled={isAdjusting}
-                    className="flex-1 py-1.5 rounded-xl border border-white/[0.08] bg-zinc-900 text-xs font-mono font-bold text-zinc-200 hover:text-white hover:bg-zinc-800 transition"
+                    className="flex-1 py-1.5 rounded-xl border border-fg/[0.08] bg-zinc-900 text-xs font-mono font-bold text-zinc-200 hover:text-fg hover:bg-zinc-800 transition"
                   >
                     {amt > 0 ? `+${amt}` : amt}
                   </button>
@@ -1263,7 +1263,7 @@ export default function AdminPage() {
                     type="number"
                     value={adjustAmount}
                     onChange={(e) => setAdjustAmount(Number(e.target.value))}
-                    className="flex-1 rounded-xl border border-white/[0.08] bg-zinc-950 px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-blue-500"
+                    className="flex-1 rounded-xl border border-fg/[0.08] bg-zinc-950 px-3 py-2 text-xs font-mono text-fg focus:outline-none focus:border-blue-500"
                   />
                   <button
                     type="button"
@@ -1280,7 +1280,7 @@ export default function AdminPage() {
                 <button
                   type="button"
                   onClick={() => setCreditModalAccount(null)}
-                  className="px-4 py-1.5 text-xs text-zinc-400 hover:text-white"
+                  className="px-4 py-1.5 text-xs text-zinc-400 hover:text-fg"
                 >
                   Close
                 </button>

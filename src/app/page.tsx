@@ -39,7 +39,7 @@ const InteractivePlayground = dynamic(
   () => import("@/components/InteractivePlayground").then((m) => m.InteractivePlayground),
   {
     loading: () => (
-      <div className="h-[480px] rounded-2xl border border-white/[0.08] bg-[#0c0e14]/70 animate-pulse p-6 flex items-center justify-center text-xs text-zinc-500 font-mono">
+      <div className="h-[480px] rounded-2xl border border-fg/[0.08] bg-card/70 animate-pulse p-6 flex items-center justify-center text-xs text-zinc-500 font-mono">
         Loading Interactive Sandbox...
       </div>
     ),
@@ -48,21 +48,21 @@ const InteractivePlayground = dynamic(
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-background text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
       <Navbar />
 
       {/* Hero Section */}
       <HeroSection />
 
       {/* Interactive Sandbox Section */}
-      <section id="playground" className="py-20 border-y border-white/[0.08] bg-[#0a0b10]/80 relative">
+      <section id="playground" className="py-20 border-y border-fg/[0.08] bg-background/80 relative">
         <div className="mx-auto w-full max-w-[1760px] 2xl:max-w-[1920px] px-4 sm:px-6 lg:px-10 xl:px-14">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-400 mb-3">
               <Terminal className="h-3.5 w-3.5" />
               <span>Test The Live Endpoint</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-fg tracking-tight">
               Test The Live Execution Engine
             </h2>
             <p className="mt-3 text-sm sm:text-base text-zinc-400">
@@ -82,7 +82,7 @@ export default function HomePage() {
               <Layers className="h-3.5 w-3.5" />
               <span>Architected for Speed</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-fg tracking-tight">
               How You Ship In Under 1 Hour
             </h2>
             <p className="mt-3 text-base text-zinc-400">
@@ -92,7 +92,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Step 1 */}
-            <div className="group rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-7 sm:p-8 flex flex-col justify-between hover:border-blue-500/40 hover:bg-[#10131e] transition-all">
+            <div className="group rounded-3xl border border-fg/[0.08] bg-card/80 p-7 sm:p-8 flex flex-col justify-between hover:border-blue-500/40 hover:bg-card-hover transition-all">
               <div>
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-500/10 text-blue-400 border border-blue-500/20 mb-6 group-hover:scale-105 transition-transform">
                   <Code2 className="h-6 w-6" />
@@ -100,18 +100,18 @@ export default function HomePage() {
                 <div className="text-xs font-mono font-bold text-blue-400 uppercase tracking-wider mb-2">
                   Step 01
                 </div>
-                <h3 className="text-xl font-bold text-white">Drop in Your Logic</h3>
+                <h3 className="text-xl font-bold text-fg">Drop in Your Logic</h3>
                 <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-                  Open <code className="text-xs text-blue-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-white/[0.06]">src/tool-engine/index.ts</code> and export your TypeScript or Python function. It receives validated inputs and context automatically.
+                  Open <code className="text-xs text-blue-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-fg/[0.06]">src/tool-engine/index.ts</code> and export your TypeScript or Python function. It receives validated inputs and context automatically.
                 </p>
               </div>
-              <div className="mt-6 pt-4 border-t border-white/[0.06] text-xs text-zinc-500 font-mono">
+              <div className="mt-6 pt-4 border-t border-fg/[0.06] text-xs text-zinc-500 font-mono">
                 <code>export async function executeToolLogic()</code>
               </div>
             </div>
 
             {/* Step 2 */}
-            <div className="group rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-7 sm:p-8 flex flex-col justify-between hover:border-emerald-500/40 hover:bg-[#10131e] transition-all">
+            <div className="group rounded-3xl border border-fg/[0.08] bg-card/80 p-7 sm:p-8 flex flex-col justify-between hover:border-emerald-500/40 hover:bg-card-hover transition-all">
               <div>
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-6 group-hover:scale-105 transition-transform">
                   <DollarSign className="h-6 w-6" />
@@ -119,18 +119,18 @@ export default function HomePage() {
                 <div className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider mb-2">
                   Step 02
                 </div>
-                <h3 className="text-xl font-bold text-white">Configure Your Prices</h3>
+                <h3 className="text-xl font-bold text-fg">Configure Your Prices</h3>
                 <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-                  Edit <code className="text-xs text-emerald-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-white/[0.06]">monetize.config.ts</code> to define your tiers, monthly credits, and rate limits. The pricing table & webhooks update automatically.
+                  Edit <code className="text-xs text-emerald-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-fg/[0.06]">monetize.config.ts</code> to define your tiers, monthly credits, and rate limits. The pricing table & webhooks update automatically.
                 </p>
               </div>
-              <div className="mt-6 pt-4 border-t border-white/[0.06] text-xs text-zinc-500 font-mono">
+              <div className="mt-6 pt-4 border-t border-fg/[0.06] text-xs text-zinc-500 font-mono">
                 <code>monetizeConfig.plans = [...]</code>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="group rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-7 sm:p-8 flex flex-col justify-between hover:border-purple-500/40 hover:bg-[#10131e] transition-all">
+            <div className="group rounded-3xl border border-fg/[0.08] bg-card/80 p-7 sm:p-8 flex flex-col justify-between hover:border-purple-500/40 hover:bg-card-hover transition-all">
               <div>
                 <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-6 group-hover:scale-105 transition-transform">
                   <TrendingUp className="h-6 w-6" />
@@ -138,12 +138,12 @@ export default function HomePage() {
                 <div className="text-xs font-mono font-bold text-purple-400 uppercase tracking-wider mb-2">
                   Step 03
                 </div>
-                <h3 className="text-xl font-bold text-white">Deploy & Monetize</h3>
+                <h3 className="text-xl font-bold text-fg">Deploy & Monetize</h3>
                 <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-                  Push to GitHub and connect to Vercel. Run <code className="text-xs text-purple-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-white/[0.06]">npm run setup</code> to test webhooks and start accepting global payments.
+                  Push to GitHub and connect to Vercel. Run <code className="text-xs text-purple-300 bg-zinc-900 px-1.5 py-0.5 rounded border border-fg/[0.06]">npm run setup</code> to test webhooks and start accepting global payments.
                 </p>
               </div>
-              <div className="mt-6 pt-4 border-t border-white/[0.06] text-xs text-zinc-500 font-mono">
+              <div className="mt-6 pt-4 border-t border-fg/[0.06] text-xs text-zinc-500 font-mono">
                 <code>vercel deploy --prod</code>
               </div>
             </div>
@@ -152,7 +152,7 @@ export default function HomePage() {
       </section>
 
       {/* Developer API & Integration Showcase */}
-      <section className="py-20 border-t border-white/[0.08] bg-[#0a0b10]/60">
+      <section className="py-20 border-t border-fg/[0.08] bg-background/60">
         <div className="mx-auto w-full max-w-[1760px] 2xl:max-w-[1920px] px-4 sm:px-6 lg:px-10 xl:px-14">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -160,7 +160,7 @@ export default function HomePage() {
                 <Key className="h-3.5 w-3.5" />
                 <span>Multi-Language SDK & CLI</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-fg tracking-tight">
                 Developer-First API & Programmable Access
               </h2>
               <p className="mt-4 text-base text-zinc-400 leading-relaxed">
@@ -198,21 +198,21 @@ export default function HomePage() {
       <PricingTable />
 
       {/* FAQ Section */}
-      <section className="py-20 border-t border-white/[0.08] bg-[#0c0e14]/50">
+      <section className="py-20 border-t border-fg/[0.08] bg-card/50">
         <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10 xl:px-14">
           <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/[0.08] bg-white/[0.03] px-3 py-1 text-xs font-semibold text-zinc-400 mb-3">
+            <div className="inline-flex items-center gap-2 rounded-full border border-fg/[0.08] bg-fg/[0.03] px-3 py-1 text-xs font-semibold text-zinc-400 mb-3">
               <HelpCircle className="h-3.5 w-3.5 text-blue-400" />
               <span>Answers to Common Questions</span>
             </div>
-            <h2 className="text-3xl font-extrabold text-white">
+            <h2 className="text-3xl font-extrabold text-fg">
               Frequently Asked Questions
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0f1118] p-6 hover:border-white/[0.12] transition">
-              <h4 className="text-base font-bold text-white flex items-center gap-2">
+            <div className="rounded-2xl border border-fg/[0.08] bg-card p-6 hover:border-fg/[0.12] transition">
+              <h4 className="text-base font-bold text-fg flex items-center gap-2">
                 <Shield className="h-4 w-4 text-blue-400" />
                 Why Lemon Squeezy over direct Stripe?
               </h4>
@@ -221,8 +221,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0f1118] p-6 hover:border-white/[0.12] transition">
-              <h4 className="text-base font-bold text-white flex items-center gap-2">
+            <div className="rounded-2xl border border-fg/[0.08] bg-card p-6 hover:border-fg/[0.12] transition">
+              <h4 className="text-base font-bold text-fg flex items-center gap-2">
                 <Zap className="h-4 w-4 text-amber-400" />
                 How does atomic credit metering work?
               </h4>
@@ -231,8 +231,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0f1118] p-6 hover:border-white/[0.12] transition">
-              <h4 className="text-base font-bold text-white flex items-center gap-2">
+            <div className="rounded-2xl border border-fg/[0.08] bg-card p-6 hover:border-fg/[0.12] transition">
+              <h4 className="text-base font-bold text-fg flex items-center gap-2">
                 <Terminal className="h-4 w-4 text-emerald-400" />
                 Can I test locally without third-party API keys?
               </h4>
@@ -241,8 +241,8 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0f1118] p-6 hover:border-white/[0.12] transition">
-              <h4 className="text-base font-bold text-white flex items-center gap-2">
+            <div className="rounded-2xl border border-fg/[0.08] bg-card p-6 hover:border-fg/[0.12] transition">
+              <h4 className="text-base font-bold text-fg flex items-center gap-2">
                 <Cpu className="h-4 w-4 text-purple-400" />
                 What can I build with this?
               </h4>

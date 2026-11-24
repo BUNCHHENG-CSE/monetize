@@ -199,7 +199,7 @@ export function PricingTable() {
               </div>
               <button
                 onClick={() => setFeedback(null)}
-                className="text-zinc-400 hover:text-white p-1 rounded-lg transition"
+                className="text-zinc-400 hover:text-fg p-1 rounded-lg transition"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -213,7 +213,7 @@ export function PricingTable() {
             <Sparkles className="h-3.5 w-3.5" />
             <span>Developer-First Pricing Engine</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-white">
+          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-fg">
             Transparent Pricing.{" "}
             <span className="bg-gradient-to-r from-blue-400 via-indigo-300 to-emerald-400 bg-clip-text text-transparent">
               Zero Hidden Fees.
@@ -226,22 +226,22 @@ export function PricingTable() {
 
           {/* User Status Bar if logged in */}
           {isAuthenticated && user && (
-            <div className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-white/[0.08] bg-white/[0.03] px-4 py-1.5 text-xs text-zinc-300 backdrop-blur-md">
+            <div className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-fg/[0.08] bg-fg/[0.03] px-4 py-1.5 text-xs text-zinc-300 backdrop-blur-md">
               <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Signed in as <strong className="text-white">{user.name || user.email}</strong></span>
+              <span>Signed in as <strong className="text-fg">{user.name || user.email}</strong></span>
               <span className="text-zinc-500">•</span>
               <span>Active Plan: <strong className="text-blue-400 uppercase font-mono">{user.planName || user.plan}</strong></span>
             </div>
           )}
 
           {/* Billing Cycle Toggle */}
-          <div className="mt-8 inline-flex items-center rounded-2xl border border-white/[0.08] bg-white/[0.03] p-1.5 backdrop-blur-xl">
+          <div className="mt-8 inline-flex items-center rounded-2xl border border-fg/[0.08] bg-fg/[0.03] p-1.5 backdrop-blur-xl">
             <button
               onClick={() => setBillingCycle("month")}
               className={`rounded-xl px-5 py-2 text-xs font-semibold transition-all ${
                 billingCycle === "month"
-                  ? "bg-white/[0.1] text-white shadow-sm font-bold"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-fg/[0.1] text-fg shadow-sm font-bold"
+                  : "text-zinc-400 hover:text-fg"
               }`}
             >
               Monthly Billing
@@ -250,8 +250,8 @@ export function PricingTable() {
               onClick={() => setBillingCycle("year")}
               className={`rounded-xl px-5 py-2 text-xs font-semibold flex items-center gap-2 transition-all ${
                 billingCycle === "year"
-                  ? "bg-white/[0.1] text-white shadow-sm font-bold"
-                  : "text-zinc-400 hover:text-white"
+                  ? "bg-fg/[0.1] text-fg shadow-sm font-bold"
+                  : "text-zinc-400 hover:text-fg"
               }`}
             >
               <span>Annual Billing</span>
@@ -282,12 +282,12 @@ export function PricingTable() {
                 key={plan.id}
                 className={`relative flex flex-col justify-between rounded-3xl p-6 sm:p-8 backdrop-blur-xl transition-all duration-300 ${
                   isCurrentPlan
-                    ? "border-2 border-emerald-500/60 bg-gradient-to-b from-[#0c1814]/90 to-[#0c0e14] shadow-[0_0_35px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/30 md:-translate-y-1"
+                    ? "border-2 border-emerald-500/60 bg-gradient-to-b from-emerald-500/10 to-card shadow-[0_0_35px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/30 md:-translate-y-1"
                     : isPopular
-                    ? "border-2 border-blue-500/70 bg-gradient-to-b from-[#121626] to-[#0c0e16] shadow-[0_0_40px_rgba(59,130,246,0.2)] md:-translate-y-2 ring-1 ring-blue-500/30"
+                    ? "border-2 border-blue-500/70 bg-gradient-to-b from-blue-500/10 to-card shadow-[0_0_40px_rgba(59,130,246,0.2)] md:-translate-y-2 ring-1 ring-blue-500/30"
                     : isOneTime
-                    ? "border-2 border-amber-500/50 bg-gradient-to-b from-[#1c1810]/80 to-[#0c0e14] shadow-[0_0_35px_rgba(245,158,11,0.15)] hover:border-amber-400/80 md:-translate-y-1"
-                    : "border border-white/[0.08] bg-[#0c0e14]/80 hover:border-white/[0.15] hover:bg-[#10131c]"
+                    ? "border-2 border-amber-500/50 bg-gradient-to-b from-amber-500/10 to-card shadow-[0_0_35px_rgba(245,158,11,0.15)] hover:border-amber-400/80 md:-translate-y-1"
+                    : "border border-fg/[0.08] bg-card/80 hover:border-fg/[0.15] hover:bg-card-hover"
                 }`}
               >
                 {/* Current Active Plan Badge */}
@@ -312,14 +312,14 @@ export function PricingTable() {
 
                 <div>
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xl font-bold text-white">{plan.name}</h3>
+                    <h3 className="text-xl font-bold text-fg">{plan.name}</h3>
                     <span
                       className={`rounded-full border px-2.5 py-1 text-[11px] font-mono shrink-0 ${
                         isCurrentPlan
                           ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-300 font-semibold"
                           : isOneTime
                           ? "bg-amber-500/10 border-amber-500/30 text-amber-300 font-semibold"
-                          : "bg-white/[0.05] border-white/[0.08] text-zinc-300"
+                          : "bg-fg/[0.05] border-fg/[0.08] text-zinc-300"
                       }`}
                     >
                       {plan.creditsPerMonth.toLocaleString()} cr / mo
@@ -331,8 +331,8 @@ export function PricingTable() {
                   </p>
 
                   {/* Price */}
-                  <div className="mt-6 flex items-baseline gap-1.5 pb-6 border-b border-white/[0.08]">
-                    <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-white">
+                  <div className="mt-6 flex items-baseline gap-1.5 pb-6 border-b border-fg/[0.08]">
+                    <span className="text-4xl sm:text-5xl font-extrabold tracking-tight text-fg">
                       ${price}
                     </span>
                     <span className="text-xs sm:text-sm font-medium text-zinc-400">
@@ -394,11 +394,11 @@ export function PricingTable() {
                           ? "bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 shadow-blue-500/25"
                           : isOneTime
                           ? "bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 text-white hover:from-amber-400 hover:to-orange-400 shadow-amber-500/25"
-                          : "bg-white/[0.06] text-white hover:bg-white/[0.12] border border-white/[0.08]"
+                          : "bg-fg/[0.06] text-fg hover:bg-fg/[0.12] border border-fg/[0.08]"
                       }`}
                     >
                       {loadingPlan === plan.id ? (
-                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-fg border-t-transparent" />
                       ) : (
                         <>
                           <span>
@@ -426,14 +426,14 @@ export function PricingTable() {
         </div>
 
         {/* Credit Packs (One-Time Refills) */}
-        <div className="mt-20 rounded-3xl border border-white/[0.08] bg-[#0c0e14]/70 p-6 sm:p-10 backdrop-blur-xl">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-white/[0.08]">
+        <div className="mt-20 rounded-3xl border border-fg/[0.08] bg-card/70 p-6 sm:p-10 backdrop-blur-xl">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-fg/[0.08]">
             <div>
               <div className="flex items-center gap-2 text-amber-400 mb-1">
                 <Coins className="h-5 w-5" />
                 <span className="text-xs font-bold uppercase tracking-wider">Need More Execution Credits?</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white">
+              <h3 className="text-xl sm:text-2xl font-bold text-fg">
                 One-Time Credit Top-Up Packs
               </h3>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-xl">
@@ -450,14 +450,14 @@ export function PricingTable() {
             {monetizeConfig.creditPacks.map((pack) => (
               <div
                 key={pack.id}
-                className="flex items-center justify-between rounded-2xl border border-white/[0.06] bg-white/[0.02] p-5 hover:border-white/[0.12] transition"
+                className="flex items-center justify-between rounded-2xl border border-fg/[0.06] bg-fg/[0.02] p-5 hover:border-fg/[0.12] transition"
               >
                 <div>
-                  <div className="text-sm font-bold text-white">{pack.name}</div>
+                  <div className="text-sm font-bold text-fg">{pack.name}</div>
                   <div className="text-xs text-zinc-400 mt-0.5">
                     {pack.credits.toLocaleString()} API Invocations
                   </div>
-                  <div className="text-lg font-extrabold text-white mt-2 font-mono">${pack.price}</div>
+                  <div className="text-lg font-extrabold text-fg mt-2 font-mono">${pack.price}</div>
                 </div>
 
                 <button
@@ -470,15 +470,15 @@ export function PricingTable() {
               </div>
             ))}
 
-            <div className="flex items-center justify-between rounded-2xl border border-dashed border-white/[0.1] bg-white/[0.01] p-5">
+            <div className="flex items-center justify-between rounded-2xl border border-dashed border-fg/[0.1] bg-fg/[0.01] p-5">
               <div>
-                <div className="text-sm font-bold text-white">High Volume / Enterprise</div>
+                <div className="text-sm font-bold text-fg">High Volume / Enterprise</div>
                 <div className="text-xs text-zinc-400 mt-0.5">Custom credit quotas & dedicated cluster</div>
                 <div className="text-xs font-semibold text-emerald-400 mt-2">Volume Discounts Available</div>
               </div>
               <a
                 href="mailto:contact@developer.local"
-                className="rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-2 text-xs font-semibold text-zinc-200 hover:text-white transition"
+                className="rounded-xl border border-fg/[0.1] bg-fg/[0.04] px-4 py-2 text-xs font-semibold text-zinc-200 hover:text-fg transition"
               >
                 Contact
               </a>
@@ -506,11 +506,11 @@ export function PricingTable() {
       {/* Downgrade Confirmation Modal */}
       {downgradeTarget && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-md rounded-3xl border border-amber-500/30 bg-[#0c0e14] p-6 sm:p-8 shadow-2xl">
+          <div className="relative w-full max-w-md rounded-3xl border border-amber-500/30 bg-card p-6 sm:p-8 shadow-2xl">
             <button
               onClick={() => setDowngradeTarget(null)}
               disabled={downgrading}
-              className="absolute top-5 right-5 text-zinc-400 hover:text-white p-1 rounded-lg transition"
+              className="absolute top-5 right-5 text-zinc-400 hover:text-fg p-1 rounded-lg transition"
             >
               <X className="h-4 w-4" />
             </button>
@@ -520,35 +520,35 @@ export function PricingTable() {
                 <AlertTriangle className="h-5 w-5" />
               </div>
               <div>
-                <h3 className="text-base font-bold text-white">Confirm Plan Downgrade</h3>
+                <h3 className="text-base font-bold text-fg">Confirm Plan Downgrade</h3>
                 <p className="text-xs text-zinc-400">Switching subscription tier</p>
               </div>
             </div>
 
             <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-5">
               Are you sure you want to downgrade from{" "}
-              <strong className="text-white">{currentPlanConfig.name}</strong> to{" "}
+              <strong className="text-fg">{currentPlanConfig.name}</strong> to{" "}
               <strong className="text-amber-300">{downgradeTarget.name}</strong>?
             </p>
 
-            <div className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2 mb-6 text-xs font-mono">
+            <div className="rounded-2xl border border-fg/[0.06] bg-fg/[0.02] p-4 space-y-2 mb-6 text-xs font-mono">
               <div className="flex items-center justify-between text-zinc-400">
                 <span>Monthly Credits:</span>
-                <span className="text-white">
+                <span className="text-fg">
                   {currentPlanConfig.creditsPerMonth.toLocaleString()} →{" "}
                   <strong className="text-amber-300">{downgradeTarget.creditsPerMonth.toLocaleString()} cr/mo</strong>
                 </span>
               </div>
               <div className="flex items-center justify-between text-zinc-400">
                 <span>Rate Limits:</span>
-                <span className="text-white">
+                <span className="text-fg">
                   {currentPlanConfig.rateLimitPerMin} →{" "}
                   <strong className="text-amber-300">{downgradeTarget.rateLimitPerMin} req/min</strong>
                 </span>
               </div>
               <div className="flex items-center justify-between text-zinc-400">
                 <span>New Price:</span>
-                <span className="text-white font-bold">
+                <span className="text-fg font-bold">
                   ${downgradeTarget.price}
                   {downgradeTarget.interval === "one-time" ? " one-time" : "/month"}
                 </span>
@@ -560,7 +560,7 @@ export function PricingTable() {
                 type="button"
                 onClick={() => setDowngradeTarget(null)}
                 disabled={downgrading}
-                className="flex-1 rounded-xl border border-white/[0.1] bg-white/[0.04] py-2.5 text-xs font-semibold text-zinc-300 hover:bg-white/[0.08] hover:text-white transition"
+                className="flex-1 rounded-xl border border-fg/[0.1] bg-fg/[0.04] py-2.5 text-xs font-semibold text-zinc-300 hover:bg-fg/[0.08] hover:text-fg transition"
               >
                 Keep Current Plan
               </button>

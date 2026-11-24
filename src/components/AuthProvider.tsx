@@ -2,6 +2,26 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { ClerkProvider } from "@clerk/nextjs";
+import { useResolvedTheme } from "@/lib/useResolvedTheme";
+
+const clerkThemes = {
+  dark: {
+    colorPrimary: "#3b82f6",
+    colorBackground: "#0c0e14",
+    colorText: "#fafafa",
+    colorTextSecondary: "#a1a1aa",
+    colorInputBackground: "#18181b",
+    colorInputText: "#fafafa",
+  },
+  light: {
+    colorPrimary: "#2563eb",
+    colorBackground: "#ffffff",
+    colorText: "#18181b",
+    colorTextSecondary: "#52525b",
+    colorInputBackground: "#f4f4f5",
+    colorInputText: "#18181b",
+  },
+};
 
 const clerkPublishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "";
 const isConfigured = Boolean(
@@ -187,20 +207,14 @@ function AuthStateProvider({ children }: { children: React.ReactNode }) {
 }
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const theme = useResolvedTheme();
   if (isConfigured) {
     return (
       <ClerkProvider
         publishableKey={clerkPublishableKey}
         appearance={{
           baseTheme: undefined,
-          variables: {
-            colorPrimary: "#3b82f6",
-            colorBackground: "#121215",
-            colorText: "#fafafa",
-            colorTextSecondary: "#a1a1aa",
-            colorInputBackground: "#18181b",
-            colorInputText: "#fafafa",
-          },
+          variables: clerkThemes[theme],
         }}
       >
         <AuthStateProvider>{children}</AuthStateProvider>

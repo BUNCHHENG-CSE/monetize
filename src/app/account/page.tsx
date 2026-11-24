@@ -97,7 +97,7 @@ export default function AccountPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col">
+      <div className="min-h-screen bg-background text-zinc-100 flex flex-col">
         <Navbar />
         <div className="flex-1 flex items-center justify-center">
           <div className="h-6 w-6 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
@@ -109,12 +109,12 @@ export default function AccountPage() {
 
   if (!isAuthenticated || !user) {
     return (
-      <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col bg-grid-pattern">
+      <div className="min-h-screen bg-background text-zinc-100 flex flex-col bg-grid-pattern">
         <Navbar />
         <main className="flex-1 flex items-center justify-center p-4">
-          <div className="max-w-md w-full text-center rounded-3xl border border-white/[0.08] bg-[#0c0e14]/90 p-8 backdrop-blur-xl">
+          <div className="max-w-md w-full text-center rounded-3xl border border-fg/[0.08] bg-card/90 p-8 backdrop-blur-xl">
             <User className="h-10 w-10 text-blue-400 mx-auto mb-3" />
-            <h2 className="text-xl font-bold text-white mb-2">Sign In Required</h2>
+            <h2 className="text-xl font-bold text-fg mb-2">Sign In Required</h2>
             <p className="text-xs text-zinc-400 mb-6">
               You must be signed in to view and manage your developer account.
             </p>
@@ -133,19 +133,19 @@ export default function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#08090c] text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-background text-zinc-100 flex flex-col bg-grid-pattern selection:bg-blue-600 selection:text-white">
       <Navbar />
 
       <main className="flex-1 py-10">
         <div className="mx-auto w-full max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Header */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/[0.08]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-fg/[0.08]">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-1 text-xs font-semibold text-blue-400 mb-2">
                 <User className="h-3.5 w-3.5" />
                 <span>Account Control Center</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-fg tracking-tight">
                 Account & Developer Profile
               </h1>
               <p className="text-xs sm:text-sm text-zinc-400 mt-1">
@@ -169,8 +169,8 @@ export default function AccountPage() {
             {/* Left 2 Cols: Profile Form & Details */}
             <div className="lg:col-span-2 space-y-6">
               {/* Profile Card */}
-              <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 sm:p-8 backdrop-blur-xl shadow-xl">
-                <h2 className="text-base font-bold text-white mb-6 flex items-center gap-2">
+              <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 sm:p-8 backdrop-blur-xl shadow-xl">
+                <h2 className="text-base font-bold text-fg mb-6 flex items-center gap-2">
                   <User className="h-4 w-4 text-blue-400" />
                   <span>Profile Information</span>
                 </h2>
@@ -196,13 +196,13 @@ export default function AccountPage() {
                       Account User ID (Unique)
                     </label>
                     <div className="flex items-center gap-2">
-                      <div className="flex-1 rounded-xl border border-white/[0.06] bg-zinc-950 px-3.5 py-2.5 text-xs font-mono text-zinc-300 select-all">
+                      <div className="flex-1 rounded-xl border border-fg/[0.06] bg-zinc-950 px-3.5 py-2.5 text-xs font-mono text-zinc-300 select-all">
                         {user.id}
                       </div>
                       <button
                         type="button"
                         onClick={handleCopyId}
-                        className="rounded-xl border border-white/[0.08] bg-zinc-900 px-3 py-2.5 text-zinc-300 hover:text-white transition"
+                        className="rounded-xl border border-fg/[0.08] bg-zinc-900 px-3 py-2.5 text-zinc-300 hover:text-fg transition"
                         title="Copy User ID"
                       >
                         {copiedId ? <Check className="h-4 w-4 text-emerald-400" /> : <Copy className="h-4 w-4" />}
@@ -219,7 +219,7 @@ export default function AccountPage() {
                       type="email"
                       disabled
                       value={user.email}
-                      className="w-full rounded-xl border border-white/[0.06] bg-zinc-950/50 px-3.5 py-2.5 text-xs text-zinc-400 cursor-not-allowed font-mono"
+                      className="w-full rounded-xl border border-fg/[0.06] bg-zinc-950/50 px-3.5 py-2.5 text-xs text-zinc-400 cursor-not-allowed font-mono"
                     />
                   </div>
 
@@ -233,7 +233,7 @@ export default function AccountPage() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Alex Rivera"
-                      className="w-full rounded-xl border border-white/[0.1] bg-zinc-950 px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 transition"
+                      className="w-full rounded-xl border border-fg/[0.1] bg-zinc-950 px-3.5 py-2.5 text-xs text-fg focus:outline-none focus:border-blue-500 transition"
                     />
                   </div>
 
@@ -243,7 +243,7 @@ export default function AccountPage() {
                       Avatar Image URL
                     </label>
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 shrink-0 rounded-full bg-blue-600/30 border border-blue-500/40 overflow-hidden flex items-center justify-center text-xs font-bold text-white">
+                      <div className="h-10 w-10 shrink-0 rounded-full bg-blue-600/30 border border-blue-500/40 overflow-hidden flex items-center justify-center text-xs font-bold text-fg">
                         {avatarUrl ? (
                           <img src={avatarUrl} alt="Avatar" className="h-full w-full object-cover" />
                         ) : (
@@ -255,7 +255,7 @@ export default function AccountPage() {
                         value={avatarUrl}
                         onChange={(e) => setAvatarUrl(e.target.value)}
                         placeholder="https://..."
-                        className="flex-1 rounded-xl border border-white/[0.1] bg-zinc-950 px-3.5 py-2.5 text-xs text-white focus:outline-none focus:border-blue-500 transition font-mono text-[11px]"
+                        className="flex-1 rounded-xl border border-fg/[0.1] bg-zinc-950 px-3.5 py-2.5 text-xs text-fg focus:outline-none focus:border-blue-500 transition font-mono text-[11px]"
                       />
                     </div>
                   </div>
@@ -273,9 +273,9 @@ export default function AccountPage() {
               </div>
 
               {/* API & Developer Keys Shortcut */}
-              <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 sm:p-8 backdrop-blur-xl">
+              <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 sm:p-8 backdrop-blur-xl">
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <h3 className="text-base font-bold text-fg flex items-center gap-2">
                     <Key className="h-4 w-4 text-emerald-400" />
                     <span>API Credentials & SDK Distribution</span>
                   </h3>
@@ -296,21 +296,21 @@ export default function AccountPage() {
             {/* Right 1 Col: Plan, Role & Credits */}
             <div className="space-y-6">
               {/* Credits Balance Card */}
-              <div className="rounded-3xl border border-white/[0.08] bg-gradient-to-b from-[#0c0e14] to-zinc-950 p-6 backdrop-blur-xl">
+              <div className="rounded-3xl border border-fg/[0.08] bg-gradient-to-b from-card to-zinc-950 p-6 backdrop-blur-xl">
                 <div className="flex items-center justify-between text-zinc-400 text-xs font-semibold mb-2">
                   <span>Available Balance</span>
                   <div className="p-1.5 rounded-lg bg-emerald-500/10 text-emerald-400">
                     <Coins className="h-4 w-4" />
                   </div>
                 </div>
-                <div className="text-3xl font-extrabold text-white font-mono">
+                <div className="text-3xl font-extrabold text-fg font-mono">
                   {user.creditsBalance}
                   <span className="text-xs font-normal text-zinc-500 ml-1.5">credits</span>
                 </div>
                 <p className="text-[11px] text-zinc-400 mt-2">
                   Automatically deducted atomically per tool invocation.
                 </p>
-                <div className="mt-4 pt-4 border-t border-white/[0.06]">
+                <div className="mt-4 pt-4 border-t border-fg/[0.06]">
                   <Link
                     href="/dashboard?tab=billing"
                     className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-2 text-xs font-bold text-white hover:from-blue-500 hover:to-indigo-500 transition shadow-sm"
@@ -322,7 +322,7 @@ export default function AccountPage() {
               </div>
 
               {/* Plan Card */}
-              <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 backdrop-blur-xl">
+              <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 backdrop-blur-xl">
                 <div className="flex items-center justify-between text-zinc-400 text-xs font-semibold mb-3">
                   <span>Current Subscription</span>
                   <div className="p-1.5 rounded-lg bg-blue-500/10 text-blue-400">
@@ -330,7 +330,7 @@ export default function AccountPage() {
                   </div>
                 </div>
 
-                <div className="text-xl font-bold text-white uppercase font-mono">
+                <div className="text-xl font-bold text-fg uppercase font-mono">
                   {user.plan} Developer
                 </div>
                 <div className="mt-1 flex items-center gap-2">
@@ -343,7 +343,7 @@ export default function AccountPage() {
                     type="button"
                     onClick={handleOpenBillingPortal}
                     disabled={portalLoading}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/[0.1] bg-zinc-900 py-2 text-xs font-semibold text-zinc-200 hover:text-white hover:bg-zinc-800 transition"
+                    className="w-full flex items-center justify-center gap-2 rounded-xl border border-fg/[0.1] bg-zinc-900 py-2 text-xs font-semibold text-zinc-200 hover:text-fg hover:bg-zinc-800 transition"
                   >
                     <ExternalLink className="h-3.5 w-3.5 text-zinc-400" />
                     <span>Open Billing Portal</span>
@@ -351,7 +351,7 @@ export default function AccountPage() {
 
                   <Link
                     href="/#pricing"
-                    className="w-full block text-center py-2 text-xs text-zinc-400 hover:text-white transition"
+                    className="w-full block text-center py-2 text-xs text-zinc-400 hover:text-fg transition"
                   >
                     View All Plans & Features
                   </Link>
@@ -359,12 +359,12 @@ export default function AccountPage() {
               </div>
 
               {/* Role & Privileges */}
-              <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/80 p-6 backdrop-blur-xl">
+              <div className="rounded-3xl border border-fg/[0.08] bg-card/80 p-6 backdrop-blur-xl">
                 <div className="flex items-center justify-between text-zinc-400 text-xs font-semibold mb-2">
                   <span>Access Tier</span>
                   <Shield className="h-4 w-4 text-purple-400" />
                 </div>
-                <div className="text-sm font-bold text-white capitalize">
+                <div className="text-sm font-bold text-fg capitalize">
                   {user.role} Permissions
                 </div>
                 <p className="text-[11px] text-zinc-400 mt-1">
@@ -374,7 +374,7 @@ export default function AccountPage() {
                 </p>
 
                 {isAdmin && (
-                  <div className="mt-4 pt-4 border-t border-white/[0.06]">
+                  <div className="mt-4 pt-4 border-t border-fg/[0.06]">
                     <Link
                       href="/admin"
                       className="w-full flex items-center justify-center gap-2 rounded-xl border border-purple-500/30 bg-purple-500/10 py-2 text-xs font-bold text-purple-300 hover:bg-purple-500/20 transition"

@@ -101,11 +101,11 @@ function LoginForm() {
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600/30 to-indigo-600/20 border border-blue-500/30 text-blue-400 shadow-[0_0_20px_rgba(59,130,246,0.25)] group-hover:scale-105 transition-all">
             <Terminal className="h-5 w-5" />
           </div>
-          <span className="text-xl font-bold tracking-tight text-white">
+          <span className="text-xl font-bold tracking-tight text-fg">
             {monetizeConfig.tool.name}
           </span>
         </Link>
-        <h1 className="text-2xl font-black text-white tracking-tight">
+        <h1 className="text-2xl font-black text-fg tracking-tight">
           {mode === "signin" ? "Welcome Back" : "Create Developer Account"}
         </h1>
         <p className="text-xs text-zinc-400 mt-1.5">
@@ -116,7 +116,7 @@ function LoginForm() {
       </div>
 
       {/* Main Glass Card */}
-      <div className="rounded-3xl border border-white/[0.08] bg-[#0c0e14]/90 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
+      <div className="rounded-3xl border border-fg/[0.08] bg-card/90 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
         {/* Already Logged In Banner */}
         {isAuthenticated && user && (
           <div className="mb-6 rounded-2xl border border-blue-500/30 bg-blue-500/10 p-4">
@@ -126,7 +126,7 @@ function LoginForm() {
                   {user.name?.charAt(0) || user.email.charAt(0).toUpperCase()}
                 </div>
                 <div>
-                  <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                  <div className="text-xs font-bold text-fg flex items-center gap-1.5">
                     <span>{user.name || user.email}</span>
                     <span className="rounded bg-blue-500/20 px-1.5 py-0.5 text-[10px] font-mono text-blue-400 uppercase">
                       {user.role}
@@ -153,7 +153,7 @@ function LoginForm() {
                 <div className="text-[10px] font-mono uppercase tracking-wider text-blue-400 font-bold">
                   Subscription Selected
                 </div>
-                <div className="text-sm font-bold text-white mt-0.5">
+                <div className="text-sm font-bold text-fg mt-0.5">
                   {selectedPlan.name} Tier
                 </div>
                 <div className="text-[11px] text-zinc-400 mt-0.5">
@@ -217,15 +217,15 @@ function LoginForm() {
         {/* Divider */}
         <div className="relative my-6 flex items-center justify-center">
           <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-white/[0.08]" />
+            <div className="w-full border-t border-fg/[0.08]" />
           </div>
-          <span className="relative bg-[#0c0e14] px-3 text-[11px] font-mono uppercase text-zinc-500">
+          <span className="relative bg-card px-3 text-[11px] font-mono uppercase text-zinc-500">
             Or Use Custom Credentials
           </span>
         </div>
 
         {/* Mode Toggle Tabs */}
-        <div className="flex rounded-xl bg-zinc-950 p-1 border border-white/[0.06] mb-5">
+        <div className="flex rounded-xl bg-zinc-950 p-1 border border-fg/[0.06] mb-5">
           <button
             type="button"
             onClick={() => {
@@ -234,8 +234,8 @@ function LoginForm() {
             }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
               mode === "signin"
-                ? "bg-white/[0.08] text-white shadow-sm"
-                : "text-zinc-400 hover:text-white"
+                ? "bg-fg/[0.08] text-fg shadow-sm"
+                : "text-zinc-400 hover:text-fg"
             }`}
           >
             Sign In
@@ -248,8 +248,8 @@ function LoginForm() {
             }}
             className={`flex-1 py-1.5 text-xs font-semibold rounded-lg transition-all ${
               mode === "signup"
-                ? "bg-white/[0.08] text-white shadow-sm"
-                : "text-zinc-400 hover:text-white"
+                ? "bg-fg/[0.08] text-fg shadow-sm"
+                : "text-zinc-400 hover:text-fg"
             }`}
           >
             Create Account
@@ -285,7 +285,7 @@ function LoginForm() {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Alex Rivera"
-                  className="w-full rounded-xl border border-white/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
+                  className="w-full rounded-xl border border-fg/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2.5 text-xs text-fg placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
                 />
               </div>
             </div>
@@ -303,7 +303,7 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="dev@company.com"
-                className="w-full rounded-xl border border-white/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
+                className="w-full rounded-xl border border-fg/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2.5 text-xs text-fg placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
               />
             </div>
           </div>
@@ -326,7 +326,7 @@ function LoginForm() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full rounded-xl border border-white/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2.5 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
+                className="w-full rounded-xl border border-fg/[0.08] bg-zinc-950/80 pl-10 pr-4 py-2.5 text-xs text-fg placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
               />
             </div>
           </div>
@@ -338,7 +338,7 @@ function LoginForm() {
           >
             {loading ? (
               <>
-                <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-fg border-t-transparent" />
                 <span>Processing...</span>
               </>
             ) : (
@@ -367,7 +367,7 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen bg-[#08090c] text-zinc-100 flex items-center justify-center p-4 bg-grid-pattern selection:bg-blue-600 selection:text-white">
+    <div className="min-h-screen bg-background text-zinc-100 flex items-center justify-center p-4 bg-grid-pattern selection:bg-blue-600 selection:text-white">
       <Suspense
         fallback={
           <div className="text-xs text-zinc-500 font-mono">Loading authentication...</div>
